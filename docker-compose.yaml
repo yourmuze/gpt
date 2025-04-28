@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  selenium-hub:
+    image: selenium/hub
+    ports:
+      - "4444:4444"
+
+  chrome-node:
+    image: selenium/node-chrome
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_SESSIONS=1
+    volumes:
+      - ${PROFILES_DIR}:/app/profiles  # Монтирование папки с профилями на хост
+
+  bot:
+    build:
+      context: ../../Downloads
+      dockerfile: Dockerfile
+    command: celery -A tasks worker --loglevel=INFO
+    depends_on:
+      - redis
+      - selenium-hub
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - SELENIUM_HUB_URL=http://selenium-hub:4444/wd/hub
+      - TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
+      - ADMIN_CHAT_ID=${ADMIN_CHAT_ID}
+      - NUM_SESSIONS=${NUM_SESSIONS:-20}
+      - PROFILES_DIR=/app/profiles
+    volumes:
+      - ${PROFILES_DIR}:/app/profiles  # Монтирование папки с профилями на хост
+
+  beat:
+    build:
+      context: ../../Downloads
+      dockerfile: Dockerfile
+    command: celery -A tasks beat --loglevel=INFO
+    depends_on:
+      - redis
+    environment:
+      - REDIS_URL=redis://redis:6379/0
