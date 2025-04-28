@@ -1,0 +1,22 @@
+# HTTP & async
+aiofiles==24.1.0
+aiosqlite==0.21.0
+
+# Telegram bot
+aiogram==3.20.0.post0
+
+# OpenAI API
+openai==1.76.0
+
+# Data processing
+pandas==2.2.3
+openpyxl==3.1.5
+
+# Task queue
+celery[redis]==5.5.1
+redis==5.2.1
+flower==2.0.1
+requests>=2.32.3
+
+#docker-compose down
+#docker-compose up --build -d

@@ -1,0 +1,339 @@
+# user_bot.py
+import re
+import random
+import asyncio
+from pathlib import Path
+from difflib import SequenceMatcher
+
+import pandas as pd
+import aiosqlite
+from aiogram import Bot, Dispatcher, types, F
+from aiogram.filters import Command, CommandStart
+from aiogram.filters.state import StateFilter
+from aiogram.fsm.context import FSMContext
+from aiogram.fsm.state import State, StatesGroup
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, FSInputFile
+from aiogram.exceptions import TelegramNetworkError
+
+# --------------------
+# Настройки
+# --------------------
+API_TOKEN       = "7916603610:AAFc4MEz4SKhe-kUlWHGA3l5fnCxQClIuac"
+BASE_DIR        = Path(__file__).resolve().parent
+
+# Поиск Excel-файла со списком профессий в корне проекта
+excel_files     = list(BASE_DIR.glob("*.xlsx"))
+if not excel_files:
+    raise FileNotFoundError("Excel-файл со списком профессий не найден в корне проекта")
+EXCEL_PATH      = excel_files[0]
+WAIT_VIDEO_PATH = BASE_DIR / "waiting_video.mp4"
+
+# Каналы и админы
+SUB_CHANNEL_USERNAME   = "@test11111111223084034"  # для проверки подписки
+ADMIN_CHANNEL_USERNAME = "@test11111111223084034"  # админ-канал для HELP и команд
+ADMIN_CHAT_ID          = None                        # numeric chat_id инициализируется на старте
+ADMIN_IDS              = [434092620, 386406595]      # список администраторов по user_id
+
+# --------------------
+# Инициализация бота и диспетчера
+# --------------------
+bot = Bot(token=API_TOKEN)
+dp  = Dispatcher()
+
+# Хранение последнего file_id фото для каждого пользователя
+best_file_id: dict[int, str] = {}
+
+# --------------------
+# FSM States
+# --------------------
+class Form(StatesGroup):
+    check_sub      = State()
+    ask_name       = State()
+    ask_profession = State()
+    ask_photo      = State()
+
+# --------------------
+# Вспомогательные функции
+# --------------------
+
+def normalize(text: str) -> str:
+    t = text.lower()
+    t = re.sub(r"[^\w\s]", "", t)
+    return re.sub(r"\s+", " ", t).strip()
+
+# --------------------
+# Загрузка списка профессий из Excel
+# --------------------
+df = pd.read_excel(EXCEL_PATH, sheet_name="Лист1")
+raw_professions = df.iloc[3:,0].dropna().astype(str).tolist()
+professions = [normalize(p) for p in raw_professions]
+
+# --------------------
+# Инициализация базы данных
+# --------------------
+async def init_db():
+    async with aiosqlite.connect(BASE_DIR / "users.db") as db:
+        await db.execute(
+            """
+            CREATE TABLE IF NOT EXISTS users (
+                user_id     INTEGER PRIMARY KEY,
+                name        TEXT,
+                profession  TEXT,
+                photo_count INTEGER DEFAULT 0
+            );
+            """
+        )
+        await db.commit()
+
+async def get_user(uid: int):
+    async with aiosqlite.connect(BASE_DIR / "users.db") as db:
+        cur = await db.execute("SELECT * FROM users WHERE user_id = ?", (uid,))
+        return await cur.fetchone()
+
+async def upsert_user(uid: int, name=None, profession=None, inc_photo=False):
+    user = await get_user(uid)
+    async with aiosqlite.connect(BASE_DIR / "users.db") as db:
+        if user:
+            if name:
+                await db.execute("UPDATE users SET name = ? WHERE user_id = ?", (name, uid))
+            if profession:
+                await db.execute("UPDATE users SET profession = ? WHERE user_id = ?", (profession, uid))
+            if inc_photo:
+                await db.execute("UPDATE users SET photo_count = photo_count + 1 WHERE user_id = ?", (uid,))
+        else:
+            await db.execute(
+                "INSERT INTO users (user_id, name, profession, photo_count) VALUES (?, ?, ?, ?)",
+                (uid, name or "", profession or "", 1 if inc_photo else 0)
+            )
+        await db.commit()
+
+# --------------------
+# Клавиатуры
+# --------------------
+
+def sub_keyboard() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(inline_keyboard=[[
+        InlineKeyboardButton(text="✅ Проверить", callback_data="check_sub"),
+        InlineKeyboardButton(text="🔗 Подписаться", url=f"https://t.me/{SUB_CHANNEL_USERNAME.lstrip('@')}" )
+    ]])
+
+def retry_prof_keyboard() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(inline_keyboard=[[
+        InlineKeyboardButton(text="🎲 Случайная профессия", callback_data="random_profession")
+    ]])
+
+def result_keyboard() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(inline_keyboard=[[
+        InlineKeyboardButton(text="Помощь", callback_data="help"),
+        InlineKeyboardButton(text="Другую фигурку", callback_data="another")
+    ]])
+
+# --------------------
+# Хэндлеры
+# --------------------
+@dp.startup()
+async def on_startup():
+    global ADMIN_CHAT_ID
+    await init_db()
+    chat = await bot.get_chat(ADMIN_CHANNEL_USERNAME)
+    ADMIN_CHAT_ID = chat.id
+
+@dp.message(CommandStart())
+async def cmd_start(msg: types.Message, state: FSMContext):
+    await msg.answer(
+        f"Чтобы получить аватарку, подпишитесь на {SUB_CHANNEL_USERNAME}",
+        reply_markup=sub_keyboard()
+    )
+    await state.set_state(Form.check_sub)
+
+@dp.callback_query(StateFilter(Form.check_sub), F.data == "check_sub")
+async def check_sub(call: types.CallbackQuery, state: FSMContext):
+    try:
+        m = await bot.get_chat_member(SUB_CHANNEL_USERNAME, call.from_user.id)
+        ok = m.status in ("creator", "administrator", "member")
+    except:
+        ok = False
+    if ok:
+        await call.message.edit_text("Напишите, как вас зовут. Лучше оставить только имя...")
+        await state.set_state(Form.ask_name)
+    else:
+        await call.message.edit_text(
+            f"Вы не подписаны, подпишитесь на {SUB_CHANNEL_USERNAME}",
+            reply_markup=sub_keyboard()
+        )
+
+@dp.message(StateFilter(Form.ask_name))
+async def process_name(msg: types.Message, state: FSMContext):
+    await upsert_user(msg.from_user.id, name=msg.text.strip())
+    await msg.answer("Укажите вашу профессию")
+    await state.set_state(Form.ask_profession)
+
+@dp.message(StateFilter(Form.ask_profession))
+async def process_profession(msg: types.Message, state: FSMContext):
+    text = normalize(msg.text)
+    best, score = None, 0.0
+    for p in professions:
+        s = SequenceMatcher(None, text, p).ratio()
+        if s > score:
+            best, score = p, s
+    if score >= 0.75:
+        await upsert_user(msg.from_user.id, profession=best)
+        await msg.answer("Чтобы получить фигурку, пришлите свое фото в чат")
+        await state.set_state(Form.ask_photo)
+    else:
+        await msg.answer("К сожалению, профессия не найдена...", reply_markup=retry_prof_keyboard())
+
+@dp.callback_query(F.data == "random_profession")
+async def random_prof(call: types.CallbackQuery, state: FSMContext):
+    prof = random.choice(professions)
+    await upsert_user(call.from_user.id, profession=prof)
+    await call.message.edit_text(f"Ваша профессия — {prof}\nПришлите свое фото для фигурки")
+    await state.set_state(Form.ask_photo)
+
+@dp.message(StateFilter(Form.ask_photo), ~F.photo)
+async def not_photo(msg: types.Message):
+    await msg.answer("Пожалуйста, пришлите фото в медиа-формате")
+
+@dp.message(StateFilter(Form.ask_photo), F.photo)
+async def process_photo(msg: types.Message, state: FSMContext):
+    user = await get_user(msg.from_user.id)
+    if user and user[3] >= 2:
+        await msg.answer("Вы достигли лимита фото (2)")
+        return
+    await upsert_user(msg.from_user.id, inc_photo=True)
+    await msg.answer("Создаем вашу фигурку... Это займет до минуты")
+    try:
+        await msg.answer_video(FSInputFile(str(WAIT_VIDEO_PATH)), caption="Ждите немного...")
+    except TelegramNetworkError:
+        pass
+    fid = msg.photo[-1].file_id
+    best_file_id[msg.from_user.id] = fid
+    await msg.answer_photo(photo=fid, caption="Ваш результат готов!", reply_markup=result_keyboard())
+    await state.clear()
+
+@dp.callback_query(F.data == "help")
+async def help_req(call: types.CallbackQuery):
+    uid = call.from_user.id
+    await bot.forward_message(chat_id=ADMIN_CHAT_ID, from_chat_id=call.message.chat.id, message_id=call.message.message_id)
+    await bot.send_message(chat_id=ADMIN_CHAT_ID, text=f"HELP запрос от пользователя {uid}")
+    await call.answer("Запрос отправлен в админ-чат", show_alert=True)
+
+@dp.callback_query(F.data == "another")
+async def another_fun(call: types.CallbackQuery, state: FSMContext):
+    await call.message.answer("Пришлите новое фото для фигурки")
+    await state.set_state(Form.ask_photo)
+
+# --------------------
+# Админские команды (от бота)
+# --------------------
+@dp.message(Command("broadcast"))
+async def admin_broadcast(msg: types.Message):
+    if msg.from_user.id not in ADMIN_IDS:
+        return
+    parts = msg.text.split(' ', 1)
+    if len(parts) < 2:
+        return await msg.reply("❌ Укажите текст: /broadcast <текст>")
+    text = parts[1]
+    async with aiosqlite.connect(BASE_DIR / "users.db") as db:
+        cur = await db.execute("SELECT user_id FROM users")
+        ids = [r[0] for r in await cur.fetchall()]
+    success = 0
+    for uid in ids:
+        try:
+            await bot.send_message(chat_id=uid, text=text)
+            success += 1
+        except Exception:
+            pass
+    await msg.reply(f"✅ Рассылка выполнена: {success} пользователей.")
+
+@dp.message(Command("send"))
+async def admin_send(msg: types.Message):
+    if msg.from_user.id not in ADMIN_IDS:
+        return
+    parts = msg.text.split(' ', 2)
+    if len(parts) < 3:
+        return await msg.reply("❌ Использование: /send <user_id> <текст>")
+    try:
+        uid = int(parts[1])
+    except ValueError:
+        return await msg.reply("❌ User ID должен быть числом.")
+    text = parts[2]
+    try:
+        await bot.send_message(chat_id=uid, text=text)
+        await msg.reply(f"✅ Сообщение отправлено пользователю {uid}.")
+    except Exception as e:
+        await msg.reply(f"❌ Не удалось отправить: {e}")
+
+@dp.message(Command("reset"))
+async def admin_reset(msg: types.Message):
+    if msg.from_user.id not in ADMIN_IDS:
+        return
+    parts = msg.text.split(' ', 1)
+    if len(parts) < 2:
+        return await msg.reply("❌ Использование: /reset <user_id>")
+    try:
+        uid = int(parts[1])
+    except ValueError:
+        return await msg.reply("❌ User ID должен быть числом.")
+    async with aiosqlite.connect(BASE_DIR / "users.db") as db:
+        await db.execute("UPDATE users SET photo_count = 0 WHERE user_id = ?", (uid,))
+        await db.commit()
+    await msg.reply(f"✅ Счетчик фото для пользователя {uid} сброшен.")
+
+# --------------------
+# Админские команды (из канала)
+# --------------------
+@dp.channel_post(Command("broadcast"))
+async def channel_broadcast(post: types.Message):
+    if post.chat.id != ADMIN_CHAT_ID:
+        return
+    parts = post.text.split(' ', 1)
+    if len(parts) < 2:
+        return
+    text = parts[1]
+    async with aiosqlite.connect(BASE_DIR / "users.db") as db:
+        cur = await db.execute("SELECT user_id FROM users")
+        ids = [r[0] for r in await cur.fetchall()]
+    for uid in ids:
+        try:
+            await bot.send_message(chat_id=uid, text=text)
+        except Exception:
+            pass
+
+@dp.channel_post(Command("send"))
+async def channel_send(post: types.Message):
+    if post.chat.id != ADMIN_CHAT_ID:
+        return
+    parts = post.text.split(' ', 2)
+    if len(parts) < 3:
+        return
+    try:
+        uid = int(parts[1])
+    except ValueError:
+        return
+    text = parts[2]
+    try:
+        await bot.send_message(chat_id=uid, text=text)
+    except Exception:
+        pass
+
+@dp.channel_post(Command("reset"))
+async def channel_reset(post: types.Message):
+    if post.chat.id != ADMIN_CHAT_ID:
+        return
+    parts = post.text.split(' ', 1)
+    if len(parts) < 2:
+        return
+    try:
+        uid = int(parts[1])
+    except ValueError:
+        return
+    async with aiosqlite.connect(BASE_DIR / "users.db") as db:
+        await db.execute("UPDATE users SET photo_count = 0 WHERE user_id = ?", (uid,))
+        await db.commit()
+
+# --------------------
+# Запуск бота
+# --------------------
+if __name__ == "__main__":
+    dp.run_polling(bot, skip_updates=True)

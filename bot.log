@@ -1,0 +1,1500 @@
+2025-04-26 19:43:19,935 - INFO - База данных инициализирована с полем gender
+2025-04-26 19:43:21,443 - INFO - Бот запущен, воркеры генератора изображений активированы
+2025-04-26 19:43:21,443 - INFO - Start polling
+2025-04-26 19:43:21,805 - INFO - Run polling for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-26 19:43:50,168 - INFO - Пользователь 386406595 начал взаимодействие с ботом
+2025-04-26 19:43:50,169 - INFO - Update id=222384577 is handled. Duration 1403 ms by bot id=7916603610
+2025-04-26 19:43:53,189 - INFO - Пользователь 386406595 подписан, перешел к вводу имени
+2025-04-26 19:43:53,190 - INFO - Update id=222384578 is handled. Duration 1138 ms by bot id=7916603610
+2025-04-26 19:43:57,103 - INFO - Обновлено имя пользователя 386406595: Владимир
+2025-04-26 19:43:57,858 - INFO - Пользователь 386406595 ввел имя: Владимир
+2025-04-26 19:43:57,858 - INFO - Update id=222384579 is handled. Duration 759 ms by bot id=7916603610
+2025-04-26 19:44:00,728 - WARNING - Пользователь 386406595 ввел неверную профессию: Хуила
+2025-04-26 19:44:00,728 - INFO - Update id=222384580 is handled. Duration 406 ms by bot id=7916603610
+2025-04-26 19:44:03,478 - INFO - Обновлена профессия пользователя 386406595: оператор производственной линии
+2025-04-26 19:44:04,350 - INFO - Пользователь 386406595 получил случайную профессию: оператор производственной линии
+2025-04-26 19:44:04,351 - INFO - Update id=222384581 is handled. Duration 886 ms by bot id=7916603610
+2025-04-26 19:44:13,757 - INFO - Update id=222384582 is not handled. Duration 4 ms by bot id=7916603610
+2025-04-26 19:44:13,757 - ERROR - Cause exception while process update id=222384582 by bot id=7916603610
+OperationalError: no such column: gender
+Traceback (most recent call last):
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 309, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 158, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\middlewares\error.py", line 25, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\middlewares\user_context.py", line 56, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\fsm\middleware.py", line 42, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 276, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 146, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 141, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        observer=observer, update_type=update_type, event=telegram_event, **data
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 166, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\user_bot.py", line 338, in choose_gender
+    await upsert_user(call.from_user.id, gender=gender)
+  File "C:\Users\В\Desktop\gpt-selenium-bot\user_bot.py", line 133, in upsert_user
+    await db.execute("UPDATE users SET gender = ? WHERE user_id = ?", (gender, uid))
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiosqlite\core.py", line 183, in execute
+    cursor = await self._execute(self._conn.execute, sql, parameters)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiosqlite\core.py", line 122, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiosqlite\core.py", line 105, in run
+    result = function()
+sqlite3.OperationalError: no such column: gender
+2025-04-26 20:57:12,275 - INFO - База данных инициализирована с полем gender
+2025-04-26 20:57:13,957 - INFO - Бот запущен, воркеры генератора изображений активированы
+2025-04-26 20:57:13,958 - INFO - Start polling
+2025-04-26 20:57:14,313 - INFO - Run polling for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-26 20:57:26,402 - INFO - Пользователь 386406595 начал взаимодействие с ботом
+2025-04-26 20:57:26,403 - INFO - Update id=222384583 is handled. Duration 1283 ms by bot id=7916603610
+2025-04-26 20:57:29,325 - INFO - Пользователь 386406595 подписан, перешел к вводу имени
+2025-04-26 20:57:29,325 - INFO - Update id=222384584 is handled. Duration 1021 ms by bot id=7916603610
+2025-04-26 20:57:32,692 - INFO - Обновлено имя пользователя 386406595: Владимир
+2025-04-26 20:57:33,312 - INFO - Пользователь 386406595 ввел имя: Владимир
+2025-04-26 20:57:33,312 - INFO - Update id=222384585 is handled. Duration 623 ms by bot id=7916603610
+2025-04-26 20:57:37,589 - WARNING - Пользователь 386406595 ввел неверную профессию: хуила
+2025-04-26 20:57:37,590 - INFO - Update id=222384586 is handled. Duration 606 ms by bot id=7916603610
+2025-04-26 20:57:39,614 - INFO - Обновлена профессия пользователя 386406595: начальник смены мастер участка
+2025-04-26 20:57:40,586 - INFO - Пользователь 386406595 получил случайную профессию: начальник смены мастер участка
+2025-04-26 20:57:40,587 - INFO - Update id=222384587 is handled. Duration 986 ms by bot id=7916603610
+2025-04-26 20:57:44,715 - INFO - Update id=222384588 is not handled. Duration 4 ms by bot id=7916603610
+2025-04-26 20:57:44,715 - ERROR - Cause exception while process update id=222384588 by bot id=7916603610
+OperationalError: no such column: gender
+Traceback (most recent call last):
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 309, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 158, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\middlewares\error.py", line 25, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\middlewares\user_context.py", line 56, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\fsm\middleware.py", line 42, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 276, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 146, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 141, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        observer=observer, update_type=update_type, event=telegram_event, **data
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 166, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\bot.py", line 224, in choose_gender
+    await upsert_user(call.from_user.id, gender=gender)
+  File "C:\Users\В\Desktop\gpt-selenium-bot\bot.py", line 100, in upsert_user
+    await db.execute("UPDATE users SET gender = ? WHERE user_id = ?", (gender, uid))
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiosqlite\core.py", line 183, in execute
+    cursor = await self._execute(self._conn.execute, sql, parameters)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiosqlite\core.py", line 122, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiosqlite\core.py", line 105, in run
+    result = function()
+sqlite3.OperationalError: no such column: gender
+2025-04-26 21:01:09,555 - INFO - Добавлен столбец gender в таблицу users
+2025-04-26 21:01:09,556 - INFO - База данных инициализирована
+2025-04-26 21:01:11,520 - INFO - Бот запущен, воркеры генератора изображений активированы
+2025-04-26 21:01:11,521 - INFO - Start polling
+2025-04-26 21:01:11,876 - INFO - Run polling for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-26 21:01:22,625 - INFO - Пользователь 386406595 начал взаимодействие с ботом
+2025-04-26 21:01:22,626 - INFO - Update id=222384589 is handled. Duration 1410 ms by bot id=7916603610
+2025-04-26 21:01:25,255 - INFO - Пользователь 386406595 подписан, перешел к вводу имени
+2025-04-26 21:01:25,256 - INFO - Update id=222384590 is handled. Duration 1215 ms by bot id=7916603610
+2025-04-26 21:01:28,703 - INFO - Обновлено имя пользователя 386406595: Владимир
+2025-04-26 21:01:29,290 - INFO - Пользователь 386406595 ввел имя: Владимир
+2025-04-26 21:01:29,291 - INFO - Update id=222384591 is handled. Duration 605 ms by bot id=7916603610
+2025-04-26 21:01:33,438 - WARNING - Пользователь 386406595 ввел неверную профессию: хуила
+2025-04-26 21:01:33,438 - INFO - Update id=222384592 is handled. Duration 601 ms by bot id=7916603610
+2025-04-26 21:01:35,794 - INFO - Обновлена профессия пользователя 386406595: инженер пнр
+2025-04-26 21:01:36,887 - INFO - Пользователь 386406595 получил случайную профессию: инженер пнр
+2025-04-26 21:01:36,888 - INFO - Update id=222384593 is handled. Duration 1107 ms by bot id=7916603610
+2025-04-26 21:01:39,077 - INFO - Обновлен пол пользователя 386406595: male
+2025-04-26 21:01:40,278 - INFO - Пользователь 386406595 выбрал пол: male
+2025-04-26 21:01:40,278 - INFO - Update id=222384594 is handled. Duration 1215 ms by bot id=7916603610
+2025-04-26 21:02:00,030 - WARNING - Пользователь 386406595 отправил не фото
+2025-04-26 21:02:00,030 - INFO - Update id=222384595 is handled. Duration 620 ms by bot id=7916603610
+2025-04-26 21:02:11,959 - WARNING - Пользователь 386406595 отправил не фото
+2025-04-26 21:02:11,960 - INFO - Update id=222384596 is handled. Duration 579 ms by bot id=7916603610
+2025-04-26 21:02:22,184 - INFO - Update id=222384597 is not handled. Duration 3 ms by bot id=7916603610
+2025-04-26 21:02:22,185 - ERROR - Cause exception while process update id=222384597 by bot id=7916603610
+TypeError: '>=' not supported between instances of 'str' and 'int'
+Traceback (most recent call last):
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 309, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 158, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\middlewares\error.py", line 25, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\middlewares\user_context.py", line 56, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\fsm\middleware.py", line 42, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 276, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 146, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 141, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        observer=observer, update_type=update_type, event=telegram_event, **data
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 166, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\bot.py", line 246, in process_photo
+    if user and user[4] >= 2:
+                ^^^^^^^^^^^^
+TypeError: '>=' not supported between instances of 'str' and 'int'
+2025-04-26 21:04:36,267 - INFO - База данных инициализирована
+2025-04-26 21:04:37,803 - INFO - Бот запущен, воркеры генератора изображений активированы
+2025-04-26 21:04:37,803 - INFO - Start polling
+2025-04-26 21:04:38,256 - INFO - Run polling for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-26 21:04:44,654 - INFO - Update id=222384598 is not handled. Duration 0 ms by bot id=7916603610
+2025-04-26 21:04:52,697 - INFO - Пользователь 386406595 начал взаимодействие с ботом
+2025-04-26 21:04:52,698 - INFO - Update id=222384599 is handled. Duration 1767 ms by bot id=7916603610
+2025-04-26 21:04:55,369 - INFO - Пользователь 386406595 подписан, перешел к вводу имени
+2025-04-26 21:04:55,369 - INFO - Update id=222384600 is handled. Duration 1041 ms by bot id=7916603610
+2025-04-26 21:04:58,041 - INFO - Обновлено имя пользователя 386406595: в
+2025-04-26 21:04:58,624 - INFO - Пользователь 386406595 ввел имя: в
+2025-04-26 21:04:58,625 - INFO - Update id=222384601 is handled. Duration 591 ms by bot id=7916603610
+2025-04-26 21:05:01,777 - WARNING - Пользователь 386406595 ввел неверную профессию: хуй
+2025-04-26 21:05:01,777 - INFO - Update id=222384602 is handled. Duration 610 ms by bot id=7916603610
+2025-04-26 21:05:05,371 - INFO - Обновлена профессия пользователя 386406595: генеральный директор исполнительный директор ceo
+2025-04-26 21:05:06,367 - INFO - Пользователь 386406595 получил случайную профессию: генеральный директор исполнительный директор ceo
+2025-04-26 21:05:06,367 - INFO - Update id=222384603 is handled. Duration 1011 ms by bot id=7916603610
+2025-04-26 21:05:08,625 - INFO - Обновлен пол пользователя 386406595: male
+2025-04-26 21:05:09,623 - INFO - Пользователь 386406595 выбрал пол: male
+2025-04-26 21:05:09,623 - INFO - Update id=222384604 is handled. Duration 1002 ms by bot id=7916603610
+2025-04-26 21:06:05,936 - INFO - Update id=222384605 is not handled. Duration 2 ms by bot id=7916603610
+2025-04-26 21:06:05,936 - ERROR - Cause exception while process update id=222384605 by bot id=7916603610
+ValueError: invalid literal for int() with base 10: 'male'
+Traceback (most recent call last):
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 309, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 158, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\middlewares\error.py", line 25, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\middlewares\user_context.py", line 56, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\fsm\middleware.py", line 42, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 276, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 146, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 141, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        observer=observer, update_type=update_type, event=telegram_event, **data
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 166, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\bot.py", line 277, in process_photo
+    photo_count = int(user[4]) if user[4] is not None else 0
+                  ~~~^^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'male'
+2025-04-26 21:09:32,828 - INFO - База данных инициализирована
+2025-04-26 21:09:34,391 - INFO - Бот запущен, воркеры генератора изображений активированы
+2025-04-26 21:09:34,391 - INFO - Start polling
+2025-04-26 21:09:34,796 - INFO - Run polling for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-26 21:09:40,928 - INFO - Update id=222384606 is not handled. Duration 0 ms by bot id=7916603610
+2025-04-26 21:09:47,318 - INFO - Пользователь 386406595 начал взаимодействие с ботом
+2025-04-26 21:09:47,319 - INFO - Update id=222384607 is handled. Duration 1446 ms by bot id=7916603610
+2025-04-26 21:09:49,416 - INFO - Пользователь 386406595 подписан, перешел к вводу имени
+2025-04-26 21:09:49,417 - INFO - Update id=222384608 is handled. Duration 816 ms by bot id=7916603610
+2025-04-26 21:09:55,442 - INFO - Добавлен новый пользователь 386406595: name=Владимир, profession=None, gender=None
+2025-04-26 21:09:56,024 - INFO - Пользователь 386406595 ввел имя: Владимир
+2025-04-26 21:09:56,024 - INFO - Update id=222384609 is handled. Duration 596 ms by bot id=7916603610
+2025-04-26 21:10:04,471 - INFO - Обновлена профессия пользователя 386406595: врач
+2025-04-26 21:10:05,065 - INFO - Пользователь 386406595 выбрал профессию: врач
+2025-04-26 21:10:05,065 - INFO - Update id=222384610 is handled. Duration 609 ms by bot id=7916603610
+2025-04-26 21:10:07,099 - INFO - Обновлен пол пользователя 386406595: male
+2025-04-26 21:10:08,187 - INFO - Пользователь 386406595 выбрал пол: male
+2025-04-26 21:10:08,188 - INFO - Update id=222384611 is handled. Duration 1104 ms by bot id=7916603610
+2025-04-26 21:10:16,379 - INFO - Увеличен счетчик фото для пользователя 386406595
+2025-04-26 21:10:16,971 - INFO - Пользователь 386406595 отправил фото, обработка начата
+2025-04-26 21:10:18,051 - INFO - Добавлена задача для user_id=386406595: profession=врач, gender=male
+2025-04-26 21:10:18,062 - ERROR - Ошибка в worker: 'Lock' object does not support the context manager protocol
+2025-04-26 21:11:18,882 - ERROR - Ошибка отправки видео-заглушки пользователю 386406595: HTTP Client says - Request timeout error
+2025-04-26 21:11:18,882 - INFO - Update id=222384612 is handled. Duration 62518 ms by bot id=7916603610
+2025-04-26 21:11:49,665 - INFO - База данных инициализирована
+2025-04-26 21:11:51,012 - INFO - Бот запущен, воркеры генератора изображений активированы
+2025-04-26 21:11:51,013 - INFO - Start polling
+2025-04-26 21:11:51,503 - INFO - Run polling for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-26 21:11:56,100 - INFO - Пользователь 386406595 начал взаимодействие с ботом
+2025-04-26 21:11:56,101 - INFO - Update id=222384613 is handled. Duration 1363 ms by bot id=7916603610
+2025-04-26 21:11:58,729 - INFO - Пользователь 386406595 подписан, перешел к вводу имени
+2025-04-26 21:11:58,729 - INFO - Update id=222384614 is handled. Duration 1064 ms by bot id=7916603610
+2025-04-26 21:12:01,214 - INFO - Обновлено имя пользователя 386406595: в
+2025-04-26 21:12:01,666 - INFO - Пользователь 386406595 ввел имя: в
+2025-04-26 21:12:01,666 - INFO - Update id=222384615 is handled. Duration 465 ms by bot id=7916603610
+2025-04-26 21:12:04,888 - INFO - Обновлена профессия пользователя 386406595: врач
+2025-04-26 21:12:05,465 - INFO - Пользователь 386406595 выбрал профессию: врач
+2025-04-26 21:12:05,467 - INFO - Update id=222384616 is handled. Duration 585 ms by bot id=7916603610
+2025-04-26 21:12:07,440 - INFO - Обновлен пол пользователя 386406595: male
+2025-04-26 21:12:08,652 - INFO - Пользователь 386406595 выбрал пол: male
+2025-04-26 21:12:08,653 - INFO - Update id=222384617 is handled. Duration 1215 ms by bot id=7916603610
+2025-04-26 21:12:15,426 - INFO - Увеличен счетчик фото для пользователя 386406595
+2025-04-26 21:12:16,437 - INFO - Пользователь 386406595 отправил фото, обработка начата
+2025-04-26 21:12:17,290 - INFO - Добавлена задача для user_id=386406595: profession=врач, gender=male
+2025-04-26 21:12:20,047 - INFO - HTTP Request: POST https://api.openai.com/v1/images/edits "HTTP/1.1 400 Bad Request"
+2025-04-26 21:12:20,058 - ERROR - Ошибка генерации для user_id=386406595: Error code: 400 - {'error': {'message': "Unknown parameter: 'response_format'.", 'type': 'invalid_request_error', 'param': 'response_format', 'code': 'unknown_parameter'}}
+2025-04-26 21:12:20,456 - WARNING - Не удалось отправить результат пользователю 386406595
+2025-04-26 21:13:17,880 - ERROR - Ошибка отправки видео-заглушки пользователю 386406595: HTTP Client says - Request timeout error
+2025-04-26 21:13:18,328 - INFO - Update id=222384618 is handled. Duration 62907 ms by bot id=7916603610
+2025-04-26 21:21:40,999 - INFO - База данных инициализирована
+2025-04-26 21:21:42,487 - INFO - Бот запущен, воркеры генератора изображений активированы
+2025-04-26 21:21:42,487 - INFO - Start polling
+2025-04-26 21:21:42,958 - INFO - Run polling for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-26 21:21:53,205 - INFO - Пользователь 386406595 начал взаимодействие с ботом
+2025-04-26 21:21:53,206 - INFO - Update id=222384619 is handled. Duration 1751 ms by bot id=7916603610
+2025-04-26 21:21:56,060 - INFO - Пользователь 386406595 подписан, перешел к вводу имени
+2025-04-26 21:21:56,061 - INFO - Update id=222384620 is handled. Duration 1041 ms by bot id=7916603610
+2025-04-26 21:21:59,319 - INFO - Обновлено имя пользователя 386406595: в
+2025-04-26 21:21:59,919 - INFO - Пользователь 386406595 ввел имя: в
+2025-04-26 21:21:59,919 - INFO - Update id=222384621 is handled. Duration 607 ms by bot id=7916603610
+2025-04-26 21:22:02,214 - INFO - Обновлена профессия пользователя 386406595: врач
+2025-04-26 21:22:02,799 - INFO - Пользователь 386406595 выбрал профессию: врач
+2025-04-26 21:22:02,800 - INFO - Update id=222384622 is handled. Duration 592 ms by bot id=7916603610
+2025-04-26 21:22:05,169 - INFO - Обновлен пол пользователя 386406595: male
+2025-04-26 21:22:06,381 - INFO - Пользователь 386406595 выбрал пол: male
+2025-04-26 21:22:06,382 - INFO - Update id=222384623 is handled. Duration 1215 ms by bot id=7916603610
+2025-04-26 21:22:12,807 - INFO - Пользователь 386406595 достиг лимита фото
+2025-04-26 21:22:12,808 - INFO - Update id=222384624 is handled. Duration 446 ms by bot id=7916603610
+2025-04-26 21:22:35,699 - INFO - Пользователь 386406595 начал взаимодействие с ботом
+2025-04-26 21:22:35,699 - INFO - Update id=222384625 is handled. Duration 448 ms by bot id=7916603610
+2025-04-26 21:22:38,320 - INFO - Пользователь 386406595 подписан, перешел к вводу имени
+2025-04-26 21:22:38,320 - INFO - Update id=222384626 is handled. Duration 1178 ms by bot id=7916603610
+2025-04-26 21:22:43,067 - INFO - Обновлено имя пользователя 386406595: в
+2025-04-26 21:22:43,534 - INFO - Пользователь 386406595 ввел имя: в
+2025-04-26 21:22:43,534 - INFO - Update id=222384627 is handled. Duration 470 ms by bot id=7916603610
+2025-04-26 21:22:45,806 - INFO - Обновлена профессия пользователя 386406595: врач
+2025-04-26 21:22:46,412 - INFO - Пользователь 386406595 выбрал профессию: врач
+2025-04-26 21:22:46,412 - INFO - Update id=222384628 is handled. Duration 612 ms by bot id=7916603610
+2025-04-26 21:22:48,439 - INFO - Обновлен пол пользователя 386406595: male
+2025-04-26 21:22:49,684 - INFO - Пользователь 386406595 выбрал пол: male
+2025-04-26 21:22:49,684 - INFO - Update id=222384629 is handled. Duration 1248 ms by bot id=7916603610
+2025-04-26 21:22:57,300 - INFO - Пользователь 386406595 достиг лимита фото
+2025-04-26 21:22:57,300 - INFO - Update id=222384630 is handled. Duration 481 ms by bot id=7916603610
+2025-04-26 21:29:54,777 - INFO - База данных инициализирована
+2025-04-26 21:29:57,282 - INFO - Бот запущен, воркеры генератора изображений активированы
+2025-04-26 21:29:57,282 - INFO - Start polling
+2025-04-26 21:29:57,731 - INFO - Run polling for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-26 21:30:01,699 - INFO - Счетчик фото сброшен для пользователя 386406595 из канала.
+2025-04-26 21:30:01,699 - INFO - Update id=222384631 is handled. Duration 20 ms by bot id=7916603610
+2025-04-26 21:30:58,020 - INFO - Сообщение отправлено пользователю 386406595 из канала.
+2025-04-26 21:30:58,021 - INFO - Update id=222384632 is handled. Duration 1403 ms by bot id=7916603610
+2025-04-26 21:31:10,098 - INFO - Пользователь 386406595 начал взаимодействие с ботом
+2025-04-26 21:31:10,098 - INFO - Update id=222384633 is handled. Duration 453 ms by bot id=7916603610
+2025-04-26 21:31:12,854 - INFO - Пользователь 386406595 подписан, перешел к вводу имени
+2025-04-26 21:31:12,855 - INFO - Update id=222384634 is handled. Duration 1069 ms by bot id=7916603610
+2025-04-26 21:31:13,808 - INFO - Обновлено имя пользователя 386406595: в
+2025-04-26 21:31:14,412 - INFO - Пользователь 386406595 ввел имя: в
+2025-04-26 21:31:14,412 - INFO - Update id=222384635 is handled. Duration 608 ms by bot id=7916603610
+2025-04-26 21:31:20,587 - INFO - Обновлена профессия пользователя 386406595: врач
+2025-04-26 21:31:21,173 - INFO - Пользователь 386406595 выбрал профессию: врач
+2025-04-26 21:31:21,174 - INFO - Update id=222384636 is handled. Duration 590 ms by bot id=7916603610
+2025-04-26 21:31:23,359 - INFO - Обновлен пол пользователя 386406595: male
+2025-04-26 21:31:24,565 - INFO - Пользователь 386406595 выбрал пол: male
+2025-04-26 21:31:24,565 - INFO - Update id=222384637 is handled. Duration 1209 ms by bot id=7916603610
+2025-04-26 21:31:33,027 - INFO - Увеличен счетчик фото для пользователя 386406595
+2025-04-26 21:31:34,055 - INFO - Пользователь 386406595 отправил фото, обработка начата
+2025-04-26 21:31:35,031 - INFO - Добавлена задача для user_id=386406595: profession=врач, gender=male
+2025-04-26 21:31:37,087 - INFO - HTTP Request: POST https://api.openai.com/v1/images/edits "HTTP/1.1 400 Bad Request"
+2025-04-26 21:31:37,088 - ERROR - Ошибка генерации для user_id=386406595: Error code: 400 - {'error': {'message': "Unknown parameter: 'response_format'.", 'type': 'invalid_request_error', 'param': 'response_format', 'code': 'unknown_parameter'}}
+2025-04-26 21:31:38,935 - WARNING - Не удалось отправить результат пользователю 386406595
+2025-04-26 21:32:35,873 - ERROR - Ошибка отправки видео-заглушки пользователю 386406595: HTTP Client says - Request timeout error
+2025-04-26 21:32:36,062 - INFO - Update id=222384638 is handled. Duration 63049 ms by bot id=7916603610
+2025-04-26 21:43:51,123 - INFO - База данных инициализирована
+2025-04-26 21:43:52,808 - INFO - Бот запущен, воркеры генератора изображений активированы
+2025-04-26 21:43:52,808 - INFO - Start polling
+2025-04-26 21:43:53,288 - INFO - Run polling for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-26 21:43:59,675 - INFO - Пользователь 386406595 начал взаимодействие с ботом
+2025-04-26 21:43:59,675 - INFO - Update id=222384639 is handled. Duration 1281 ms by bot id=7916603610
+2025-04-26 21:45:02,791 - INFO - Пользователь 386406595 подписан, перешел к вводу имени
+2025-04-26 21:45:02,792 - INFO - Update id=222384640 is handled. Duration 1108 ms by bot id=7916603610
+2025-04-26 21:45:05,843 - INFO - Обновлено имя пользователя 386406595: в
+2025-04-26 21:45:06,447 - INFO - Пользователь 386406595 ввел имя: в
+2025-04-26 21:45:06,448 - INFO - Update id=222384641 is handled. Duration 608 ms by bot id=7916603610
+2025-04-26 21:45:08,531 - INFO - Обновлена профессия пользователя 386406595: врач
+2025-04-26 21:45:09,124 - INFO - Пользователь 386406595 выбрал профессию: врач
+2025-04-26 21:45:09,125 - INFO - Update id=222384642 is handled. Duration 600 ms by bot id=7916603610
+2025-04-26 21:45:14,631 - INFO - Обновлен пол пользователя 386406595: male
+2025-04-26 21:45:15,712 - INFO - Пользователь 386406595 выбрал пол: male
+2025-04-26 21:45:15,713 - INFO - Update id=222384643 is handled. Duration 1086 ms by bot id=7916603610
+2025-04-26 21:45:22,764 - INFO - Увеличен счетчик фото для пользователя 386406595
+2025-04-26 21:45:23,356 - INFO - Пользователь 386406595 отправил фото, обработка начата
+2025-04-26 21:45:24,528 - INFO - Добавлена задача для user_id=386406595: profession=врач, gender=male
+2025-04-26 21:45:26,422 - INFO - HTTP Request: POST https://api.openai.com/v1/images/edits "HTTP/1.1 400 Bad Request"
+2025-04-26 21:45:26,423 - ERROR - Ошибка генерации для user_id=386406595: Error code: 400 - {'error': {'message': "Unknown parameter: 'response_format'.", 'type': 'invalid_request_error', 'param': 'response_format', 'code': 'unknown_parameter'}}
+2025-04-26 21:45:26,941 - WARNING - Не удалось отправить результат пользователю 386406595
+2025-04-26 21:46:15,116 - INFO - Видео-заглушка отправлена пользователю 386406595
+2025-04-26 21:46:15,408 - INFO - Update id=222384644 is handled. Duration 52657 ms by bot id=7916603610
+2025-04-26 21:59:30,245 - INFO - База данных инициализирована
+2025-04-26 21:59:32,191 - INFO - Бот запущен, воркеры генератора изображений активированы
+2025-04-26 21:59:32,191 - INFO - Start polling
+2025-04-26 21:59:32,815 - INFO - Run polling for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-26 21:59:36,874 - INFO - Пользователь 386406595 начал взаимодействие с ботом
+2025-04-26 21:59:36,874 - INFO - Update id=222384645 is handled. Duration 1346 ms by bot id=7916603610
+2025-04-26 21:59:39,684 - INFO - Пользователь 386406595 подписан, перешел к вводу имени
+2025-04-26 21:59:39,684 - INFO - Update id=222384646 is handled. Duration 999 ms by bot id=7916603610
+2025-04-26 21:59:41,663 - INFO - Обновлено имя пользователя 386406595: В
+2025-04-26 21:59:42,284 - INFO - Пользователь 386406595 ввел имя: В
+2025-04-26 21:59:42,285 - INFO - Update id=222384647 is handled. Duration 625 ms by bot id=7916603610
+2025-04-26 21:59:44,437 - INFO - Обновлена профессия пользователя 386406595: врач
+2025-04-26 21:59:45,051 - INFO - Пользователь 386406595 выбрал профессию: врач
+2025-04-26 21:59:45,051 - INFO - Update id=222384648 is handled. Duration 620 ms by bot id=7916603610
+2025-04-26 21:59:47,368 - INFO - Обновлен пол пользователя 386406595: male
+2025-04-26 21:59:48,289 - INFO - Пользователь 386406595 выбрал пол: male
+2025-04-26 21:59:48,290 - INFO - Update id=222384649 is handled. Duration 924 ms by bot id=7916603610
+2025-04-26 21:59:55,020 - INFO - Пользователь 386406595 достиг лимита фото
+2025-04-26 21:59:55,020 - INFO - Update id=222384650 is handled. Duration 626 ms by bot id=7916603610
+2025-04-26 22:00:02,385 - INFO - Счетчик фото сброшен для пользователя 386406595 из канала.
+2025-04-26 22:00:02,385 - INFO - Update id=222384651 is handled. Duration 18 ms by bot id=7916603610
+2025-04-26 22:00:09,333 - INFO - Пользователь 386406595 начал взаимодействие с ботом
+2025-04-26 22:00:09,333 - INFO - Update id=222384652 is handled. Duration 624 ms by bot id=7916603610
+2025-04-26 22:00:11,772 - INFO - Пользователь 386406595 подписан, перешел к вводу имени
+2025-04-26 22:00:11,773 - INFO - Update id=222384653 is handled. Duration 969 ms by bot id=7916603610
+2025-04-26 22:00:15,735 - INFO - Обновлено имя пользователя 386406595: В
+2025-04-26 22:00:16,154 - INFO - Пользователь 386406595 ввел имя: В
+2025-04-26 22:00:16,154 - INFO - Update id=222384654 is handled. Duration 428 ms by bot id=7916603610
+2025-04-26 22:00:17,559 - INFO - Обновлена профессия пользователя 386406595: врач
+2025-04-26 22:00:18,162 - INFO - Пользователь 386406595 выбрал профессию: врач
+2025-04-26 22:00:18,162 - INFO - Update id=222384655 is handled. Duration 608 ms by bot id=7916603610
+2025-04-26 22:00:20,102 - INFO - Обновлен пол пользователя 386406595: male
+2025-04-26 22:00:21,358 - INFO - Пользователь 386406595 выбрал пол: male
+2025-04-26 22:00:21,360 - INFO - Update id=222384656 is handled. Duration 1259 ms by bot id=7916603610
+2025-04-26 22:00:25,631 - INFO - Увеличен счетчик фото для пользователя 386406595
+2025-04-26 22:00:26,244 - INFO - Пользователь 386406595 отправил фото, обработка начата
+2025-04-26 22:00:27,292 - INFO - Добавлена задача для user_id=386406595: profession=врач, gender=male
+2025-04-26 22:00:27,662 - ERROR - Ошибка генерации для user_id=386406595: AsyncImages.edit() got an unexpected keyword argument 'output_format'
+2025-04-26 22:00:30,067 - WARNING - Не удалось отправить результат пользователю 386406595
+2025-04-26 22:01:27,877 - ERROR - Ошибка отправки видео-заглушки пользователю 386406595: HTTP Client says - Request timeout error
+2025-04-26 22:01:28,305 - INFO - Update id=222384657 is handled. Duration 62686 ms by bot id=7916603610
+2025-04-26 22:08:42,055 - INFO - Update id=222384658 is not handled. Duration 0 ms by bot id=7916603610
+2025-04-26 22:08:47,017 - INFO - Update id=222384659 is not handled. Duration 0 ms by bot id=7916603610
+2025-04-26 22:08:50,581 - INFO - Пользователь 386406595 начал взаимодействие с ботом
+2025-04-26 22:08:50,582 - INFO - Update id=222384660 is handled. Duration 648 ms by bot id=7916603610
+2025-04-26 22:08:53,056 - INFO - Пользователь 386406595 подписан, перешел к вводу имени
+2025-04-26 22:08:53,057 - INFO - Update id=222384661 is handled. Duration 1036 ms by bot id=7916603610
+2025-04-26 22:08:55,251 - INFO - Обновлено имя пользователя 386406595: d
+2025-04-26 22:08:55,870 - INFO - Пользователь 386406595 ввел имя: d
+2025-04-26 22:08:55,871 - INFO - Update id=222384662 is handled. Duration 633 ms by bot id=7916603610
+2025-04-26 22:08:58,311 - INFO - Обновлена профессия пользователя 386406595: врач
+2025-04-26 22:08:58,930 - INFO - Пользователь 386406595 выбрал профессию: врач
+2025-04-26 22:08:58,932 - INFO - Update id=222384663 is handled. Duration 627 ms by bot id=7916603610
+2025-04-26 22:09:01,877 - INFO - Обновлен пол пользователя 386406595: male
+2025-04-26 22:09:02,987 - INFO - Пользователь 386406595 выбрал пол: male
+2025-04-26 22:09:02,988 - INFO - Update id=222384664 is handled. Duration 1113 ms by bot id=7916603610
+2025-04-26 22:09:09,147 - INFO - Увеличен счетчик фото для пользователя 386406595
+2025-04-26 22:09:09,903 - INFO - Пользователь 386406595 отправил фото, обработка начата
+2025-04-26 22:09:11,129 - INFO - Добавлена задача для user_id=386406595: profession=врач, gender=male
+2025-04-26 22:09:11,352 - ERROR - Ошибка генерации для user_id=386406595: AsyncImages.edit() got an unexpected keyword argument 'output_format'
+2025-04-26 22:09:12,749 - WARNING - Не удалось отправить результат пользователю 386406595
+2025-04-26 22:10:11,887 - ERROR - Ошибка отправки видео-заглушки пользователю 386406595: HTTP Client says - Request timeout error
+2025-04-26 22:10:11,909 - INFO - Update id=222384665 is handled. Duration 62775 ms by bot id=7916603610
+2025-04-26 22:13:42,215 - INFO - База данных инициализирована
+2025-04-26 22:13:43,820 - INFO - Бот запущен, воркеры генератора изображений активированы
+2025-04-26 22:13:43,820 - INFO - Start polling
+2025-04-26 22:13:44,247 - INFO - Run polling for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-26 22:13:47,827 - INFO - Пользователь 386406595 начал взаимодействие с ботом
+2025-04-26 22:13:47,828 - INFO - Update id=222384666 is handled. Duration 1261 ms by bot id=7916603610
+2025-04-26 22:13:50,472 - INFO - Пользователь 386406595 подписан, перешел к вводу имени
+2025-04-26 22:13:50,472 - INFO - Update id=222384667 is handled. Duration 1357 ms by bot id=7916603610
+2025-04-26 22:13:52,456 - INFO - Обновлено имя пользователя 386406595: в
+2025-04-26 22:13:52,931 - INFO - Пользователь 386406595 ввел имя: в
+2025-04-26 22:13:52,932 - INFO - Update id=222384668 is handled. Duration 482 ms by bot id=7916603610
+2025-04-26 22:13:56,016 - INFO - Обновлена профессия пользователя 386406595: врач
+2025-04-26 22:13:56,622 - INFO - Пользователь 386406595 выбрал профессию: врач
+2025-04-26 22:13:56,622 - INFO - Update id=222384669 is handled. Duration 612 ms by bot id=7916603610
+2025-04-26 22:13:58,593 - INFO - Обновлен пол пользователя 386406595: male
+2025-04-26 22:14:42,750 - INFO - Update id=222384670 is not handled. Duration 44159 ms by bot id=7916603610
+2025-04-26 22:14:42,754 - ERROR - Cause exception while process update id=222384670 by bot id=7916603610
+TelegramNetworkError: HTTP Client says - ClientOSError: [WinError 1236] Подключение к сети было разорвано локальной системой
+Traceback (most recent call last):
+  File "C:\Users\В\AppData\Local\Programs\Python\Python313\Lib\asyncio\proactor_events.py", line 286, in _loop_reading
+    length = fut.result()
+  File "C:\Users\В\AppData\Local\Programs\Python\Python313\Lib\asyncio\windows_events.py", line 804, in _poll
+    value = callback(transferred, key, ov)
+  File "C:\Users\В\AppData\Local\Programs\Python\Python313\Lib\asyncio\windows_events.py", line 463, in finish_socket_func
+    return ov.getresult()
+           ~~~~~~~~~~~~^^
+ConnectionAbortedError: [WinError 1236] Подключение к сети было разорвано локальной системой
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\client\session\aiohttp.py", line 177, in make_request
+    async with session.post(
+               ~~~~~~~~~~~~^
+        url, data=form, timeout=self.timeout if timeout is None else timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ) as resp:
+    ^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiohttp\client.py", line 1425, in __aenter__
+    self._resp: _RetType = await self._coro
+                           ^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiohttp\client.py", line 730, in _request
+    await resp.start(conn)
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiohttp\client_reqrep.py", line 1059, in start
+    message, payload = await protocol.read()  # type: ignore[union-attr]
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiohttp\streams.py", line 672, in read
+    await self._waiter
+aiohttp.client_exceptions.ClientOSError: [WinError 1236] Подключение к сети было разорвано локальной системой
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 309, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 158, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\middlewares\error.py", line 25, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\middlewares\user_context.py", line 56, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\fsm\middleware.py", line 42, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 276, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 146, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 141, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        observer=observer, update_type=update_type, event=telegram_event, **data
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 166, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\bot.py", line 303, in choose_gender
+    await call.message.answer("Чтобы получить фигурку, пришлите свое фото в чат")
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\methods\base.py", line 84, in emit
+    return await bot(self)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\client\bot.py", line 478, in __call__
+    return await self.session(self, method, timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\client\session\base.py", line 254, in __call__
+    return cast(TelegramType, await middleware(bot, method))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\В\Desktop\gpt-selenium-bot\.venv\Lib\site-packages\aiogram\client\session\aiohttp.py", line 184, in make_request
+    raise TelegramNetworkError(method=method, message=f"{type(e).__name__}: {e}")
+aiogram.exceptions.TelegramNetworkError: HTTP Client says - ClientOSError: [WinError 1236] Подключение к сети было разорвано локальной системой
+2025-04-26 22:14:42,849 - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientOSError: [WinError 1236] Подключение к сети было разорвано локальной системой
+2025-04-26 22:14:42,850 - WARNING - Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7916603610)
+2025-04-26 22:14:44,472 - INFO - Connection established (tryings = 1, bot id = 7916603610)
+2025-04-26 22:14:44,473 - INFO - Update id=222384671 is not handled. Duration 0 ms by bot id=7916603610
+2025-04-26 22:15:11,853 - INFO - База данных инициализирована
+2025-04-26 22:15:13,028 - INFO - Бот запущен, воркеры генератора изображений активированы
+2025-04-26 22:15:13,028 - INFO - Start polling
+2025-04-26 22:15:13,291 - INFO - Run polling for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-26 22:15:18,485 - INFO - Пользователь 386406595 начал взаимодействие с ботом
+2025-04-26 22:15:18,485 - INFO - Update id=222384672 is handled. Duration 1119 ms by bot id=7916603610
+2025-04-26 22:15:20,289 - INFO - Пользователь 386406595 подписан, перешел к вводу имени
+2025-04-26 22:15:20,290 - INFO - Update id=222384673 is handled. Duration 537 ms by bot id=7916603610
+2025-04-26 22:15:22,929 - INFO - Обновлено имя пользователя 386406595: в
+2025-04-26 22:15:23,252 - INFO - Пользователь 386406595 ввел имя: в
+2025-04-26 22:15:23,253 - INFO - Update id=222384674 is handled. Duration 326 ms by bot id=7916603610
+2025-04-26 22:15:26,041 - INFO - Обновлена профессия пользователя 386406595: врач
+2025-04-26 22:15:26,340 - INFO - Пользователь 386406595 выбрал профессию: врач
+2025-04-26 22:15:26,341 - INFO - Update id=222384675 is handled. Duration 302 ms by bot id=7916603610
+2025-04-26 22:15:29,570 - INFO - Обновлен пол пользователя 386406595: male
+2025-04-26 22:15:30,356 - INFO - Пользователь 386406595 выбрал пол: male
+2025-04-26 22:15:30,356 - INFO - Update id=222384676 is handled. Duration 788 ms by bot id=7916603610
+2025-04-26 22:15:34,227 - INFO - Пользователь 386406595 достиг лимита фото
+2025-04-26 22:15:34,228 - INFO - Update id=222384677 is handled. Duration 384 ms by bot id=7916603610
+2025-04-26 22:15:38,136 - INFO - Счетчик фото сброшен для пользователя 386406595 из канала.
+2025-04-26 22:15:38,136 - INFO - Update id=222384678 is handled. Duration 18 ms by bot id=7916603610
+2025-04-26 22:15:44,261 - INFO - Пользователь 386406595 начал взаимодействие с ботом
+2025-04-26 22:15:44,261 - INFO - Update id=222384679 is handled. Duration 388 ms by bot id=7916603610
+2025-04-26 22:15:45,919 - INFO - Пользователь 386406595 подписан, перешел к вводу имени
+2025-04-26 22:15:45,919 - INFO - Update id=222384680 is handled. Duration 744 ms by bot id=7916603610
+2025-04-26 22:15:48,177 - INFO - Обновлено имя пользователя 386406595: в
+2025-04-26 22:15:48,655 - INFO - Пользователь 386406595 ввел имя: в
+2025-04-26 22:15:48,655 - INFO - Update id=222384681 is handled. Duration 480 ms by bot id=7916603610
+2025-04-26 22:15:52,121 - INFO - Обновлена профессия пользователя 386406595: врач
+2025-04-26 22:15:52,457 - INFO - Пользователь 386406595 выбрал профессию: врач
+2025-04-26 22:15:52,458 - INFO - Update id=222384682 is handled. Duration 340 ms by bot id=7916603610
+2025-04-26 22:15:53,389 - INFO - Обновлен пол пользователя 386406595: male
+2025-04-26 22:15:54,217 - INFO - Пользователь 386406595 выбрал пол: male
+2025-04-26 22:15:54,217 - INFO - Update id=222384683 is handled. Duration 831 ms by bot id=7916603610
+2025-04-26 22:15:59,559 - INFO - Увеличен счетчик фото для пользователя 386406595
+2025-04-26 22:15:59,811 - INFO - Пользователь 386406595 отправил фото, обработка начата
+2025-04-26 22:16:00,345 - INFO - Добавлена задача для user_id=386406595: profession=врач, gender=male
+2025-04-26 22:16:42,031 - INFO - HTTP Request: POST https://api.openai.com/v1/images/edits "HTTP/1.1 200 OK"
+2025-04-26 22:16:43,194 - INFO - Изображение сохранено: C:\Users\В\Desktop\gpt-selenium-bot\output_images\result_386406595_120903.png
+2025-04-26 22:16:43,804 - INFO - Видео-заглушка отправлена пользователю 386406595
+2025-04-26 22:16:43,804 - INFO - Update id=222384684 is handled. Duration 44258 ms by bot id=7916603610
+2025-04-26 22:16:54,467 - INFO - Результат отправлен пользователю 386406595, файл C:\Users\В\Desktop\gpt-selenium-bot\output_images\result_386406595_120903.png удален
+2025-04-26 22:23:42,758 - INFO - Пользователь 386406595 запросил помощь
+2025-04-26 22:23:42,758 - INFO - Update id=222384685 is handled. Duration 1239 ms by bot id=7916603610
+2025-04-27 13:48:52,827 - INFO - База данных инициализирована
+2025-04-27 13:48:54,138 - INFO - Бот запущен, воркеры генератора изображений активированы
+2025-04-27 13:48:54,138 - INFO - Start polling
+2025-04-27 13:48:54,615 - INFO - Run polling for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-27 13:49:44,811 - INFO - Пользователь 434092620 начал взаимодействие с ботом
+2025-04-27 13:49:44,811 - INFO - Update id=222384687 is handled. Duration 1301 ms by bot id=7916603610
+2025-04-27 13:49:51,094 - INFO - Пользователь 434092620 подписан, перешел к вводу имени
+2025-04-27 13:49:51,095 - INFO - Update id=222384688 is handled. Duration 925 ms by bot id=7916603610
+2025-04-27 13:49:56,793 - INFO - Добавлен новый пользователь 434092620: name=Никита, profession=None, gender=None
+2025-04-27 13:49:57,244 - INFO - Пользователь 434092620 ввел имя: Никита
+2025-04-27 13:49:57,245 - INFO - Update id=222384689 is handled. Duration 461 ms by bot id=7916603610
+2025-04-27 13:50:00,468 - WARNING - Пользователь 434092620 ввел неверную профессию: Креатор
+2025-04-27 13:50:00,468 - INFO - Update id=222384690 is handled. Duration 442 ms by bot id=7916603610
+2025-04-27 13:50:01,940 - INFO - Обновлена профессия пользователя 434092620: eventменеджер
+2025-04-27 13:50:02,860 - INFO - Пользователь 434092620 получил случайную профессию: eventменеджер
+2025-04-27 13:50:02,861 - INFO - Update id=222384691 is handled. Duration 928 ms by bot id=7916603610
+2025-04-27 13:50:05,172 - INFO - Обновлен пол пользователя 434092620: male
+2025-04-27 13:50:06,096 - INFO - Пользователь 434092620 выбрал пол: male
+2025-04-27 13:50:06,096 - INFO - Update id=222384692 is handled. Duration 930 ms by bot id=7916603610
+2025-04-27 13:50:32,332 - INFO - Увеличен счетчик фото для пользователя 434092620
+2025-04-27 13:50:32,787 - INFO - Пользователь 434092620 отправил фото, обработка начата
+2025-04-27 13:50:34,404 - INFO - Добавлена задача для user_id=434092620: profession=eventменеджер, gender=male
+2025-04-27 13:51:22,292 - INFO - HTTP Request: POST https://api.openai.com/v1/images/edits "HTTP/1.1 200 OK"
+2025-04-27 13:51:23,593 - INFO - Изображение сохранено: C:\Users\В\Desktop\gpt-selenium-bot\output_images\result_434092620_53438.png
+2025-04-27 13:51:32,450 - INFO - Видео-заглушка отправлена пользователю 434092620
+2025-04-27 13:51:32,450 - INFO - Update id=222384693 is handled. Duration 60127 ms by bot id=7916603610
+2025-04-27 13:51:45,884 - INFO - Результат отправлен пользователю 434092620, файл C:\Users\В\Desktop\gpt-selenium-bot\output_images\result_434092620_53438.png удален
+2025-04-27 13:51:58,501 - INFO - Пользователь 434092620 запросил помощь
+2025-04-27 13:51:58,501 - INFO - Update id=222384694 is handled. Duration 1300 ms by bot id=7916603610
+2025-04-27 13:52:04,701 - INFO - Пользователь 434092620 запросил другую фигурку
+2025-04-27 13:52:04,702 - INFO - Update id=222384695 is handled. Duration 922 ms by bot id=7916603610
+2025-04-27 13:52:07,671 - INFO - Увеличен счетчик фото для пользователя 434092620
+2025-04-27 13:52:08,125 - INFO - Пользователь 434092620 отправил фото, обработка начата
+2025-04-27 13:52:09,462 - INFO - Добавлена задача для user_id=434092620: profession=eventменеджер, gender=male
+2025-04-27 13:52:57,041 - INFO - HTTP Request: POST https://api.openai.com/v1/images/edits "HTTP/1.1 200 OK"
+2025-04-27 13:52:57,937 - INFO - Изображение сохранено: C:\Users\В\Desktop\gpt-selenium-bot\output_images\result_434092620_53532.png
+2025-04-27 13:53:10,310 - ERROR - Ошибка отправки видео-заглушки пользователю 434092620: HTTP Client says - Request timeout error
+2025-04-27 13:53:10,310 - INFO - Update id=222384696 is handled. Duration 62646 ms by bot id=7916603610
+2025-04-27 13:53:27,521 - INFO - Результат отправлен пользователю 434092620, файл C:\Users\В\Desktop\gpt-selenium-bot\output_images\result_434092620_53532.png удален
+2025-04-27 13:53:38,474 - INFO - Пользователь 434092620 запросил другую фигурку
+2025-04-27 13:53:38,474 - INFO - Update id=222384697 is handled. Duration 801 ms by bot id=7916603610
+2025-04-28 18:53:48,266 - INFO - База данных инициализирована
+2025-04-28 18:53:49,852 - INFO - Бот запущен, воркеры генератора изображений активированы
+2025-04-28 18:53:49,852 - INFO - Start polling
+2025-04-28 18:53:50,186 - INFO - Run polling for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-28 18:54:02,716 - INFO - Пользователь 386406595 начал взаимодействие с ботом
+2025-04-28 18:54:02,717 - INFO - Update id=222384698 is handled. Duration 1384 ms by bot id=7916603610
+2025-04-28 18:54:04,540 - INFO - Пользователь 386406595 подписан, перешел к вводу имени
+2025-04-28 18:54:04,540 - INFO - Update id=222384699 is handled. Duration 783 ms by bot id=7916603610
+2025-04-28 18:54:09,038 - INFO - Обновлено имя пользователя 386406595: Владимир
+2025-04-28 18:54:09,576 - INFO - Пользователь 386406595 ввел имя: Владимир
+2025-04-28 18:54:09,576 - INFO - Update id=222384700 is handled. Duration 554 ms by bot id=7916603610
+2025-04-28 18:54:11,431 - INFO - Обновлена профессия пользователя 386406595: врач
+2025-04-28 18:54:11,778 - INFO - Пользователь 386406595 выбрал профессию: врач
+2025-04-28 18:54:11,779 - INFO - Update id=222384701 is handled. Duration 354 ms by bot id=7916603610
+2025-04-28 18:54:14,333 - INFO - Обновлен пол пользователя 386406595: male
+2025-04-28 18:54:15,073 - INFO - Пользователь 386406595 выбрал пол: male
+2025-04-28 18:54:15,073 - INFO - Update id=222384702 is handled. Duration 743 ms by bot id=7916603610
+2025-04-28 18:54:21,422 - INFO - Увеличен счетчик фото для пользователя 386406595
+2025-04-28 18:54:21,927 - INFO - Пользователь 386406595 отправил фото, обработка начата
+2025-04-28 18:54:22,887 - INFO - Добавлена задача для user_id=386406595: profession=врач, gender=male
+2025-04-28 18:55:01,294 - INFO - HTTP Request: POST https://api.openai.com/v1/images/edits "HTTP/1.1 200 OK"
+2025-04-28 18:55:02,561 - INFO - Изображение сохранено: C:\Users\В\Desktop\gpt-selenium-bot\output_images\result_386406595_158059.png
+2025-04-28 18:55:23,010 - ERROR - Ошибка отправки видео-заглушки пользователю 386406595: HTTP Client says - Request timeout error
+2025-04-28 18:55:23,010 - INFO - Update id=222384703 is handled. Duration 61598 ms by bot id=7916603610
+2025-04-28 18:55:37,679 - INFO - Результат отправлен пользователю 386406595, файл C:\Users\В\Desktop\gpt-selenium-bot\output_images\result_386406595_158059.png удален
+2025-04-28 18:55:48,374 - INFO - Пользователь 386406595 запросил помощь
+2025-04-28 18:55:48,375 - INFO - Update id=222384704 is handled. Duration 1449 ms by bot id=7916603610
+2025-04-28 18:56:04,855 - INFO - Пользователь 386406595 запросил другую фигурку
+2025-04-28 18:56:04,855 - INFO - Update id=222384705 is handled. Duration 1044 ms by bot id=7916603610
+2025-04-28 18:56:10,133 - INFO - Пользователь 386406595 достиг лимита фото
+2025-04-28 18:56:10,134 - INFO - Update id=222384706 is handled. Duration 487 ms by bot id=7916603610
+2025-04-28 18:56:17,891 - INFO - Счетчик фото сброшен для пользователя 386406595 из канала.
+2025-04-28 18:56:17,891 - INFO - Update id=222384707 is handled. Duration 23 ms by bot id=7916603610
+2025-04-28 18:56:22,887 - INFO - Пользователь 386406595 начал взаимодействие с ботом
+2025-04-28 18:56:22,887 - INFO - Update id=222384708 is handled. Duration 436 ms by bot id=7916603610
+2025-04-28 18:56:24,787 - INFO - Пользователь 386406595 подписан, перешел к вводу имени
+2025-04-28 18:56:24,787 - INFO - Update id=222384709 is handled. Duration 952 ms by bot id=7916603610
+2025-04-28 18:56:27,566 - INFO - Обновлено имя пользователя 386406595: Владимир
+2025-04-28 18:56:28,177 - INFO - Пользователь 386406595 ввел имя: Владимир
+2025-04-28 18:56:28,177 - INFO - Update id=222384710 is handled. Duration 614 ms by bot id=7916603610
+2025-04-28 18:56:30,324 - INFO - Обновлена профессия пользователя 386406595: врач
+2025-04-28 18:56:30,660 - INFO - Пользователь 386406595 выбрал профессию: врач
+2025-04-28 18:56:30,661 - INFO - Update id=222384711 is handled. Duration 341 ms by bot id=7916603610
+2025-04-28 18:56:31,645 - INFO - Обновлен пол пользователя 386406595: male
+2025-04-28 18:56:32,542 - INFO - Пользователь 386406595 выбрал пол: male
+2025-04-28 18:56:32,543 - INFO - Update id=222384712 is handled. Duration 900 ms by bot id=7916603610
+2025-04-28 18:56:39,099 - INFO - Увеличен счетчик фото для пользователя 386406595
+2025-04-28 18:56:39,578 - INFO - Пользователь 386406595 отправил фото, обработка начата
+2025-04-28 18:56:40,526 - INFO - Добавлена задача для user_id=386406595: profession=врач, gender=male
+2025-04-28 18:57:22,593 - INFO - HTTP Request: POST https://api.openai.com/v1/images/edits "HTTP/1.1 200 OK"
+2025-04-28 18:57:23,800 - INFO - Изображение сохранено: C:\Users\В\Desktop\gpt-selenium-bot\output_images\result_386406595_158200.png
+2025-04-28 18:57:29,091 - INFO - Видео-заглушка отправлена пользователю 386406595
+2025-04-28 18:57:29,092 - INFO - Update id=222384713 is handled. Duration 50006 ms by bot id=7916603610
+2025-04-28 18:57:36,742 - INFO - Результат отправлен пользователю 386406595, файл C:\Users\В\Desktop\gpt-selenium-bot\output_images\result_386406595_158200.png удален
+2025-04-28 19:30:45,437 - INFO - Пользователь 386406595 запросил другую фигурку
+2025-04-28 19:30:45,438 - INFO - Update id=222384714 is handled. Duration 1677 ms by bot id=7916603610
+2025-04-28 19:30:49,182 - INFO - Увеличен счетчик фото для пользователя 386406595
+2025-04-28 19:30:49,519 - INFO - Пользователь 386406595 отправил фото, обработка начата
+2025-04-28 19:30:50,220 - INFO - Добавлена задача для user_id=386406595: profession=врач, gender=male
+2025-04-28 19:31:23,284 - INFO - Видео-заглушка отправлена пользователю 386406595
+2025-04-28 19:31:23,285 - INFO - Update id=222384715 is handled. Duration 34106 ms by bot id=7916603610
+2025-04-28 19:31:33,833 - INFO - HTTP Request: POST https://api.openai.com/v1/images/edits "HTTP/1.1 200 OK"
+2025-04-28 19:31:35,386 - INFO - Изображение сохранено: C:\Users\В\Desktop\gpt-selenium-bot\output_images\result_386406595_160252.png
+2025-04-28 19:31:44,955 - INFO - Результат отправлен пользователю 386406595, файл C:\Users\В\Desktop\gpt-selenium-bot\output_images\result_386406595_160252.png удален
+2025-04-28 19:31:48,942 - INFO - Пользователь 386406595 запросил другую фигурку
+2025-04-28 19:31:48,942 - INFO - Update id=222384716 is handled. Duration 850 ms by bot id=7916603610
+2025-04-28 19:31:57,127 - INFO - Пользователь 386406595 достиг лимита фото
+2025-04-28 19:31:57,127 - INFO - Update id=222384717 is handled. Duration 497 ms by bot id=7916603610
+2025-04-28 17:18:05,143 - WARNING - You have incorrectly specified the following celery arguments after flower command: ['--broker']. Please specify them after celery command instead following this template: celery [celery args] flower [flower args].
+2025-04-28 17:18:05,156 - INFO - Visit me at http://0.0.0.0:5555
+2025-04-28 17:18:05,174 - INFO - Broker: redis://redis:6379/0
+2025-04-28 17:18:05,179 - INFO - Registered tasks: 
+['celery.accumulate',
+ 'celery.backend_cleanup',
+ 'celery.chain',
+ 'celery.chord',
+ 'celery.chord_unlock',
+ 'celery.chunks',
+ 'celery.group',
+ 'celery.map',
+ 'celery.starmap']
+2025-04-28 17:18:05,192 - INFO - Connected to redis://redis:6379/0
+2025-04-28 17:18:06,267 - WARNING - Inspect method conf failed
+2025-04-28 17:18:06,267 - WARNING - Inspect method stats failed
+2025-04-28 17:18:06,275 - WARNING - Inspect method scheduled failed
+2025-04-28 17:18:06,275 - WARNING - Inspect method active failed
+2025-04-28 17:18:06,281 - WARNING - Inspect method revoked failed
+2025-04-28 17:18:06,281 - WARNING - Inspect method active_queues failed
+2025-04-28 17:18:06,282 - WARNING - Inspect method reserved failed
+2025-04-28 17:18:06,283 - WARNING - Inspect method registered failed
+2025-04-28 17:55:56,730 - INFO - Р‘Р°Р·Р° РґР°РЅРЅС‹С… РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°РЅР°
+2025-04-28 17:55:58,178 - INFO - Р‘РѕС‚ Р·Р°РїСѓС‰РµРЅ, РІРѕСЂРєРµСЂС‹ РіРµРЅРµСЂР°С‚РѕСЂР° РёР·РѕР±СЂР°Р¶РµРЅРёР№ Р°РєС‚РёРІРёСЂРѕРІР°РЅС‹
+2025-04-28 17:55:58,178 - INFO - Start polling
+2025-04-28 17:55:58,673 - INFO - Run polling for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-28 17:56:00,388 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РЅР°С‡Р°Р» РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ Р±РѕС‚РѕРј
+2025-04-28 17:56:00,388 - INFO - Update id=222384718 is handled. Duration 1441 ms by bot id=7916603610
+2025-04-28 17:56:05,920 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РїРѕРґРїРёСЃР°РЅ, РїРµСЂРµС€РµР» Рє РІРІРѕРґСѓ РёРјРµРЅРё
+2025-04-28 17:56:05,921 - INFO - Update id=222384719 is handled. Duration 974 ms by bot id=7916603610
+2025-04-28 17:56:07,940 - INFO - РћР±РЅРѕРІР»РµРЅРѕ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: Р’
+2025-04-28 17:56:08,405 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІРІРµР» РёРјСЏ: Р’
+2025-04-28 17:56:08,406 - INFO - Update id=222384720 is handled. Duration 476 ms by bot id=7916603610
+2025-04-28 17:56:12,774 - INFO - РћР±РЅРѕРІР»РµРЅР° РїСЂРѕС„РµСЃСЃРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: РІСЂР°С‡
+2025-04-28 17:56:13,192 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїСЂРѕС„РµСЃСЃРёСЋ: РІСЂР°С‡
+2025-04-28 17:56:13,193 - INFO - Update id=222384721 is handled. Duration 431 ms by bot id=7916603610
+2025-04-28 17:56:17,337 - INFO - РћР±РЅРѕРІР»РµРЅ РїРѕР» РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: male
+2025-04-28 17:56:18,103 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїРѕР»: male
+2025-04-28 17:56:18,104 - INFO - Update id=222384722 is handled. Duration 786 ms by bot id=7916603610
+2025-04-28 17:56:26,682 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РґРѕСЃС‚РёРі Р»РёРјРёС‚Р° С„РѕС‚Рѕ
+2025-04-28 17:56:26,683 - INFO - Update id=222384723 is handled. Duration 483 ms by bot id=7916603610
+2025-04-28 18:04:57,014 - INFO - РЎС‡РµС‚С‡РёРє С„РѕС‚Рѕ СЃР±СЂРѕС€РµРЅ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595 РёР· РєР°РЅР°Р»Р°.
+2025-04-28 18:04:57,015 - INFO - Update id=222384724 is handled. Duration 17 ms by bot id=7916603610
+2025-04-28 18:05:09,647 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РЅР°С‡Р°Р» РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ Р±РѕС‚РѕРј
+2025-04-28 18:05:09,647 - INFO - Update id=222384725 is handled. Duration 344 ms by bot id=7916603610
+2025-04-28 18:05:16,251 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РїРѕРґРїРёСЃР°РЅ, РїРµСЂРµС€РµР» Рє РІРІРѕРґСѓ РёРјРµРЅРё
+2025-04-28 18:05:16,252 - INFO - Update id=222384726 is handled. Duration 784 ms by bot id=7916603610
+2025-04-28 18:05:23,783 - INFO - РћР±РЅРѕРІР»РµРЅРѕ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: Р’Р»Р°РґРёРјРёСЂ
+2025-04-28 18:05:24,335 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІРІРµР» РёРјСЏ: Р’Р»Р°РґРёРјРёСЂ
+2025-04-28 18:05:24,335 - INFO - Update id=222384727 is handled. Duration 571 ms by bot id=7916603610
+2025-04-28 18:05:27,356 - INFO - РћР±РЅРѕРІР»РµРЅР° РїСЂРѕС„РµСЃСЃРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: РІСЂР°С‡
+2025-04-28 18:05:27,688 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїСЂРѕС„РµСЃСЃРёСЋ: РІСЂР°С‡
+2025-04-28 18:05:27,688 - INFO - Update id=222384728 is handled. Duration 346 ms by bot id=7916603610
+2025-04-28 18:05:28,712 - INFO - РћР±РЅРѕРІР»РµРЅ РїРѕР» РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: male
+2025-04-28 18:05:29,826 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїРѕР»: male
+2025-04-28 18:05:29,827 - INFO - Update id=222384729 is handled. Duration 1130 ms by bot id=7916603610
+2025-04-28 18:05:34,523 - INFO - РЈРІРµР»РёС‡РµРЅ СЃС‡РµС‚С‡РёРє С„РѕС‚Рѕ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595
+2025-04-28 18:05:35,004 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РѕС‚РїСЂР°РІРёР» С„РѕС‚Рѕ, РѕР±СЂР°Р±РѕС‚РєР° РЅР°С‡Р°С‚Р°
+2025-04-28 18:06:37,195 - ERROR - РћС€РёР±РєР° РѕС‚РїСЂР°РІРєРё РІРёРґРµРѕ-Р·Р°РіР»СѓС€РєРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ 386406595: HTTP Client says - Request timeout error
+2025-04-28 18:06:37,195 - INFO - Update id=222384730 is handled. Duration 62693 ms by bot id=7916603610
+2025-04-28 18:08:25,466 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РЅР°С‡Р°Р» РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ Р±РѕС‚РѕРј
+2025-04-28 18:08:25,467 - INFO - Update id=222384731 is handled. Duration 355 ms by bot id=7916603610
+2025-04-28 18:08:27,837 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РїРѕРґРїРёСЃР°РЅ, РїРµСЂРµС€РµР» Рє РІРІРѕРґСѓ РёРјРµРЅРё
+2025-04-28 18:08:27,838 - INFO - Update id=222384732 is handled. Duration 1029 ms by bot id=7916603610
+2025-04-28 18:08:32,058 - INFO - РћР±РЅРѕРІР»РµРЅРѕ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: Р’
+2025-04-28 18:08:32,542 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІРІРµР» РёРјСЏ: Р’
+2025-04-28 18:08:32,542 - INFO - Update id=222384733 is handled. Duration 494 ms by bot id=7916603610
+2025-04-28 18:08:33,853 - INFO - РћР±РЅРѕРІР»РµРЅР° РїСЂРѕС„РµСЃСЃРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: РІСЂР°С‡
+2025-04-28 18:08:34,232 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїСЂРѕС„РµСЃСЃРёСЋ: РІСЂР°С‡
+2025-04-28 18:08:34,232 - INFO - Update id=222384734 is handled. Duration 394 ms by bot id=7916603610
+2025-04-28 18:08:35,204 - INFO - РћР±РЅРѕРІР»РµРЅ РїРѕР» РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: male
+2025-04-28 18:08:36,090 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїРѕР»: male
+2025-04-28 18:08:36,091 - INFO - Update id=222384735 is handled. Duration 895 ms by bot id=7916603610
+2025-04-28 18:08:41,172 - INFO - РЈРІРµР»РёС‡РµРЅ СЃС‡РµС‚С‡РёРє С„РѕС‚Рѕ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595
+2025-04-28 18:08:41,650 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РѕС‚РїСЂР°РІРёР» С„РѕС‚Рѕ, РѕР±СЂР°Р±РѕС‚РєР° РЅР°С‡Р°С‚Р°
+2025-04-28 18:09:26,976 - WARNING - 404 GET /worker/celery%40c78c12d34f39 (172.18.0.1): Unknown worker 'celery@c78c12d34f39'
+2025-04-28 18:09:31,769 - INFO - Р’РёРґРµРѕ-Р·Р°РіР»СѓС€РєР° РѕС‚РїСЂР°РІР»РµРЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ 386406595
+2025-04-28 18:09:31,769 - INFO - Update id=222384736 is handled. Duration 50616 ms by bot id=7916603610
+2025-04-28 18:12:44,101 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РЅР°С‡Р°Р» РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ Р±РѕС‚РѕРј
+2025-04-28 18:12:44,102 - INFO - Update id=222384737 is handled. Duration 468 ms by bot id=7916603610
+2025-04-28 18:12:45,610 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РїРѕРґРїРёСЃР°РЅ, РїРµСЂРµС€РµР» Рє РІРІРѕРґСѓ РёРјРµРЅРё
+2025-04-28 18:12:45,610 - INFO - Update id=222384738 is handled. Duration 883 ms by bot id=7916603610
+2025-04-28 18:12:49,640 - INFO - РЎС‡РµС‚С‡РёРє С„РѕС‚Рѕ СЃР±СЂРѕС€РµРЅ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595 РёР· РєР°РЅР°Р»Р°.
+2025-04-28 18:12:49,640 - INFO - Update id=222384739 is handled. Duration 31 ms by bot id=7916603610
+2025-04-28 18:12:55,628 - INFO - РћР±РЅРѕРІР»РµРЅРѕ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: Р’
+2025-04-28 18:12:56,079 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІРІРµР» РёРјСЏ: Р’
+2025-04-28 18:12:56,079 - INFO - Update id=222384740 is handled. Duration 463 ms by bot id=7916603610
+2025-04-28 18:12:57,780 - INFO - РћР±РЅРѕРІР»РµРЅР° РїСЂРѕС„РµСЃСЃРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: РІСЂР°С‡
+2025-04-28 18:12:58,267 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїСЂРѕС„РµСЃСЃРёСЋ: РІСЂР°С‡
+2025-04-28 18:12:58,267 - INFO - Update id=222384741 is handled. Duration 508 ms by bot id=7916603610
+2025-04-28 18:12:59,176 - INFO - РћР±РЅРѕРІР»РµРЅ РїРѕР» РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: male
+2025-04-28 18:13:00,277 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїРѕР»: male
+2025-04-28 18:13:00,277 - INFO - Update id=222384742 is handled. Duration 1112 ms by bot id=7916603610
+2025-04-28 18:13:06,672 - INFO - РЈРІРµР»РёС‡РµРЅ СЃС‡РµС‚С‡РёРє С„РѕС‚Рѕ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595
+2025-04-28 18:13:07,087 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РѕС‚РїСЂР°РІРёР» С„РѕС‚Рѕ, РѕР±СЂР°Р±РѕС‚РєР° РЅР°С‡Р°С‚Р°
+2025-04-28 18:13:52,141 - INFO - Р’РёРґРµРѕ-Р·Р°РіР»СѓС€РєР° РѕС‚РїСЂР°РІР»РµРЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ 386406595
+2025-04-28 18:13:52,141 - INFO - Update id=222384743 is handled. Duration 45486 ms by bot id=7916603610
+2025-04-28 18:15:23,484 - WARNING - 404 GET /worker/celery%40a958c9d4a062 (172.18.0.1): Unknown worker 'celery@a958c9d4a062'
+2025-04-28 18:16:14,715 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РЅР°С‡Р°Р» РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ Р±РѕС‚РѕРј
+2025-04-28 18:16:14,715 - INFO - Update id=222384744 is handled. Duration 1745 ms by bot id=7916603610
+2025-04-28 18:16:16,961 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РїРѕРґРїРёСЃР°РЅ, РїРµСЂРµС€РµР» Рє РІРІРѕРґСѓ РёРјРµРЅРё
+2025-04-28 18:16:16,962 - INFO - Update id=222384745 is handled. Duration 1765 ms by bot id=7916603610
+2025-04-28 18:16:20,182 - INFO - РћР±РЅРѕРІР»РµРЅРѕ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: Р’
+2025-04-28 18:16:20,518 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІРІРµР» РёРјСЏ: Р’
+2025-04-28 18:16:20,519 - INFO - Update id=222384746 is handled. Duration 350 ms by bot id=7916603610
+2025-04-28 18:16:23,363 - WARNING - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІРІРµР» РЅРµРІРµСЂРЅСѓСЋ РїСЂРѕС„РµСЃСЃРёСЋ: С‰СѓРѕРІС‰Сѓ
+2025-04-28 18:16:23,363 - INFO - Update id=222384747 is handled. Duration 347 ms by bot id=7916603610
+2025-04-28 18:16:24,954 - INFO - РћР±РЅРѕРІР»РµРЅР° РїСЂРѕС„РµСЃСЃРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: РІСЂР°С‡
+2025-04-28 18:16:25,428 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїСЂРѕС„РµСЃСЃРёСЋ: РІСЂР°С‡
+2025-04-28 18:16:25,429 - INFO - Update id=222384748 is handled. Duration 485 ms by bot id=7916603610
+2025-04-28 18:16:28,953 - INFO - РћР±РЅРѕРІР»РµРЅ РїРѕР» РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: male
+2025-04-28 18:16:29,956 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїРѕР»: male
+2025-04-28 18:16:29,956 - INFO - Update id=222384749 is handled. Duration 1018 ms by bot id=7916603610
+2025-04-28 18:57:55,977 - INFO - 15 detected, shutting down
+2025-04-28 18:57:55,987 - WARNING - Received SIGTERM signal
+2025-04-28 18:57:55,990 - INFO - Polling stopped for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-28 18:57:55,991 - INFO - Polling stopped
+2025-04-28 18:58:01,288 - WARNING - You have incorrectly specified the following celery arguments after flower command: ['--broker']. Please specify them after celery command instead following this template: celery [celery args] flower [flower args].
+2025-04-28 18:58:03,543 - INFO - Visit me at http://0.0.0.0:5555
+2025-04-28 18:58:03,551 - INFO - Broker: redis://redis:6379/0
+2025-04-28 18:58:03,554 - INFO - Registered tasks: 
+['celery.accumulate',
+ 'celery.backend_cleanup',
+ 'celery.chain',
+ 'celery.chord',
+ 'celery.chord_unlock',
+ 'celery.chunks',
+ 'celery.group',
+ 'celery.map',
+ 'celery.starmap',
+ 'tasks.generate_image_task']
+2025-04-28 18:58:03,560 - INFO - Connected to redis://redis:6379/0
+2025-04-28 18:58:04,242 - INFO - Р‘Р°Р·Р° РґР°РЅРЅС‹С… РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°РЅР°
+2025-04-28 18:58:04,605 - WARNING - Inspect method stats failed
+2025-04-28 18:58:04,608 - WARNING - Inspect method registered failed
+2025-04-28 18:58:04,624 - WARNING - Inspect method scheduled failed
+2025-04-28 18:58:04,635 - WARNING - Inspect method revoked failed
+2025-04-28 18:58:04,636 - WARNING - Inspect method active failed
+2025-04-28 18:58:04,675 - WARNING - Inspect method active_queues failed
+2025-04-28 18:58:04,676 - WARNING - Inspect method reserved failed
+2025-04-28 18:58:04,677 - WARNING - Inspect method conf failed
+2025-04-28 18:58:05,499 - INFO - Р‘РѕС‚ Р·Р°РїСѓС‰РµРЅ, РІРѕСЂРєРµСЂС‹ РіРµРЅРµСЂР°С‚РѕСЂР° РёР·РѕР±СЂР°Р¶РµРЅРёР№ Р°РєС‚РёРІРёСЂРѕРІР°РЅС‹
+2025-04-28 18:58:05,500 - INFO - Start polling
+2025-04-28 18:58:05,894 - INFO - Run polling for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-28 18:58:38,701 - INFO - РЎС‡РµС‚С‡РёРє С„РѕС‚Рѕ СЃР±СЂРѕС€РµРЅ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595.
+2025-04-28 18:58:38,701 - INFO - Update id=222384750 is handled. Duration 1346 ms by bot id=7916603610
+2025-04-28 18:59:18,677 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РЅР°С‡Р°Р» РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ Р±РѕС‚РѕРј
+2025-04-28 18:59:18,677 - INFO - Update id=222384751 is handled. Duration 417 ms by bot id=7916603610
+2025-04-28 18:59:20,148 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РїРѕРґРїРёСЃР°РЅ, РїРµСЂРµС€РµР» Рє РІРІРѕРґСѓ РёРјРµРЅРё
+2025-04-28 18:59:20,149 - INFO - Update id=222384752 is handled. Duration 698 ms by bot id=7916603610
+2025-04-28 18:59:23,304 - INFO - РћР±РЅРѕРІР»РµРЅРѕ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: Р’Р»Р°РґРёРјРёСЂ
+2025-04-28 18:59:23,769 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІРІРµР» РёРјСЏ: Р’Р»Р°РґРёРјРёСЂ
+2025-04-28 18:59:23,770 - INFO - Update id=222384753 is handled. Duration 486 ms by bot id=7916603610
+2025-04-28 18:59:25,226 - INFO - РћР±РЅРѕРІР»РµРЅР° РїСЂРѕС„РµСЃСЃРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: РІСЂР°С‡
+2025-04-28 18:59:25,720 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїСЂРѕС„РµСЃСЃРёСЋ: РІСЂР°С‡
+2025-04-28 18:59:25,721 - INFO - Update id=222384754 is handled. Duration 509 ms by bot id=7916603610
+2025-04-28 18:59:26,955 - INFO - РћР±РЅРѕРІР»РµРЅ РїРѕР» РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: male
+2025-04-28 18:59:27,795 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїРѕР»: male
+2025-04-28 18:59:27,796 - INFO - Update id=222384755 is handled. Duration 852 ms by bot id=7916603610
+2025-04-28 18:59:35,579 - INFO - РЈРІРµР»РёС‡РµРЅ СЃС‡РµС‚С‡РёРє С„РѕС‚Рѕ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595
+2025-04-28 18:59:36,080 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РѕС‚РїСЂР°РІРёР» С„РѕС‚Рѕ, РѕР±СЂР°Р±РѕС‚РєР° РЅР°С‡Р°С‚Р°
+2025-04-28 19:00:25,915 - INFO - Р’РёРґРµРѕ-Р·Р°РіР»СѓС€РєР° РѕС‚РїСЂР°РІР»РµРЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ 386406595
+2025-04-28 19:00:25,916 - INFO - Update id=222384756 is handled. Duration 50354 ms by bot id=7916603610
+2025-04-28 19:23:22,595 - INFO - 15 detected, shutting down
+2025-04-28 19:23:22,597 - WARNING - Received SIGTERM signal
+2025-04-28 19:23:22,599 - INFO - Polling stopped for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-28 19:23:22,617 - INFO - Polling stopped
+2025-04-28 19:23:27,096 - WARNING - You have incorrectly specified the following celery arguments after flower command: ['--broker']. Please specify them after celery command instead following this template: celery [celery args] flower [flower args].
+2025-04-28 19:23:29,615 - INFO - Visit me at http://0.0.0.0:5555
+2025-04-28 19:23:29,624 - INFO - Broker: redis://redis:6379/0
+2025-04-28 19:23:29,626 - INFO - Registered tasks: 
+['celery.accumulate',
+ 'celery.backend_cleanup',
+ 'celery.chain',
+ 'celery.chord',
+ 'celery.chord_unlock',
+ 'celery.chunks',
+ 'celery.group',
+ 'celery.map',
+ 'celery.starmap',
+ 'tasks.generate_image_task']
+2025-04-28 19:23:29,670 - INFO - Connected to redis://redis:6379/0
+2025-04-28 19:23:30,284 - INFO - Р‘Р°Р·Р° РґР°РЅРЅС‹С… РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°РЅР°
+2025-04-28 19:23:30,764 - WARNING - Inspect method revoked failed
+2025-04-28 19:23:30,766 - WARNING - Inspect method stats failed
+2025-04-28 19:23:30,769 - WARNING - Inspect method active_queues failed
+2025-04-28 19:23:30,770 - WARNING - Inspect method conf failed
+2025-04-28 19:23:30,770 - WARNING - Inspect method scheduled failed
+2025-04-28 19:23:30,771 - WARNING - Inspect method active failed
+2025-04-28 19:23:30,771 - WARNING - Inspect method reserved failed
+2025-04-28 19:23:30,772 - WARNING - Inspect method registered failed
+2025-04-28 19:23:31,658 - INFO - Р‘РѕС‚ Р·Р°РїСѓС‰РµРЅ, РІРѕСЂРєРµСЂС‹ РіРµРЅРµСЂР°С‚РѕСЂР° РёР·РѕР±СЂР°Р¶РµРЅРёР№ Р°РєС‚РёРІРёСЂРѕРІР°РЅС‹
+2025-04-28 19:23:31,659 - INFO - Start polling
+2025-04-28 19:23:32,035 - INFO - Run polling for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-28 19:23:55,839 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РЅР°С‡Р°Р» РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ Р±РѕС‚РѕРј
+2025-04-28 19:23:55,840 - INFO - Update id=222384757 is handled. Duration 1410 ms by bot id=7916603610
+2025-04-28 19:23:57,872 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РїРѕРґРїРёСЃР°РЅ, РїРµСЂРµС€РµР» Рє РІРІРѕРґСѓ РёРјРµРЅРё
+2025-04-28 19:23:57,873 - INFO - Update id=222384758 is handled. Duration 775 ms by bot id=7916603610
+2025-04-28 19:24:01,803 - INFO - РћР±РЅРѕРІР»РµРЅРѕ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: Р’Р»Р°РґРёРјРёСЂ
+2025-04-28 19:24:02,303 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІРІРµР» РёРјСЏ: Р’Р»Р°РґРёРјРёСЂ
+2025-04-28 19:24:02,304 - INFO - Update id=222384759 is handled. Duration 514 ms by bot id=7916603610
+2025-04-28 19:24:03,563 - INFO - РћР±РЅРѕРІР»РµРЅР° РїСЂРѕС„РµСЃСЃРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: РІСЂР°С‡
+2025-04-28 19:24:03,965 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїСЂРѕС„РµСЃСЃРёСЋ: РІСЂР°С‡
+2025-04-28 19:24:03,965 - INFO - Update id=222384760 is handled. Duration 419 ms by bot id=7916603610
+2025-04-28 19:24:04,939 - INFO - РћР±РЅРѕРІР»РµРЅ РїРѕР» РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: male
+2025-04-28 19:24:05,905 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїРѕР»: male
+2025-04-28 19:24:05,908 - INFO - Update id=222384761 is handled. Duration 978 ms by bot id=7916603610
+2025-04-28 19:24:11,270 - INFO - РЈРІРµР»РёС‡РµРЅ СЃС‡РµС‚С‡РёРє С„РѕС‚Рѕ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595
+2025-04-28 19:24:11,598 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РѕС‚РїСЂР°РІРёР» С„РѕС‚Рѕ, РѕР±СЂР°Р±РѕС‚РєР° РЅР°С‡Р°С‚Р°
+2025-04-28 19:25:12,983 - ERROR - РћС€РёР±РєР° РѕС‚РїСЂР°РІРєРё РІРёРґРµРѕ-Р·Р°РіР»СѓС€РєРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ 386406595: HTTP Client says - Request timeout error
+2025-04-28 19:25:13,217 - INFO - Update id=222384762 is handled. Duration 61966 ms by bot id=7916603610
+2025-04-28 19:25:42,849 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 Р·Р°РїСЂРѕСЃРёР» РїРѕРјРѕС‰СЊ
+2025-04-28 19:25:42,850 - INFO - Update id=222384763 is handled. Duration 1311 ms by bot id=7916603610
+2025-04-28 19:25:46,259 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 Р·Р°РїСЂРѕСЃРёР» РґСЂСѓРіСѓСЋ С„РёРіСѓСЂРєСѓ
+2025-04-28 19:25:46,260 - INFO - Update id=222384764 is handled. Duration 801 ms by bot id=7916603610
+2025-04-28 19:25:53,198 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РґРѕСЃС‚РёРі Р»РёРјРёС‚Р° С„РѕС‚Рѕ
+2025-04-28 19:25:53,198 - INFO - Update id=222384765 is handled. Duration 493 ms by bot id=7916603610
+2025-04-28 19:26:40,168 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РЅР°С‡Р°Р» РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ Р±РѕС‚РѕРј
+2025-04-28 19:26:40,169 - INFO - Update id=222384766 is handled. Duration 404 ms by bot id=7916603610
+2025-04-28 19:26:58,766 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РїРѕРґРїРёСЃР°РЅ, РїРµСЂРµС€РµР» Рє РІРІРѕРґСѓ РёРјРµРЅРё
+2025-04-28 19:26:58,766 - INFO - Update id=222384767 is handled. Duration 994 ms by bot id=7916603610
+2025-04-28 19:27:07,215 - INFO - Р”РѕР±Р°РІР»РµРЅ РЅРѕРІС‹Р№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996: name=РђСЂРёРЅР°, profession=None, gender=None
+2025-04-28 19:27:07,697 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РІРІРµР» РёРјСЏ: РђСЂРёРЅР°
+2025-04-28 19:27:07,698 - INFO - Update id=222384768 is handled. Duration 501 ms by bot id=7916603610
+2025-04-28 19:27:28,569 - INFO - РћР±РЅРѕРІР»РµРЅР° РїСЂРѕС„РµСЃСЃРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 320928996: РїРѕР»РёС†РµР№СЃРєРёР№
+2025-04-28 19:27:28,932 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РІС‹Р±СЂР°Р» РїСЂРѕС„РµСЃСЃРёСЋ: РїРѕР»РёС†РµР№СЃРєРёР№
+2025-04-28 19:27:28,932 - INFO - Update id=222384769 is handled. Duration 386 ms by bot id=7916603610
+2025-04-28 19:27:32,342 - INFO - РћР±РЅРѕРІР»РµРЅ РїРѕР» РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 320928996: female
+2025-04-28 19:27:33,303 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РІС‹Р±СЂР°Р» РїРѕР»: female
+2025-04-28 19:27:33,304 - INFO - Update id=222384770 is handled. Duration 977 ms by bot id=7916603610
+2025-04-28 19:28:06,553 - INFO - РЈРІРµР»РёС‡РµРЅ СЃС‡РµС‚С‡РёРє С„РѕС‚Рѕ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 320928996
+2025-04-28 19:28:06,915 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РѕС‚РїСЂР°РІРёР» С„РѕС‚Рѕ, РѕР±СЂР°Р±РѕС‚РєР° РЅР°С‡Р°С‚Р°
+2025-04-28 19:29:08,966 - ERROR - РћС€РёР±РєР° РѕС‚РїСЂР°РІРєРё РІРёРґРµРѕ-Р·Р°РіР»СѓС€РєРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ 320928996: HTTP Client says - Request timeout error
+2025-04-28 19:29:09,242 - INFO - Update id=222384771 is handled. Duration 62716 ms by bot id=7916603610
+2025-04-28 19:35:05,353 - WARNING - Received SIGTERM signal
+2025-04-28 19:35:05,355 - INFO - 15 detected, shutting down
+2025-04-28 19:35:05,355 - INFO - Polling stopped for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-28 19:35:05,357 - INFO - Polling stopped
+2025-04-28 19:35:10,019 - WARNING - You have incorrectly specified the following celery arguments after flower command: ['--broker']. Please specify them after celery command instead following this template: celery [celery args] flower [flower args].
+2025-04-28 19:35:12,387 - INFO - Visit me at http://0.0.0.0:5555
+2025-04-28 19:35:12,395 - INFO - Broker: redis://redis:6379/0
+2025-04-28 19:35:12,398 - INFO - Registered tasks: 
+['celery.accumulate',
+ 'celery.backend_cleanup',
+ 'celery.chain',
+ 'celery.chord',
+ 'celery.chord_unlock',
+ 'celery.chunks',
+ 'celery.group',
+ 'celery.map',
+ 'celery.starmap',
+ 'tasks.generate_image_task']
+2025-04-28 19:35:12,469 - INFO - Connected to redis://redis:6379/0
+2025-04-28 19:35:13,079 - INFO - Р‘Р°Р·Р° РґР°РЅРЅС‹С… РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°РЅР°
+2025-04-28 19:35:13,496 - WARNING - Inspect method scheduled failed
+2025-04-28 19:35:13,508 - WARNING - Inspect method active_queues failed
+2025-04-28 19:35:13,509 - WARNING - Inspect method reserved failed
+2025-04-28 19:35:13,517 - WARNING - Inspect method conf failed
+2025-04-28 19:35:13,518 - WARNING - Inspect method stats failed
+2025-04-28 19:35:13,523 - WARNING - Inspect method revoked failed
+2025-04-28 19:35:13,525 - WARNING - Inspect method registered failed
+2025-04-28 19:35:13,526 - WARNING - Inspect method active failed
+2025-04-28 19:35:14,383 - INFO - Р‘РѕС‚ Р·Р°РїСѓС‰РµРЅ, РІРѕСЂРєРµСЂС‹ РіРµРЅРµСЂР°С‚РѕСЂР° РёР·РѕР±СЂР°Р¶РµРЅРёР№ Р°РєС‚РёРІРёСЂРѕРІР°РЅС‹
+2025-04-28 19:35:14,384 - INFO - Start polling
+2025-04-28 19:35:14,723 - INFO - Run polling for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-28 19:35:26,175 - INFO - РЎС‡РµС‚С‡РёРє С„РѕС‚Рѕ СЃР±СЂРѕС€РµРЅ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595.
+2025-04-28 19:35:26,176 - INFO - Update id=222384772 is handled. Duration 1434 ms by bot id=7916603610
+2025-04-28 19:35:31,931 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РЅР°С‡Р°Р» РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ Р±РѕС‚РѕРј
+2025-04-28 19:35:31,931 - INFO - Update id=222384773 is handled. Duration 482 ms by bot id=7916603610
+2025-04-28 19:35:33,837 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РїРѕРґРїРёСЃР°РЅ, РїРµСЂРµС€РµР» Рє РІРІРѕРґСѓ РёРјРµРЅРё
+2025-04-28 19:35:33,838 - INFO - Update id=222384774 is handled. Duration 785 ms by bot id=7916603610
+2025-04-28 19:35:40,331 - INFO - РћР±РЅРѕРІР»РµРЅРѕ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: Р’Р»Р°РґРёРјРёСЂ
+2025-04-28 19:35:40,819 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІРІРµР» РёРјСЏ: Р’Р»Р°РґРёРјРёСЂ
+2025-04-28 19:35:40,820 - INFO - Update id=222384775 is handled. Duration 501 ms by bot id=7916603610
+2025-04-28 19:35:42,633 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РЅР°С‡Р°Р» РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ Р±РѕС‚РѕРј
+2025-04-28 19:35:42,634 - INFO - Update id=222384776 is handled. Duration 492 ms by bot id=7916603610
+2025-04-28 19:35:43,399 - INFO - РћР±РЅРѕРІР»РµРЅР° РїСЂРѕС„РµСЃСЃРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: РІСЂР°С‡
+2025-04-28 19:35:43,726 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїСЂРѕС„РµСЃСЃРёСЋ: РІСЂР°С‡
+2025-04-28 19:35:43,728 - INFO - Update id=222384777 is handled. Duration 341 ms by bot id=7916603610
+2025-04-28 19:35:44,823 - INFO - РћР±РЅРѕРІР»РµРЅ РїРѕР» РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: male
+2025-04-28 19:35:45,541 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїРѕР»: male
+2025-04-28 19:35:45,541 - INFO - Update id=222384778 is handled. Duration 735 ms by bot id=7916603610
+2025-04-28 19:35:49,970 - INFO - РЈРІРµР»РёС‡РµРЅ СЃС‡РµС‚С‡РёРє С„РѕС‚Рѕ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595
+2025-04-28 19:35:50,434 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РѕС‚РїСЂР°РІРёР» С„РѕС‚Рѕ, РѕР±СЂР°Р±РѕС‚РєР° РЅР°С‡Р°С‚Р°
+2025-04-28 19:36:16,089 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РїРѕРґРїРёСЃР°РЅ, РїРµСЂРµС€РµР» Рє РІРІРѕРґСѓ РёРјРµРЅРё
+2025-04-28 19:36:16,089 - INFO - Update id=222384780 is handled. Duration 682 ms by bot id=7916603610
+2025-04-28 19:36:19,355 - INFO - РћР±РЅРѕРІР»РµРЅРѕ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 320928996: РђСЂРё
+2025-04-28 19:36:19,807 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РІРІРµР» РёРјСЏ: РђСЂРё
+2025-04-28 19:36:19,808 - INFO - Update id=222384781 is handled. Duration 470 ms by bot id=7916603610
+2025-04-28 19:36:32,697 - INFO - РћР±РЅРѕРІР»РµРЅР° РїСЂРѕС„РµСЃСЃРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 320928996: СЋСЂРёСЃС‚
+2025-04-28 19:36:33,194 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РІС‹Р±СЂР°Р» РїСЂРѕС„РµСЃСЃРёСЋ: СЋСЂРёСЃС‚
+2025-04-28 19:36:33,194 - INFO - Update id=222384782 is handled. Duration 511 ms by bot id=7916603610
+2025-04-28 19:36:35,230 - INFO - РћР±РЅРѕРІР»РµРЅ РїРѕР» РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 320928996: female
+2025-04-28 19:36:35,948 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РІС‹Р±СЂР°Р» РїРѕР»: female
+2025-04-28 19:36:35,948 - INFO - Update id=222384783 is handled. Duration 728 ms by bot id=7916603610
+2025-04-28 19:36:51,951 - ERROR - РћС€РёР±РєР° РѕС‚РїСЂР°РІРєРё РІРёРґРµРѕ-Р·Р°РіР»СѓС€РєРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ 386406595: HTTP Client says - Request timeout error
+2025-04-28 19:36:52,262 - INFO - Update id=222384779 is handled. Duration 62317 ms by bot id=7916603610
+2025-04-28 19:37:06,113 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 Р·Р°РїСЂРѕСЃРёР» РїРѕРјРѕС‰СЊ
+2025-04-28 19:37:06,114 - INFO - Update id=222384784 is handled. Duration 1597 ms by bot id=7916603610
+2025-04-28 19:37:06,695 - INFO - РЈРІРµР»РёС‡РµРЅ СЃС‡РµС‚С‡РёРє С„РѕС‚Рѕ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 320928996
+2025-04-28 19:37:07,190 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РѕС‚РїСЂР°РІРёР» С„РѕС‚Рѕ, РѕР±СЂР°Р±РѕС‚РєР° РЅР°С‡Р°С‚Р°
+2025-04-28 19:37:08,463 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 Р·Р°РїСЂРѕСЃРёР» РґСЂСѓРіСѓСЋ С„РёРіСѓСЂРєСѓ
+2025-04-28 19:37:08,463 - INFO - Update id=222384786 is handled. Duration 1444 ms by bot id=7916603610
+2025-04-28 19:37:23,376 - INFO - РЈРІРµР»РёС‡РµРЅ СЃС‡РµС‚С‡РёРє С„РѕС‚Рѕ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595
+2025-04-28 19:37:23,870 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РѕС‚РїСЂР°РІРёР» С„РѕС‚Рѕ, РѕР±СЂР°Р±РѕС‚РєР° РЅР°С‡Р°С‚Р°
+2025-04-28 19:38:09,947 - ERROR - РћС€РёР±РєР° РѕС‚РїСЂР°РІРєРё РІРёРґРµРѕ-Р·Р°РіР»СѓС€РєРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ 320928996: HTTP Client says - Request timeout error
+2025-04-28 19:38:09,948 - INFO - Update id=222384785 is handled. Duration 63273 ms by bot id=7916603610
+2025-04-28 19:38:26,947 - ERROR - РћС€РёР±РєР° РѕС‚РїСЂР°РІРєРё РІРёРґРµРѕ-Р·Р°РіР»СѓС€РєРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ 386406595: HTTP Client says - Request timeout error
+2025-04-28 19:38:26,948 - INFO - Update id=222384787 is handled. Duration 63594 ms by bot id=7916603610
+2025-04-28 19:40:12,480 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 Р·Р°РїСЂРѕСЃРёР» РґСЂСѓРіСѓСЋ С„РёРіСѓСЂРєСѓ
+2025-04-28 19:40:12,480 - INFO - Update id=222384788 is handled. Duration 986 ms by bot id=7916603610
+2025-04-28 19:40:37,595 - WARNING - РљРѕРјР°РЅРґР° /reset РІ РєР°РЅР°Р»Рµ СЃ РЅРµРєРѕСЂСЂРµРєС‚РЅС‹Рј user_id.
+2025-04-28 19:40:37,596 - INFO - Update id=222384789 is handled. Duration 0 ms by bot id=7916603610
+2025-04-28 19:40:45,776 - INFO - РЎС‡РµС‚С‡РёРє С„РѕС‚Рѕ СЃР±СЂРѕС€РµРЅ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 222384788 РёР· РєР°РЅР°Р»Р°.
+2025-04-28 19:40:45,776 - INFO - Update id=222384790 is handled. Duration 10 ms by bot id=7916603610
+2025-04-28 19:41:01,046 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РЅР°С‡Р°Р» РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ Р±РѕС‚РѕРј
+2025-04-28 19:41:01,046 - INFO - Update id=222384791 is handled. Duration 476 ms by bot id=7916603610
+2025-04-28 19:41:03,202 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РїРѕРґРїРёСЃР°РЅ, РїРµСЂРµС€РµР» Рє РІРІРѕРґСѓ РёРјРµРЅРё
+2025-04-28 19:41:03,203 - INFO - Update id=222384792 is handled. Duration 887 ms by bot id=7916603610
+2025-04-28 19:41:06,695 - INFO - РћР±РЅРѕРІР»РµРЅРѕ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 320928996: A
+2025-04-28 19:41:07,093 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РІРІРµР» РёРјСЏ: A
+2025-04-28 19:41:07,097 - INFO - Update id=222384793 is handled. Duration 419 ms by bot id=7916603610
+2025-04-28 19:41:14,937 - WARNING - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РІРІРµР» РЅРµРІРµСЂРЅСѓСЋ РїСЂРѕС„РµСЃСЃРёСЋ: Р’РµС‚РµСЂРёРЅР°СЂ
+2025-04-28 19:41:14,938 - INFO - Update id=222384794 is handled. Duration 392 ms by bot id=7916603610
+2025-04-28 19:41:32,745 - INFO - РћР±РЅРѕРІР»РµРЅР° РїСЂРѕС„РµСЃСЃРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 320928996: РѕРїРµСЂР°С‚РѕСЂ РїСЂРѕРёР·РІРѕРґСЃС‚РІРµРЅРЅРѕР№ Р»РёРЅРёРё
+2025-04-28 19:41:33,675 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РїРѕР»СѓС‡РёР» СЃР»СѓС‡Р°Р№РЅСѓСЋ РїСЂРѕС„РµСЃСЃРёСЋ: РѕРїРµСЂР°С‚РѕСЂ РїСЂРѕРёР·РІРѕРґСЃС‚РІРµРЅРЅРѕР№ Р»РёРЅРёРё
+2025-04-28 19:41:33,675 - INFO - Update id=222384795 is handled. Duration 948 ms by bot id=7916603610
+2025-04-28 19:41:43,348 - INFO - РћР±РЅРѕРІР»РµРЅ РїРѕР» РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 320928996: female
+2025-04-28 19:41:44,067 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РІС‹Р±СЂР°Р» РїРѕР»: female
+2025-04-28 19:41:44,068 - INFO - Update id=222384796 is handled. Duration 730 ms by bot id=7916603610
+2025-04-28 19:41:50,723 - WARNING - Received SIGTERM signal
+2025-04-28 19:41:50,723 - INFO - 15 detected, shutting down
+2025-04-28 19:41:50,724 - INFO - Polling stopped for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-28 19:41:50,725 - INFO - Polling stopped
+2025-04-28 19:41:55,114 - WARNING - You have incorrectly specified the following celery arguments after flower command: ['--broker']. Please specify them after celery command instead following this template: celery [celery args] flower [flower args].
+2025-04-28 19:41:57,072 - WARNING - You have incorrectly specified the following celery arguments after flower command: ['--broker']. Please specify them after celery command instead following this template: celery [celery args] flower [flower args].
+2025-04-28 19:41:58,848 - WARNING - You have incorrectly specified the following celery arguments after flower command: ['--broker']. Please specify them after celery command instead following this template: celery [celery args] flower [flower args].
+2025-04-28 19:42:00,949 - WARNING - You have incorrectly specified the following celery arguments after flower command: ['--broker']. Please specify them after celery command instead following this template: celery [celery args] flower [flower args].
+2025-04-28 19:42:02,568 - WARNING - You have incorrectly specified the following celery arguments after flower command: ['--broker']. Please specify them after celery command instead following this template: celery [celery args] flower [flower args].
+2025-04-28 19:42:04,991 - WARNING - You have incorrectly specified the following celery arguments after flower command: ['--broker']. Please specify them after celery command instead following this template: celery [celery args] flower [flower args].
+2025-04-28 19:42:09,152 - WARNING - You have incorrectly specified the following celery arguments after flower command: ['--broker']. Please specify them after celery command instead following this template: celery [celery args] flower [flower args].
+2025-04-28 19:42:16,405 - WARNING - You have incorrectly specified the following celery arguments after flower command: ['--broker']. Please specify them after celery command instead following this template: celery [celery args] flower [flower args].
+2025-04-28 19:42:29,914 - WARNING - You have incorrectly specified the following celery arguments after flower command: ['--broker']. Please specify them after celery command instead following this template: celery [celery args] flower [flower args].
+2025-04-28 19:42:56,399 - WARNING - You have incorrectly specified the following celery arguments after flower command: ['--broker']. Please specify them after celery command instead following this template: celery [celery args] flower [flower args].
+2025-04-28 19:43:48,291 - WARNING - You have incorrectly specified the following celery arguments after flower command: ['--broker']. Please specify them after celery command instead following this template: celery [celery args] flower [flower args].
+2025-04-28 19:44:46,954 - WARNING - You have incorrectly specified the following celery arguments after flower command: ['--broker']. Please specify them after celery command instead following this template: celery [celery args] flower [flower args].
+2025-04-28 19:44:49,483 - INFO - Visit me at http://0.0.0.0:5555
+2025-04-28 19:44:49,487 - INFO - Broker: redis://redis:6379/0
+2025-04-28 19:44:49,489 - INFO - Registered tasks: 
+['celery.accumulate',
+ 'celery.backend_cleanup',
+ 'celery.chain',
+ 'celery.chord',
+ 'celery.chord_unlock',
+ 'celery.chunks',
+ 'celery.group',
+ 'celery.map',
+ 'celery.starmap',
+ 'tasks.generate_image_task']
+2025-04-28 19:44:49,498 - INFO - Connected to redis://redis:6379/0
+2025-04-28 19:44:49,612 - INFO - Р‘Р°Р·Р° РґР°РЅРЅС‹С… РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°РЅР°
+2025-04-28 19:44:50,537 - WARNING - Inspect method reserved failed
+2025-04-28 19:44:50,539 - WARNING - Inspect method active_queues failed
+2025-04-28 19:44:50,541 - WARNING - Inspect method registered failed
+2025-04-28 19:44:50,542 - WARNING - Inspect method revoked failed
+2025-04-28 19:44:50,545 - WARNING - Inspect method conf failed
+2025-04-28 19:44:50,545 - WARNING - Inspect method scheduled failed
+2025-04-28 19:44:50,546 - WARNING - Inspect method active failed
+2025-04-28 19:44:50,547 - WARNING - Inspect method stats failed
+2025-04-28 19:44:51,027 - INFO - Р‘РѕС‚ Р·Р°РїСѓС‰РµРЅ, РІРѕСЂРєРµСЂС‹ РіРµРЅРµСЂР°С‚РѕСЂР° РёР·РѕР±СЂР°Р¶РµРЅРёР№ Р°РєС‚РёРІРёСЂРѕРІР°РЅС‹
+2025-04-28 19:44:51,028 - INFO - Start polling
+2025-04-28 19:44:51,407 - INFO - Run polling for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-28 19:44:51,908 - INFO - Update id=222384797 is not handled. Duration 0 ms by bot id=7916603610
+2025-04-28 19:45:19,358 - INFO - РЎС‡РµС‚С‡РёРє С„РѕС‚Рѕ СЃР±СЂРѕС€РµРЅ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595 РёР· РєР°РЅР°Р»Р°.
+2025-04-28 19:45:19,359 - INFO - Update id=222384798 is handled. Duration 13 ms by bot id=7916603610
+2025-04-28 19:45:26,546 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РЅР°С‡Р°Р» РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ Р±РѕС‚РѕРј
+2025-04-28 19:45:26,547 - INFO - Update id=222384799 is handled. Duration 1154 ms by bot id=7916603610
+2025-04-28 19:45:28,033 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РїРѕРґРїРёСЃР°РЅ, РїРµСЂРµС€РµР» Рє РІРІРѕРґСѓ РёРјРµРЅРё
+2025-04-28 19:45:28,033 - INFO - Update id=222384800 is handled. Duration 803 ms by bot id=7916603610
+2025-04-28 19:45:30,285 - INFO - РћР±РЅРѕРІР»РµРЅРѕ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: Р’
+2025-04-28 19:45:30,775 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІРІРµР» РёРјСЏ: Р’
+2025-04-28 19:45:30,776 - INFO - Update id=222384801 is handled. Duration 505 ms by bot id=7916603610
+2025-04-28 19:45:32,118 - INFO - РћР±РЅРѕРІР»РµРЅР° РїСЂРѕС„РµСЃСЃРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: РІСЂР°С‡
+2025-04-28 19:45:32,593 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїСЂРѕС„РµСЃСЃРёСЋ: РІСЂР°С‡
+2025-04-28 19:45:32,593 - INFO - Update id=222384802 is handled. Duration 488 ms by bot id=7916603610
+2025-04-28 19:45:34,131 - INFO - РћР±РЅРѕРІР»РµРЅ РїРѕР» РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: male
+2025-04-28 19:45:35,166 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїРѕР»: male
+2025-04-28 19:45:35,166 - INFO - Update id=222384803 is handled. Duration 1050 ms by bot id=7916603610
+2025-04-28 19:45:39,147 - INFO - РЈРІРµР»РёС‡РµРЅ СЃС‡РµС‚С‡РёРє С„РѕС‚Рѕ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595
+2025-04-28 19:45:39,609 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РѕС‚РїСЂР°РІРёР» С„РѕС‚Рѕ, РѕР±СЂР°Р±РѕС‚РєР° РЅР°С‡Р°С‚Р°
+2025-04-28 19:46:25,675 - INFO - Р’РёРґРµРѕ-Р·Р°РіР»СѓС€РєР° РѕС‚РїСЂР°РІР»РµРЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ 386406595
+2025-04-28 19:46:25,675 - INFO - Update id=222384804 is handled. Duration 46551 ms by bot id=7916603610
+2025-04-28 19:46:58,416 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 Р·Р°РїСЂРѕСЃРёР» РґСЂСѓРіСѓСЋ С„РёРіСѓСЂРєСѓ
+2025-04-28 19:46:58,417 - INFO - Update id=222384805 is handled. Duration 632 ms by bot id=7916603610
+2025-04-28 19:47:05,544 - INFO - РЈРІРµР»РёС‡РµРЅ СЃС‡РµС‚С‡РёРє С„РѕС‚Рѕ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595
+2025-04-28 19:47:05,866 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РѕС‚РїСЂР°РІРёР» С„РѕС‚Рѕ, РѕР±СЂР°Р±РѕС‚РєР° РЅР°С‡Р°С‚Р°
+2025-04-28 19:48:06,921 - ERROR - РћС€РёР±РєР° РѕС‚РїСЂР°РІРєРё РІРёРґРµРѕ-Р·Р°РіР»СѓС€РєРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ 386406595: HTTP Client says - Request timeout error
+2025-04-28 19:48:07,127 - INFO - Update id=222384806 is handled. Duration 61610 ms by bot id=7916603610
+2025-04-28 19:48:58,402 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РЅР°С‡Р°Р» РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ Р±РѕС‚РѕРј
+2025-04-28 19:48:58,403 - INFO - Update id=222384807 is handled. Duration 493 ms by bot id=7916603610
+2025-04-28 19:49:01,075 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РїРѕРґРїРёСЃР°РЅ, РїРµСЂРµС€РµР» Рє РІРІРѕРґСѓ РёРјРµРЅРё
+2025-04-28 19:49:01,075 - INFO - Update id=222384808 is handled. Duration 738 ms by bot id=7916603610
+2025-04-28 19:49:09,425 - INFO - РћР±РЅРѕРІР»РµРЅРѕ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 320928996: Рђ
+2025-04-28 19:49:09,747 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РІРІРµР» РёРјСЏ: Рђ
+2025-04-28 19:49:09,748 - INFO - Update id=222384809 is handled. Duration 340 ms by bot id=7916603610
+2025-04-28 19:49:14,590 - WARNING - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РІРІРµР» РЅРµРІРµСЂРЅСѓСЋ РїСЂРѕС„РµСЃСЃРёСЋ: Р’РµС‚РµСЂРёРЅР°СЂ
+2025-04-28 19:49:14,591 - INFO - Update id=222384810 is handled. Duration 464 ms by bot id=7916603610
+2025-04-28 19:49:16,229 - INFO - РћР±РЅРѕРІР»РµРЅР° РїСЂРѕС„РµСЃСЃРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 320928996: Р¶СѓСЂРЅР°Р»РёСЃС‚ РєРѕСЂСЂРµСЃРїРѕРЅРґРµРЅС‚
+2025-04-28 19:49:16,989 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РїРѕР»СѓС‡РёР» СЃР»СѓС‡Р°Р№РЅСѓСЋ РїСЂРѕС„РµСЃСЃРёСЋ: Р¶СѓСЂРЅР°Р»РёСЃС‚ РєРѕСЂСЂРµСЃРїРѕРЅРґРµРЅС‚
+2025-04-28 19:49:16,989 - INFO - Update id=222384811 is handled. Duration 777 ms by bot id=7916603610
+2025-04-28 19:49:19,142 - INFO - РћР±РЅРѕРІР»РµРЅ РїРѕР» РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 320928996: female
+2025-04-28 19:49:19,821 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РІС‹Р±СЂР°Р» РїРѕР»: female
+2025-04-28 19:49:19,821 - INFO - Update id=222384812 is handled. Duration 689 ms by bot id=7916603610
+2025-04-28 19:49:33,522 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РґРѕСЃС‚РёРі Р»РёРјРёС‚Р° С„РѕС‚Рѕ
+2025-04-28 19:49:33,522 - INFO - Update id=222384813 is handled. Duration 512 ms by bot id=7916603610
+2025-04-28 19:49:55,020 - INFO - РЎС‡РµС‚С‡РёРє С„РѕС‚Рѕ СЃР±СЂРѕС€РµРЅ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 222384788 РёР· РєР°РЅР°Р»Р°.
+2025-04-28 19:49:55,021 - INFO - Update id=222384814 is handled. Duration 7 ms by bot id=7916603610
+2025-04-28 19:51:21,533 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РЅР°С‡Р°Р» РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ Р±РѕС‚РѕРј
+2025-04-28 19:51:21,534 - INFO - Update id=222384815 is handled. Duration 369 ms by bot id=7916603610
+2025-04-28 19:51:23,761 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РїРѕРґРїРёСЃР°РЅ, РїРµСЂРµС€РµР» Рє РІРІРѕРґСѓ РёРјРµРЅРё
+2025-04-28 19:51:23,762 - INFO - Update id=222384816 is handled. Duration 702 ms by bot id=7916603610
+2025-04-28 19:51:26,235 - INFO - РћР±РЅРѕРІР»РµРЅРѕ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 320928996: Рђ
+2025-04-28 19:51:26,716 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РІРІРµР» РёРјСЏ: Рђ
+2025-04-28 19:51:26,717 - INFO - Update id=222384817 is handled. Duration 496 ms by bot id=7916603610
+2025-04-28 19:51:34,230 - WARNING - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РІРІРµР» РЅРµРІРµСЂРЅСѓСЋ РїСЂРѕС„РµСЃСЃРёСЋ: РљРѕСЃРјРѕРЅР°РІС‚
+2025-04-28 19:51:34,231 - INFO - Update id=222384818 is handled. Duration 502 ms by bot id=7916603610
+2025-04-28 19:51:36,086 - INFO - РћР±РЅРѕРІР»РµРЅР° РїСЂРѕС„РµСЃСЃРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 320928996: СЃРїРµС†РёР°Р»РёСЃС‚ РїРѕ РІР·С‹СЃРєР°РЅРёСЋ Р·Р°РґРѕР»Р¶РµРЅРЅРѕСЃС‚Рё
+2025-04-28 19:51:36,872 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РїРѕР»СѓС‡РёР» СЃР»СѓС‡Р°Р№РЅСѓСЋ РїСЂРѕС„РµСЃСЃРёСЋ: СЃРїРµС†РёР°Р»РёСЃС‚ РїРѕ РІР·С‹СЃРєР°РЅРёСЋ Р·Р°РґРѕР»Р¶РµРЅРЅРѕСЃС‚Рё
+2025-04-28 19:51:36,873 - INFO - Update id=222384819 is handled. Duration 805 ms by bot id=7916603610
+2025-04-28 19:51:45,172 - INFO - РћР±РЅРѕРІР»РµРЅ РїРѕР» РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 320928996: female
+2025-04-28 19:51:46,132 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РІС‹Р±СЂР°Р» РїРѕР»: female
+2025-04-28 19:51:46,133 - INFO - Update id=222384820 is handled. Duration 974 ms by bot id=7916603610
+2025-04-28 19:51:55,860 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РґРѕСЃС‚РёРі Р»РёРјРёС‚Р° С„РѕС‚Рѕ
+2025-04-28 19:51:55,861 - INFO - Update id=222384821 is handled. Duration 501 ms by bot id=7916603610
+2025-04-28 19:52:08,338 - INFO - РЎС‡РµС‚С‡РёРє С„РѕС‚Рѕ СЃР±СЂРѕС€РµРЅ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 222384788.
+2025-04-28 19:52:08,338 - INFO - Update id=222384822 is handled. Duration 523 ms by bot id=7916603610
+2025-04-28 19:52:26,347 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РЅР°С‡Р°Р» РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ Р±РѕС‚РѕРј
+2025-04-28 19:52:26,348 - INFO - Update id=222384823 is handled. Duration 487 ms by bot id=7916603610
+2025-04-28 19:52:29,820 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РїРѕРґРїРёСЃР°РЅ, РїРµСЂРµС€РµР» Рє РІРІРѕРґСѓ РёРјРµРЅРё
+2025-04-28 19:52:29,820 - INFO - Update id=222384824 is handled. Duration 778 ms by bot id=7916603610
+2025-04-28 19:52:31,877 - INFO - РЎС‡РµС‚С‡РёРє С„РѕС‚Рѕ СЃР±СЂРѕС€РµРЅ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595 РёР· РєР°РЅР°Р»Р°.
+2025-04-28 19:52:31,878 - INFO - Update id=222384825 is handled. Duration 27 ms by bot id=7916603610
+2025-04-28 19:52:40,634 - INFO - РћР±РЅРѕРІР»РµРЅРѕ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 320928996: Р 
+2025-04-28 19:52:41,103 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РІРІРµР» РёРјСЏ: Р 
+2025-04-28 19:52:41,104 - INFO - Update id=222384826 is handled. Duration 489 ms by bot id=7916603610
+2025-04-28 19:52:50,571 - INFO - РћР±РЅРѕРІР»РµРЅР° РїСЂРѕС„РµСЃСЃРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 320928996: СЃРїРµС†РёР°Р»РёСЃС‚ РїРѕ С‚РµРЅРґРµСЂР°Рј
+2025-04-28 19:52:51,045 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РІС‹Р±СЂР°Р» РїСЂРѕС„РµСЃСЃРёСЋ: СЃРїРµС†РёР°Р»РёСЃС‚ РїРѕ С‚РµРЅРґРµСЂР°Рј
+2025-04-28 19:52:51,046 - INFO - Update id=222384827 is handled. Duration 503 ms by bot id=7916603610
+2025-04-28 19:52:52,713 - INFO - РћР±РЅРѕРІР»РµРЅ РїРѕР» РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 320928996: female
+2025-04-28 19:52:53,468 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РІС‹Р±СЂР°Р» РїРѕР»: female
+2025-04-28 19:52:53,468 - INFO - Update id=222384828 is handled. Duration 770 ms by bot id=7916603610
+2025-04-28 19:53:06,241 - INFO - РЎС‡РµС‚С‡РёРє С„РѕС‚Рѕ СЃР±СЂРѕС€РµРЅ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 320928996 РёР· РєР°РЅР°Р»Р°.
+2025-04-28 19:53:06,242 - INFO - Update id=222384829 is handled. Duration 25 ms by bot id=7916603610
+2025-04-28 19:53:11,845 - INFO - РЈРІРµР»РёС‡РµРЅ СЃС‡РµС‚С‡РёРє С„РѕС‚Рѕ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 320928996
+2025-04-28 19:53:12,310 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РѕС‚РїСЂР°РІРёР» С„РѕС‚Рѕ, РѕР±СЂР°Р±РѕС‚РєР° РЅР°С‡Р°С‚Р°
+2025-04-28 19:54:15,907 - ERROR - РћС€РёР±РєР° РѕС‚РїСЂР°РІРєРё РІРёРґРµРѕ-Р·Р°РіР»СѓС€РєРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ 320928996: HTTP Client says - Request timeout error
+2025-04-28 19:54:16,075 - INFO - Update id=222384830 is handled. Duration 64260 ms by bot id=7916603610
+2025-04-28 20:01:37,890 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РЅР°С‡Р°Р» РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ Р±РѕС‚РѕРј
+2025-04-28 20:01:37,891 - INFO - Update id=222384831 is handled. Duration 497 ms by bot id=7916603610
+2025-04-28 20:01:39,940 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РїРѕРґРїРёСЃР°РЅ, РїРµСЂРµС€РµР» Рє РІРІРѕРґСѓ РёРјРµРЅРё
+2025-04-28 20:01:39,941 - INFO - Update id=222384832 is handled. Duration 893 ms by bot id=7916603610
+2025-04-28 20:01:45,232 - INFO - РћР±РЅРѕРІР»РµРЅРѕ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: Р’Р»Р°РґРёРјРёСЂ
+2025-04-28 20:01:45,606 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІРІРµР» РёРјСЏ: Р’Р»Р°РґРёРјРёСЂ
+2025-04-28 20:01:45,606 - INFO - Update id=222384833 is handled. Duration 387 ms by bot id=7916603610
+2025-04-28 20:01:47,298 - INFO - РћР±РЅРѕРІР»РµРЅР° РїСЂРѕС„РµСЃСЃРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: РІСЂР°С‡
+2025-04-28 20:01:47,770 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїСЂРѕС„РµСЃСЃРёСЋ: РІСЂР°С‡
+2025-04-28 20:01:47,771 - INFO - Update id=222384834 is handled. Duration 485 ms by bot id=7916603610
+2025-04-28 20:01:49,417 - INFO - РћР±РЅРѕРІР»РµРЅ РїРѕР» РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: male
+2025-04-28 20:01:50,192 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїРѕР»: male
+2025-04-28 20:01:50,193 - INFO - Update id=222384835 is handled. Duration 787 ms by bot id=7916603610
+2025-04-28 20:01:55,297 - INFO - РЈРІРµР»РёС‡РµРЅ СЃС‡РµС‚С‡РёРє С„РѕС‚Рѕ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595
+2025-04-28 20:01:55,761 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РѕС‚РїСЂР°РІРёР» С„РѕС‚Рѕ, РѕР±СЂР°Р±РѕС‚РєР° РЅР°С‡Р°С‚Р°
+2025-04-28 20:02:41,766 - INFO - Р’РёРґРµРѕ-Р·Р°РіР»СѓС€РєР° РѕС‚РїСЂР°РІР»РµРЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ 386406595
+2025-04-28 20:02:41,767 - INFO - Update id=222384836 is handled. Duration 46492 ms by bot id=7916603610
+2025-04-28 20:03:48,233 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 Р·Р°РїСЂРѕСЃРёР» РґСЂСѓРіСѓСЋ С„РёРіСѓСЂРєСѓ
+2025-04-28 20:03:48,233 - INFO - Update id=222384837 is handled. Duration 977 ms by bot id=7916603610
+2025-04-28 20:04:08,946 - INFO - РЈРІРµР»РёС‡РµРЅ СЃС‡РµС‚С‡РёРє С„РѕС‚Рѕ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 320928996
+2025-04-28 20:04:09,311 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 320928996 РѕС‚РїСЂР°РІРёР» С„РѕС‚Рѕ, РѕР±СЂР°Р±РѕС‚РєР° РЅР°С‡Р°С‚Р°
+2025-04-28 20:05:11,878 - ERROR - РћС€РёР±РєР° РѕС‚РїСЂР°РІРєРё РІРёРґРµРѕ-Р·Р°РіР»СѓС€РєРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ 320928996: HTTP Client says - Request timeout error
+2025-04-28 20:05:12,012 - INFO - Update id=222384838 is handled. Duration 63088 ms by bot id=7916603610
+2025-04-28 20:07:22,716 - WARNING - Received SIGTERM signal
+2025-04-28 20:07:22,717 - INFO - Polling stopped for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-28 20:07:22,719 - INFO - Polling stopped
+2025-04-28 20:07:22,721 - INFO - 15 detected, shutting down
+2025-04-28 20:07:27,582 - WARNING - You have incorrectly specified the following celery arguments after flower command: ['--broker']. Please specify them after celery command instead following this template: celery [celery args] flower [flower args].
+2025-04-28 20:07:29,880 - INFO - Visit me at http://0.0.0.0:5555
+2025-04-28 20:07:29,887 - INFO - Broker: redis://redis:6379/0
+2025-04-28 20:07:29,889 - INFO - Registered tasks: 
+['celery.accumulate',
+ 'celery.backend_cleanup',
+ 'celery.chain',
+ 'celery.chord',
+ 'celery.chord_unlock',
+ 'celery.chunks',
+ 'celery.group',
+ 'celery.map',
+ 'celery.starmap',
+ 'tasks.generate_image_task']
+2025-04-28 20:07:29,958 - INFO - Connected to redis://redis:6379/0
+2025-04-28 20:07:30,515 - INFO - Р‘Р°Р·Р° РґР°РЅРЅС‹С… РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°РЅР°
+2025-04-28 20:07:30,957 - WARNING - Inspect method scheduled failed
+2025-04-28 20:07:30,960 - WARNING - Inspect method stats failed
+2025-04-28 20:07:30,961 - WARNING - Inspect method registered failed
+2025-04-28 20:07:31,008 - WARNING - Inspect method reserved failed
+2025-04-28 20:07:31,008 - WARNING - Inspect method revoked failed
+2025-04-28 20:07:31,015 - WARNING - Inspect method active failed
+2025-04-28 20:07:31,018 - WARNING - Inspect method conf failed
+2025-04-28 20:07:31,018 - WARNING - Inspect method active_queues failed
+2025-04-28 20:07:31,582 - INFO - Р‘РѕС‚ Р·Р°РїСѓС‰РµРЅ, РІРѕСЂРєРµСЂС‹ РіРµРЅРµСЂР°С‚РѕСЂР° РёР·РѕР±СЂР°Р¶РµРЅРёР№ Р°РєС‚РёРІРёСЂРѕРІР°РЅС‹
+2025-04-28 20:07:31,583 - INFO - Start polling
+2025-04-28 20:07:31,920 - INFO - Run polling for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-28 20:07:55,555 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 Р·Р°РїСЂРѕСЃРёР» РґСЂСѓРіСѓСЋ С„РёРіСѓСЂРєСѓ
+2025-04-28 20:07:55,556 - INFO - Update id=222384839 is handled. Duration 1598 ms by bot id=7916603610
+2025-04-28 20:08:03,632 - INFO - РЈРІРµР»РёС‡РµРЅ СЃС‡РµС‚С‡РёРє С„РѕС‚Рѕ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595
+2025-04-28 20:08:03,948 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РѕС‚РїСЂР°РІРёР» С„РѕС‚Рѕ, РѕР±СЂР°Р±РѕС‚РєР° РЅР°С‡Р°С‚Р°
+2025-04-28 20:09:05,984 - INFO - Р’РёРґРµРѕ-Р·Р°РіР»СѓС€РєР° РѕС‚РїСЂР°РІР»РµРЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ 386406595 (РїРѕРїС‹С‚РєР° 1)
+2025-04-28 20:09:05,985 - INFO - Update id=222384840 is handled. Duration 62380 ms by bot id=7916603610
+2025-04-28 20:09:21,268 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 Р·Р°РїСЂРѕСЃРёР» РґСЂСѓРіСѓСЋ С„РёРіСѓСЂРєСѓ
+2025-04-28 20:09:21,268 - INFO - Update id=222384841 is handled. Duration 876 ms by bot id=7916603610
+2025-04-28 20:09:25,728 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РґРѕСЃС‚РёРі Р»РёРјРёС‚Р° С„РѕС‚Рѕ
+2025-04-28 20:09:25,729 - INFO - Update id=222384842 is handled. Duration 489 ms by bot id=7916603610
+2025-04-28 20:09:33,311 - INFO - РЎС‡РµС‚С‡РёРє С„РѕС‚Рѕ СЃР±СЂРѕС€РµРЅ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 320928996 РёР· РєР°РЅР°Р»Р°.
+2025-04-28 20:09:33,312 - INFO - Update id=222384843 is handled. Duration 29 ms by bot id=7916603610
+2025-04-28 20:09:39,519 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РґРѕСЃС‚РёРі Р»РёРјРёС‚Р° С„РѕС‚Рѕ
+2025-04-28 20:09:39,520 - INFO - Update id=222384844 is handled. Duration 485 ms by bot id=7916603610
+2025-04-28 20:09:48,497 - INFO - РЎС‡РµС‚С‡РёРє С„РѕС‚Рѕ СЃР±СЂРѕС€РµРЅ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595 РёР· РєР°РЅР°Р»Р°.
+2025-04-28 20:09:48,497 - INFO - Update id=222384845 is handled. Duration 28 ms by bot id=7916603610
+2025-04-28 20:09:54,256 - INFO - РЈРІРµР»РёС‡РµРЅ СЃС‡РµС‚С‡РёРє С„РѕС‚Рѕ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595
+2025-04-28 20:09:54,722 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РѕС‚РїСЂР°РІРёР» С„РѕС‚Рѕ, РѕР±СЂР°Р±РѕС‚РєР° РЅР°С‡Р°С‚Р°
+2025-04-28 20:10:56,866 - WARNING - РћС€РёР±РєР° РѕС‚РїСЂР°РІРєРё РІРёРґРµРѕ (РїРѕРїС‹С‚РєР° 1): HTTP Client says - Request timeout error
+2025-04-28 20:11:47,421 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РЅР°С‡Р°Р» РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ Р±РѕС‚РѕРј
+2025-04-28 20:11:47,422 - INFO - Update id=222384847 is handled. Duration 1026 ms by bot id=7916603610
+2025-04-28 20:11:48,831 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РїРѕРґРїРёСЃР°РЅ, РїРµСЂРµС€РµР» Рє РІРІРѕРґСѓ РёРјРµРЅРё
+2025-04-28 20:11:48,832 - INFO - Update id=222384848 is handled. Duration 683 ms by bot id=7916603610
+2025-04-28 20:11:51,581 - INFO - Р’РёРґРµРѕ-Р·Р°РіР»СѓС€РєР° РѕС‚РїСЂР°РІР»РµРЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ 386406595 (РїРѕРїС‹С‚РєР° 2)
+2025-04-28 20:11:51,582 - INFO - Update id=222384846 is handled. Duration 117351 ms by bot id=7916603610
+2025-04-28 20:11:59,449 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РЅР°С‡Р°Р» РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ Р±РѕС‚РѕРј
+2025-04-28 20:11:59,450 - INFO - Update id=222384849 is handled. Duration 501 ms by bot id=7916603610
+2025-04-28 20:12:00,819 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РїРѕРґРїРёСЃР°РЅ, РїРµСЂРµС€РµР» Рє РІРІРѕРґСѓ РёРјРµРЅРё
+2025-04-28 20:12:00,822 - INFO - Update id=222384850 is handled. Duration 778 ms by bot id=7916603610
+2025-04-28 20:12:11,033 - INFO - РћР±РЅРѕРІР»РµРЅРѕ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: Р’Р»Р°РґРёРјРёСЂ
+2025-04-28 20:12:11,496 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІРІРµР» РёРјСЏ: Р’Р»Р°РґРёРјРёСЂ
+2025-04-28 20:12:11,496 - INFO - Update id=222384851 is handled. Duration 483 ms by bot id=7916603610
+2025-04-28 20:12:13,154 - INFO - РћР±РЅРѕРІР»РµРЅР° РїСЂРѕС„РµСЃСЃРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: РІСЂР°С‡
+2025-04-28 20:12:13,578 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїСЂРѕС„РµСЃСЃРёСЋ: РІСЂР°С‡
+2025-04-28 20:12:13,578 - INFO - Update id=222384852 is handled. Duration 436 ms by bot id=7916603610
+2025-04-28 20:12:16,121 - INFO - РћР±РЅРѕРІР»РµРЅ РїРѕР» РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: male
+2025-04-28 20:12:17,089 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїРѕР»: male
+2025-04-28 20:12:17,090 - INFO - Update id=222384853 is handled. Duration 981 ms by bot id=7916603610
+2025-04-28 20:12:23,785 - INFO - РЈРІРµР»РёС‡РµРЅ СЃС‡РµС‚С‡РёРє С„РѕС‚Рѕ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595
+2025-04-28 20:12:24,260 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РѕС‚РїСЂР°РІРёР» С„РѕС‚Рѕ, РѕР±СЂР°Р±РѕС‚РєР° РЅР°С‡Р°С‚Р°
+2025-04-28 20:13:26,859 - WARNING - РћС€РёР±РєР° РѕС‚РїСЂР°РІРєРё РІРёРґРµРѕ (РїРѕРїС‹С‚РєР° 1): HTTP Client says - Request timeout error
+2025-04-28 20:14:27,864 - INFO - Р’РёРґРµРѕ-Р·Р°РіР»СѓС€РєР° РѕС‚РїСЂР°РІР»РµРЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ 386406595 (РїРѕРїС‹С‚РєР° 2)
+2025-04-28 20:14:27,865 - INFO - Update id=222384854 is handled. Duration 124103 ms by bot id=7916603610
+2025-04-28 20:19:41,376 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РЅР°С‡Р°Р» РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ Р±РѕС‚РѕРј
+2025-04-28 20:19:41,377 - INFO - Update id=222384855 is handled. Duration 468 ms by bot id=7916603610
+2025-04-28 20:19:42,999 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РїРѕРґРїРёСЃР°РЅ, РїРµСЂРµС€РµР» Рє РІРІРѕРґСѓ РёРјРµРЅРё
+2025-04-28 20:19:42,999 - INFO - Update id=222384856 is handled. Duration 734 ms by bot id=7916603610
+2025-04-28 20:19:45,578 - INFO - РћР±РЅРѕРІР»РµРЅРѕ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: Р’
+2025-04-28 20:19:46,087 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІРІРµР» РёРјСЏ: Р’
+2025-04-28 20:19:46,088 - INFO - Update id=222384857 is handled. Duration 526 ms by bot id=7916603610
+2025-04-28 20:19:49,059 - INFO - РћР±РЅРѕРІР»РµРЅР° РїСЂРѕС„РµСЃСЃРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: РІСЂР°С‡
+2025-04-28 20:19:49,534 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїСЂРѕС„РµСЃСЃРёСЋ: РІСЂР°С‡
+2025-04-28 20:19:49,534 - INFO - Update id=222384858 is handled. Duration 491 ms by bot id=7916603610
+2025-04-28 20:19:50,279 - INFO - РћР±РЅРѕРІР»РµРЅ РїРѕР» РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: male
+2025-04-28 20:19:50,952 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїРѕР»: male
+2025-04-28 20:19:50,953 - INFO - Update id=222384859 is handled. Duration 683 ms by bot id=7916603610
+2025-04-28 20:19:55,435 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РґРѕСЃС‚РёРі Р»РёРјРёС‚Р° С„РѕС‚Рѕ
+2025-04-28 20:19:55,436 - INFO - Update id=222384860 is handled. Duration 481 ms by bot id=7916603610
+2025-04-28 20:19:59,428 - INFO - РЎС‡РµС‚С‡РёРє С„РѕС‚Рѕ СЃР±СЂРѕС€РµРЅ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595 РёР· РєР°РЅР°Р»Р°.
+2025-04-28 20:19:59,428 - INFO - Update id=222384861 is handled. Duration 29 ms by bot id=7916603610
+2025-04-28 20:20:05,780 - INFO - РЈРІРµР»РёС‡РµРЅ СЃС‡РµС‚С‡РёРє С„РѕС‚Рѕ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595
+2025-04-28 20:20:06,251 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РѕС‚РїСЂР°РІРёР» С„РѕС‚Рѕ, РѕР±СЂР°Р±РѕС‚РєР° РЅР°С‡Р°С‚Р°
+2025-04-28 20:20:44,885 - INFO - 15 detected, shutting down
+2025-04-28 20:20:44,886 - WARNING - Received SIGTERM signal
+2025-04-28 20:20:44,888 - INFO - Polling stopped for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-28 20:20:44,889 - INFO - Polling stopped
+2025-04-28 20:20:45,142 - INFO - Update id=222384862 is not handled. Duration 39382 ms by bot id=7916603610
+2025-04-28 20:20:57,792 - WARNING - You have incorrectly specified the following celery arguments after flower command: ['--broker']. Please specify them after celery command instead following this template: celery [celery args] flower [flower args].
+2025-04-28 20:21:00,502 - INFO - Visit me at http://0.0.0.0:5555
+2025-04-28 20:21:00,509 - INFO - Broker: redis://redis:6379/0
+2025-04-28 20:21:00,512 - INFO - Registered tasks: 
+['celery.accumulate',
+ 'celery.backend_cleanup',
+ 'celery.chain',
+ 'celery.chord',
+ 'celery.chord_unlock',
+ 'celery.chunks',
+ 'celery.group',
+ 'celery.map',
+ 'celery.starmap',
+ 'tasks.generate_image_task']
+2025-04-28 20:21:00,636 - INFO - Connected to redis://redis:6379/0
+2025-04-28 20:21:01,217 - INFO - Р‘Р°Р·Р° РґР°РЅРЅС‹С… РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°РЅР°
+2025-04-28 20:21:01,652 - WARNING - Inspect method scheduled failed
+2025-04-28 20:21:01,653 - WARNING - Inspect method stats failed
+2025-04-28 20:21:01,659 - WARNING - Inspect method conf failed
+2025-04-28 20:21:01,660 - WARNING - Inspect method active_queues failed
+2025-04-28 20:21:01,665 - WARNING - Inspect method reserved failed
+2025-04-28 20:21:01,666 - WARNING - Inspect method registered failed
+2025-04-28 20:21:01,667 - WARNING - Inspect method active failed
+2025-04-28 20:21:01,669 - WARNING - Inspect method revoked failed
+2025-04-28 20:21:02,428 - INFO - Р‘РѕС‚ Р·Р°РїСѓС‰РµРЅ, РІРѕСЂРєРµСЂС‹ РіРµРЅРµСЂР°С‚РѕСЂР° РёР·РѕР±СЂР°Р¶РµРЅРёР№ Р°РєС‚РёРІРёСЂРѕРІР°РЅС‹
+2025-04-28 20:21:02,429 - INFO - Start polling
+2025-04-28 20:21:02,702 - INFO - Run polling for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-28 20:27:47,783 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РЅР°С‡Р°Р» РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ Р±РѕС‚РѕРј
+2025-04-28 20:27:47,784 - INFO - Update id=222384863 is handled. Duration 1317 ms by bot id=7916603610
+2025-04-28 20:27:49,729 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РїРѕРґРїРёСЃР°РЅ, РїРµСЂРµС€РµР» Рє РІРІРѕРґСѓ РёРјРµРЅРё
+2025-04-28 20:27:49,730 - INFO - Update id=222384864 is handled. Duration 999 ms by bot id=7916603610
+2025-04-28 20:27:53,749 - INFO - РћР±РЅРѕРІР»РµРЅРѕ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: Р’Р»Р°РґРёРјРёСЂ
+2025-04-28 20:27:54,224 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІРІРµР» РёРјСЏ: Р’Р»Р°РґРёРјРёСЂ
+2025-04-28 20:27:54,225 - INFO - Update id=222384865 is handled. Duration 492 ms by bot id=7916603610
+2025-04-28 20:27:55,721 - INFO - РћР±РЅРѕРІР»РµРЅР° РїСЂРѕС„РµСЃСЃРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: РІСЂР°С‡
+2025-04-28 20:27:56,201 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїСЂРѕС„РµСЃСЃРёСЋ: РІСЂР°С‡
+2025-04-28 20:27:56,202 - INFO - Update id=222384866 is handled. Duration 490 ms by bot id=7916603610
+2025-04-28 20:27:57,195 - INFO - РћР±РЅРѕРІР»РµРЅ РїРѕР» РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: male
+2025-04-28 20:27:57,931 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїРѕР»: male
+2025-04-28 20:27:57,932 - INFO - Update id=222384867 is handled. Duration 750 ms by bot id=7916603610
+2025-04-28 20:28:03,006 - INFO - РЈРІРµР»РёС‡РµРЅ СЃС‡РµС‚С‡РёРє С„РѕС‚Рѕ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595
+2025-04-28 20:28:03,422 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РѕС‚РїСЂР°РІРёР» С„РѕС‚Рѕ, РѕР±СЂР°Р±РѕС‚РєР° РЅР°С‡Р°С‚Р°
+2025-04-28 20:29:04,822 - WARNING - РћС€РёР±РєР° РѕС‚РїСЂР°РІРєРё РІРёРґРµРѕ (РїРѕРїС‹С‚РєР° 1): HTTP Client says - Request timeout error
+2025-04-28 20:30:07,817 - WARNING - РћС€РёР±РєР° РѕС‚РїСЂР°РІРєРё РІРёРґРµРѕ (РїРѕРїС‹С‚РєР° 2): HTTP Client says - Request timeout error
+2025-04-28 20:31:02,602 - INFO - Р’РёРґРµРѕ-Р·Р°РіР»СѓС€РєР° РѕС‚РїСЂР°РІР»РµРЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ 386406595 (РїРѕРїС‹С‚РєР° 3)
+2025-04-28 20:31:03,214 - INFO - Update id=222384868 is handled. Duration 180239 ms by bot id=7916603610
+2025-04-28 20:33:09,381 - INFO - 15 detected, shutting down
+2025-04-28 20:33:09,382 - WARNING - Received SIGTERM signal
+2025-04-28 20:33:09,384 - INFO - Polling stopped for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-28 20:33:09,385 - INFO - Polling stopped
+2025-04-28 20:33:14,121 - WARNING - You have incorrectly specified the following celery arguments after flower command: ['--broker']. Please specify them after celery command instead following this template: celery [celery args] flower [flower args].
+2025-04-28 20:33:16,410 - INFO - Visit me at http://0.0.0.0:5555
+2025-04-28 20:33:16,414 - INFO - Broker: redis://redis:6379/0
+2025-04-28 20:33:16,417 - INFO - Registered tasks: 
+['celery.accumulate',
+ 'celery.backend_cleanup',
+ 'celery.chain',
+ 'celery.chord',
+ 'celery.chord_unlock',
+ 'celery.chunks',
+ 'celery.group',
+ 'celery.map',
+ 'celery.starmap',
+ 'tasks.generate_image_task']
+2025-04-28 20:33:16,429 - INFO - Connected to redis://redis:6379/0
+2025-04-28 20:33:17,065 - INFO - Р‘Р°Р·Р° РґР°РЅРЅС‹С… РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°РЅР°
+2025-04-28 20:33:17,535 - WARNING - Inspect method revoked failed
+2025-04-28 20:33:17,538 - WARNING - Inspect method scheduled failed
+2025-04-28 20:33:17,538 - WARNING - Inspect method active failed
+2025-04-28 20:33:17,543 - WARNING - Inspect method reserved failed
+2025-04-28 20:33:17,546 - WARNING - Inspect method registered failed
+2025-04-28 20:33:17,546 - WARNING - Inspect method stats failed
+2025-04-28 20:33:17,546 - WARNING - Inspect method conf failed
+2025-04-28 20:33:17,549 - WARNING - Inspect method active_queues failed
+2025-04-28 20:33:18,169 - INFO - Р‘РѕС‚ Р·Р°РїСѓС‰РµРЅ, РІРѕСЂРєРµСЂС‹ РіРµРЅРµСЂР°С‚РѕСЂР° РёР·РѕР±СЂР°Р¶РµРЅРёР№ Р°РєС‚РёРІРёСЂРѕРІР°РЅС‹
+2025-04-28 20:33:18,170 - INFO - Start polling
+2025-04-28 20:33:18,451 - INFO - Run polling for bot @testcomics12_bot id=7916603610 - 'testcomics12'
+2025-04-28 20:38:22,418 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РЅР°С‡Р°Р» РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ Р±РѕС‚РѕРј
+2025-04-28 20:38:22,419 - INFO - Update id=222384869 is handled. Duration 1294 ms by bot id=7916603610
+2025-04-28 20:38:23,587 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РїРѕРґРїРёСЃР°РЅ, РїРµСЂРµС€РµР» Рє РІРІРѕРґСѓ РёРјРµРЅРё
+2025-04-28 20:38:23,587 - INFO - Update id=222384870 is handled. Duration 673 ms by bot id=7916603610
+2025-04-28 20:38:26,251 - INFO - РЎС‡РµС‚С‡РёРє С„РѕС‚Рѕ СЃР±СЂРѕС€РµРЅ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595 РёР· РєР°РЅР°Р»Р°.
+2025-04-28 20:38:26,255 - INFO - Update id=222384871 is handled. Duration 38 ms by bot id=7916603610
+2025-04-28 20:38:30,142 - INFO - РћР±РЅРѕРІР»РµРЅРѕ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: Р’Р»Р°РґРёРјРёСЂ
+2025-04-28 20:38:30,533 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІРІРµР» РёРјСЏ: Р’Р»Р°РґРёРјРёСЂ
+2025-04-28 20:38:30,534 - INFO - Update id=222384872 is handled. Duration 403 ms by bot id=7916603610
+2025-04-28 20:38:32,007 - INFO - РћР±РЅРѕРІР»РµРЅР° РїСЂРѕС„РµСЃСЃРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: РІСЂР°С‡
+2025-04-28 20:38:32,577 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїСЂРѕС„РµСЃСЃРёСЋ: РІСЂР°С‡
+2025-04-28 20:38:32,577 - INFO - Update id=222384873 is handled. Duration 586 ms by bot id=7916603610
+2025-04-28 20:38:33,341 - INFO - РћР±РЅРѕРІР»РµРЅ РїРѕР» РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: male
+2025-04-28 20:38:34,023 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїРѕР»: male
+2025-04-28 20:38:34,023 - INFO - Update id=222384874 is handled. Duration 694 ms by bot id=7916603610
+2025-04-28 20:38:38,934 - INFO - РЈРІРµР»РёС‡РµРЅ СЃС‡РµС‚С‡РёРє С„РѕС‚Рѕ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595
+2025-04-28 20:38:39,314 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РѕС‚РїСЂР°РІРёР» С„РѕС‚Рѕ, РѕР±СЂР°Р±РѕС‚РєР° РЅР°С‡Р°С‚Р°
+2025-04-28 20:39:37,425 - INFO - Р’РёРґРµРѕ-Р·Р°РіР»СѓС€РєР° РѕС‚РїСЂР°РІР»РµРЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ 386406595
+2025-04-28 20:39:37,976 - INFO - Update id=222384875 is handled. Duration 59064 ms by bot id=7916603610
+2025-04-28 20:40:31,415 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 Р·Р°РїСЂРѕСЃРёР» РґСЂСѓРіСѓСЋ С„РёРіСѓСЂРєСѓ
+2025-04-28 20:40:31,415 - INFO - Update id=222384876 is handled. Duration 822 ms by bot id=7916603610
+2025-04-28 20:40:36,131 - INFO - РЈРІРµР»РёС‡РµРЅ СЃС‡РµС‚С‡РёРє С„РѕС‚Рѕ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595
+2025-04-28 20:40:36,493 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РѕС‚РїСЂР°РІРёР» С„РѕС‚Рѕ, РѕР±СЂР°Р±РѕС‚РєР° РЅР°С‡Р°С‚Р°
+2025-04-28 20:41:38,787 - ERROR - РќРµ СѓРґР°Р»РѕСЃСЊ РѕС‚РїСЂР°РІРёС‚СЊ РІРёРґРµРѕ-Р·Р°РіР»СѓС€РєСѓ: HTTP Client says - Request timeout error
+2025-04-28 20:41:39,857 - INFO - Update id=222384877 is handled. Duration 63756 ms by bot id=7916603610
+2025-04-28 20:45:18,950 - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ServerDisconnectedError: Server disconnected
+2025-04-28 20:45:18,954 - WARNING - Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7916603610)
+2025-04-28 20:45:19,966 - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Connect call failed ('149.154.167.220', 443)]
+2025-04-28 20:45:19,971 - WARNING - Sleep for 1.515909 seconds and try again... (tryings = 1, bot id = 7916603610)
+2025-04-28 20:45:21,495 - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Connect call failed ('149.154.167.220', 443)]
+2025-04-28 20:45:21,496 - WARNING - Sleep for 2.001954 seconds and try again... (tryings = 2, bot id = 7916603610)
+2025-04-28 20:45:23,506 - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Connect call failed ('149.154.167.220', 443)]
+2025-04-28 20:45:23,506 - WARNING - Sleep for 2.829276 seconds and try again... (tryings = 3, bot id = 7916603610)
+2025-04-28 20:45:26,342 - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Connect call failed ('149.154.167.220', 443)]
+2025-04-28 20:45:26,344 - WARNING - Sleep for 3.718473 seconds and try again... (tryings = 4, bot id = 7916603610)
+2025-04-28 20:45:40,273 - INFO - Connection established (tryings = 5, bot id = 7916603610)
+2025-04-28 20:45:51,289 - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ServerDisconnectedError: Server disconnected
+2025-04-28 20:45:51,296 - WARNING - Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7916603610)
+2025-04-28 20:45:52,311 - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Connect call failed ('149.154.167.220', 443)]
+2025-04-28 20:45:52,312 - WARNING - Sleep for 1.394118 seconds and try again... (tryings = 1, bot id = 7916603610)
+2025-04-28 20:45:53,712 - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Connect call failed ('149.154.167.220', 443)]
+2025-04-28 20:45:53,712 - WARNING - Sleep for 1.977566 seconds and try again... (tryings = 2, bot id = 7916603610)
+2025-04-28 20:45:55,695 - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Connect call failed ('149.154.167.220', 443)]
+2025-04-28 20:45:55,695 - WARNING - Sleep for 2.488783 seconds and try again... (tryings = 3, bot id = 7916603610)
+2025-04-28 20:45:58,190 - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Connect call failed ('149.154.167.220', 443)]
+2025-04-28 20:45:58,190 - WARNING - Sleep for 3.292891 seconds and try again... (tryings = 4, bot id = 7916603610)
+2025-04-28 20:46:11,721 - INFO - Connection established (tryings = 5, bot id = 7916603610)
+2025-04-28 20:49:37,807 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РЅР°С‡Р°Р» РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ Р±РѕС‚РѕРј
+2025-04-28 20:49:37,808 - INFO - Update id=222384878 is handled. Duration 234 ms by bot id=7916603610
+2025-04-28 20:49:39,155 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РїРѕРґРїРёСЃР°РЅ, РїРµСЂРµС€РµР» Рє РІРІРѕРґСѓ РёРјРµРЅРё
+2025-04-28 20:49:39,155 - INFO - Update id=222384879 is handled. Duration 184 ms by bot id=7916603610
+2025-04-28 20:49:42,720 - INFO - РћР±РЅРѕРІР»РµРЅРѕ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: Р’Р»Р°РґРёРјРёСЂ
+2025-04-28 20:49:42,825 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІРІРµР» РёРјСЏ: Р’Р»Р°РґРёРјРёСЂ
+2025-04-28 20:49:42,825 - INFO - Update id=222384880 is handled. Duration 117 ms by bot id=7916603610
+2025-04-28 20:49:50,275 - INFO - РћР±РЅРѕРІР»РµРЅР° РїСЂРѕС„РµСЃСЃРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: РІСЂР°С‡
+2025-04-28 20:49:50,450 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїСЂРѕС„РµСЃСЃРёСЋ: РІСЂР°С‡
+2025-04-28 20:49:50,451 - INFO - Update id=222384881 is handled. Duration 190 ms by bot id=7916603610
+2025-04-28 20:49:51,802 - INFO - РћР±РЅРѕРІР»РµРЅ РїРѕР» РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 386406595: male
+2025-04-28 20:49:51,979 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РІС‹Р±СЂР°Р» РїРѕР»: male
+2025-04-28 20:49:51,980 - INFO - Update id=222384882 is handled. Duration 192 ms by bot id=7916603610
+2025-04-28 20:49:58,716 - INFO - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ 386406595 РґРѕСЃС‚РёРі Р»РёРјРёС‚Р° С„РѕС‚Рѕ
+2025-04-28 20:49:58,716 - INFO - Update id=222384883 is handled. Duration 108 ms by bot id=7916603610
+2025-04-28 22:08:06,481 - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ServerDisconnectedError: Server disconnected
+2025-04-28 22:08:06,497 - WARNING - Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7916603610)
+2025-04-28 22:08:17,733 - INFO - Connection established (tryings = 1, bot id = 7916603610)
