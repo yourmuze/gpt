@@ -1,0 +1,60 @@
+2025-05-01 00:53:56 [INFO] Начало постановки в очередь 12 задач (profession=врач, gender=male)
+2025-05-01 00:53:56 [INFO] Все задачи поставлены в очередь.
+2025-05-01 00:53:56 [INFO] Начало мониторинга очереди Celery
+2025-05-01 00:53:56 [INFO] Осталось задач в очереди: 5
+2025-05-01 00:53:57 [INFO] Осталось задач в очереди: 0
+2025-05-01 00:53:57 [INFO] Очередь опустела — все задачи отработаны.
+2025-05-01 00:53:57 [INFO] Инспекция состояния воркеров Celery
+2025-05-01 00:53:59 [INFO] Active tasks: {'celery@73e8b0696183': []}
+2025-05-01 00:53:59 [INFO] Reserved tasks: {'celery@73e8b0696183': []}
+2025-05-01 00:53:59 [INFO] Тест очереди завершён успешно.
+2025-05-01 01:02:20 [INFO] Начало постановки в очередь 18 задач (profession=врач, gender=male)
+2025-05-01 01:02:20 [INFO] Все задачи поставлены в очередь.
+2025-05-01 01:02:20 [INFO] Начало мониторинга очереди Celery
+2025-05-01 01:02:20 [INFO] Осталось задач в очереди: 3
+2025-05-01 01:02:21 [INFO] Осталось задач в очереди: 0
+2025-05-01 01:02:21 [INFO] Очередь опустела — все задачи отработаны.
+2025-05-01 01:02:21 [INFO] Инспекция состояния воркеров Celery
+2025-05-01 01:02:23 [INFO] Active tasks: {'celery@1f81a2121554': [{'id': '7a8f599f-81bf-49f0-88d4-ce504b1b6e9e', 'name': 'tasks.generate_image_task', 'args': ['/app/placeholder.jpg', 'врач', 'male', 1000001], 'kwargs': {}, 'type': 'tasks.generate_image_task', 'hostname': 'celery@1f81a2121554', 'time_start': 1746061340.1407318, 'acknowledged': True, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0, 'redelivered': False}, 'worker_pid': 23}, {'id': '491c29ae-a387-43ef-bf53-361bbc43b7b0', 'name': 'tasks.generate_image_task', 'args': ['/app/placeholder.jpg', 'врач', 'male', 1000002], 'kwargs': {}, 'type': 'tasks.generate_image_task', 'hostname': 'celery@1f81a2121554', 'time_start': 1746061340.1408288, 'acknowledged': True, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0, 'redelivered': False}, 'worker_pid': 19}, {'id': '419b00af-e36e-4b27-b9bd-bc2c6e4755e1', 'name': 'tasks.generate_image_task', 'args': ['/app/placeholder.jpg', 'врач', 'male', 1000003], 'kwargs': {}, 'type': 'tasks.generate_image_task', 'hostname': 'celery@1f81a2121554', 'time_start': 1746061340.1477463, 'acknowledged': True, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0, 'redelivered': False}, 'worker_pid': 24}, {'id': 'c7554b24-8ece-4b0b-ab56-835161a620fd', 'name': 'tasks.generate_image_task', 'args': ['/app/placeholder.jpg', 'врач', 'male', 1000004], 'kwargs': {}, 'type': 'tasks.generate_image_task', 'hostname': 'celery@1f81a2121554', 'time_start': 1746061340.146819, 'acknowledged': True, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0, 'redelivered': False}, 'worker_pid': 20}, {'id': '07ea9c59-63ee-4906-bc26-520ef0aa0a6f', 'name': 'tasks.generate_image_task', 'args': ['/app/placeholder.jpg', 'врач', 'male', 1000000], 'kwargs': {}, 'type': 'tasks.generate_image_task', 'hostname': 'celery@1f81a2121554', 'time_start': 1746061340.1373038, 'acknowledged': True, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0, 'redelivered': False}, 'worker_pid': 22}, {'id': '16be566f-550c-4560-a5eb-33128f913d7f', 'name': 'tasks.generate_image_task', 'args': ['/app/placeholder.jpg', 'врач', 'male', 1000005], 'kwargs': {}, 'type': 'tasks.generate_image_task', 'hostname': 'celery@1f81a2121554', 'time_start': 1746061340.1510262, 'acknowledged': True, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0, 'redelivered': False}, 'worker_pid': 21}]}
+2025-05-01 01:02:23 [INFO] Reserved tasks: {'celery@1f81a2121554': [{'id': 'ade383b3-8178-48d9-be41-ec82fe836628', 'name': 'tasks.generate_image_task', 'args': ['/app/placeholder.jpg', 'врач', 'male', 1000010], 'kwargs': {}, 'type': 'tasks.generate_image_task', 'hostname': 'celery@1f81a2121554', 'time_start': None, 'acknowledged': False, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0, 'redelivered': False}, 'worker_pid': None}, {'id': '5c693f58-1fe8-49c7-ac27-f7a1a36ef2b6', 'name': 'tasks.generate_image_task', 'args': ['/app/placeholder.jpg', 'врач', 'male', 1000011], 'kwargs': {}, 'type': 'tasks.generate_image_task', 'hostname': 'celery@1f81a2121554', 'time_start': None, 'acknowledged': False, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0, 'redelivered': False}, 'worker_pid': None}, {'id': '65098b46-525e-4233-a11a-827934be707e', 'name': 'tasks.generate_image_task', 'args': ['/app/placeholder.jpg', 'врач', 'male', 1000012], 'kwargs': {}, 'type': 'tasks.generate_image_task', 'hostname': 'celery@1f81a2121554', 'time_start': None, 'acknowledged': False, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0, 'redelivered': False}, 'worker_pid': None}, {'id': '14b36823-9575-4827-a257-20f7098a706c', 'name': 'tasks.generate_image_task', 'args': ['/app/placeholder.jpg', 'врач', 'male', 1000009], 'kwargs': {}, 'type': 'tasks.generate_image_task', 'hostname': 'celery@1f81a2121554', 'time_start': None, 'acknowledged': False, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0, 'redelivered': False}, 'worker_pid': None}, {'id': '28c093dc-5483-4a8d-87d2-9859e641160c', 'name': 'tasks.generate_image_task', 'args': ['/app/placeholder.jpg', 'врач', 'male', 1000013], 'kwargs': {}, 'type': 'tasks.generate_image_task', 'hostname': 'celery@1f81a2121554', 'time_start': None, 'acknowledged': False, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0, 'redelivered': False}, 'worker_pid': None}, {'id': '27b232fe-7ced-450f-86a8-de2ef0509eb9', 'name': 'tasks.generate_image_task', 'args': ['/app/placeholder.jpg', 'врач', 'male', 1000014], 'kwargs': {}, 'type': 'tasks.generate_image_task', 'hostname': 'celery@1f81a2121554', 'time_start': None, 'acknowledged': False, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0, 'redelivered': False}, 'worker_pid': None}, {'id': 'ab93a886-b882-4216-8d05-3c9b396f3927', 'name': 'tasks.generate_image_task', 'args': ['/app/placeholder.jpg', 'врач', 'male', 1000015], 'kwargs': {}, 'type': 'tasks.generate_image_task', 'hostname': 'celery@1f81a2121554', 'time_start': None, 'acknowledged': False, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0, 'redelivered': False}, 'worker_pid': None}, {'id': 'acb4c13e-fecc-44f8-a37c-a713d406e983', 'name': 'tasks.generate_image_task', 'args': ['/app/placeholder.jpg', 'врач', 'male', 1000016], 'kwargs': {}, 'type': 'tasks.generate_image_task', 'hostname': 'celery@1f81a2121554', 'time_start': None, 'acknowledged': False, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0, 'redelivered': False}, 'worker_pid': None}, {'id': '8210a614-93f3-4eae-8919-57a4921f32ee', 'name': 'tasks.generate_image_task', 'args': ['/app/placeholder.jpg', 'врач', 'male', 1000017], 'kwargs': {}, 'type': 'tasks.generate_image_task', 'hostname': 'celery@1f81a2121554', 'time_start': None, 'acknowledged': False, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0, 'redelivered': False}, 'worker_pid': None}, {'id': '6a3ed371-f5a5-4f75-b878-ba63f57ebc24', 'name': 'tasks.generate_image_task', 'args': ['/app/placeholder.jpg', 'врач', 'male', 1000006], 'kwargs': {}, 'type': 'tasks.generate_image_task', 'hostname': 'celery@1f81a2121554', 'time_start': None, 'acknowledged': False, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0, 'redelivered': False}, 'worker_pid': None}, {'id': 'a6537420-2f64-45cb-be8a-c4825628b4ea', 'name': 'tasks.generate_image_task', 'args': ['/app/placeholder.jpg', 'врач', 'male', 1000007], 'kwargs': {}, 'type': 'tasks.generate_image_task', 'hostname': 'celery@1f81a2121554', 'time_start': None, 'acknowledged': False, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0, 'redelivered': False}, 'worker_pid': None}, {'id': 'b00e7394-aeee-4e09-a098-bc603ad104f1', 'name': 'tasks.generate_image_task', 'args': ['/app/placeholder.jpg', 'врач', 'male', 1000008], 'kwargs': {}, 'type': 'tasks.generate_image_task', 'hostname': 'celery@1f81a2121554', 'time_start': None, 'acknowledged': False, 'delivery_info': {'exchange': '', 'routing_key': 'celery', 'priority': 0, 'redelivered': False}, 'worker_pid': None}]}
+2025-05-01 01:02:23 [INFO] Тест очереди завершён успешно.
+2025-05-01 21:30:07 [INFO] Начало постановки в очередь 10 задач (profession=врач, gender=male)
+2025-05-01 21:30:07 [INFO] Все задачи поставлены в очередь.
+2025-05-01 21:30:07 [INFO] Начало мониторинга очереди Celery
+2025-05-01 21:30:07 [INFO] Осталось задач в очереди: 2
+2025-05-01 21:30:08 [INFO] Осталось задач в очереди: 0
+2025-05-01 21:30:08 [INFO] Очередь опустела — все задачи отработаны.
+2025-05-01 21:30:08 [INFO] Инспекция состояния воркеров Celery
+2025-05-01 21:30:10 [INFO] Active tasks: {'celery@cbd7fec1cd45': []}
+2025-05-01 21:30:10 [INFO] Reserved tasks: {'celery@cbd7fec1cd45': []}
+2025-05-01 21:30:10 [INFO] Тест очереди завершён успешно.
+2025-05-01 21:30:17 [INFO] Начало постановки в очередь 50 задач (profession=врач, gender=male)
+2025-05-01 21:30:17 [INFO] Все задачи поставлены в очередь.
+2025-05-01 21:30:17 [INFO] Начало мониторинга очереди Celery
+2025-05-01 21:30:17 [INFO] Осталось задач в очереди: 37
+2025-05-01 21:30:18 [INFO] Осталось задач в очереди: 0
+2025-05-01 21:30:18 [INFO] Очередь опустела — все задачи отработаны.
+2025-05-01 21:30:18 [INFO] Инспекция состояния воркеров Celery
+2025-05-01 21:30:20 [INFO] Active tasks: {'celery@cbd7fec1cd45': []}
+2025-05-01 21:30:20 [INFO] Reserved tasks: {'celery@cbd7fec1cd45': []}
+2025-05-01 21:30:20 [INFO] Тест очереди завершён успешно.
+2025-05-01 21:30:26 [INFO] Начало постановки в очередь 50 задач (profession=врач, gender=male)
+2025-05-01 21:30:26 [INFO] Все задачи поставлены в очередь.
+2025-05-01 21:30:26 [INFO] Начало мониторинга очереди Celery
+2025-05-01 21:30:26 [INFO] Осталось задач в очереди: 42
+2025-05-01 21:30:27 [INFO] Осталось задач в очереди: 0
+2025-05-01 21:30:27 [INFO] Очередь опустела — все задачи отработаны.
+2025-05-01 21:30:27 [INFO] Инспекция состояния воркеров Celery
+2025-05-01 21:30:29 [INFO] Active tasks: {'celery@cbd7fec1cd45': []}
+2025-05-01 21:30:29 [INFO] Reserved tasks: {'celery@cbd7fec1cd45': []}
+2025-05-01 21:30:29 [INFO] Тест очереди завершён успешно.
+2025-05-01 21:30:34 [INFO] Начало постановки в очередь 50 задач (profession=врач, gender=male)
+2025-05-01 21:30:34 [INFO] Все задачи поставлены в очередь.
+2025-05-01 21:30:34 [INFO] Начало мониторинга очереди Celery
+2025-05-01 21:30:34 [INFO] Осталось задач в очереди: 42
+2025-05-01 21:30:35 [INFO] Осталось задач в очереди: 0
+2025-05-01 21:30:35 [INFO] Очередь опустела — все задачи отработаны.
+2025-05-01 21:30:35 [INFO] Инспекция состояния воркеров Celery
+2025-05-01 21:30:38 [INFO] Active tasks: {'celery@cbd7fec1cd45': []}
+2025-05-01 21:30:38 [INFO] Reserved tasks: {'celery@cbd7fec1cd45': []}
+2025-05-01 21:30:38 [INFO] Тест очереди завершён успешно.

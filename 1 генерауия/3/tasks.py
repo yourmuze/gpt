@@ -158,22 +158,9 @@ def generate_image_task(self, image_path: str, profession: str, gender: str, use
             "А если вам понравился результат, поделитесь им и ссылкой на бота с близкими — вдруг они тоже коллекционируют классный мерч.\n\n"
             "Если что-то пошло не так, жмите /help 🥺"
         ) 
-            # 4. Достаём из БД и лимит, и текущее кол-во генераций
-    conn = sqlite3.connect(DB_PATH)
-    cur = conn.cursor()
-    cur.execute(
-        "SELECT photo_count, allowed_generations FROM users WHERE user_id = ?",
-        (user_id,)
-    )
-    row = cur.fetchone()
-    conn.close()
-    count = row[0] if row else 0
-    limit = row[1] if row and row[1] is not None else 2
-
-    url = f"https://api.telegram.org/bot{API_TOKEN}/sendPhoto"
-
-    if count >= limit:
-        # финальное сообщение — убираем клавиатуру
+            # 4. Отправляем в Telegram через HTTP (requests)
+    # --- готовим caption и reply_markup в зависимости от номера попытки ---
+    if count > 1:
         caption = (
             "Большое спасибо, что поучаствовали!❤️\n\n"
             "Вы использовали все доступные попытки.\n\n"
@@ -183,7 +170,7 @@ def generate_image_task(self, image_path: str, profession: str, gender: str, use
         )
         reply_markup = None
     else:
-        # ещё есть попытки — предлагаем кнопку «Другую фигурку»
+        # первая попытка — даём кнопку «Другую фигурку»
         caption = (
             "Ваша фигурка готова 🥳 Скорее скачивайте, ставьте на аватарку в Telegram и не меняйте до конца конкурса — 5 июня!\n\n"
             "И не забудьте поделиться с друзьями, пусть тоже поучаствуют в розыгрыше приза!\n\n"
@@ -202,7 +189,42 @@ def generate_image_task(self, image_path: str, profession: str, gender: str, use
     if reply_markup:
         data["reply_markup"] = reply_markup
 
-    # 5. Отправляем результат
-    with open(result_path, "rb") as photo_f:
-        resp = requests.post(url, data=data, files={"photo": photo_f}, timeout=60)
+    try:
+        with open(result_path, "rb") as photo_f:
+            resp = requests.post(
+                url,
+                data=data,
+                files={"photo": photo_f},
+                timeout=60
+            )
         resp.raise_for_status()
+        logger.info(f"[{user_id}] Изображение успешно отправлено")
+
+        # Обновляем last_photo_id в базе
+        try:
+            result = resp.json().get("result", {})
+            photo_msg_id = result.get("message_id")
+            if photo_msg_id is not None:
+                conn = sqlite3.connect(DB_PATH, timeout=10)
+                cur = conn.cursor()
+                cur.execute(
+                    "UPDATE users SET last_photo_id = ? WHERE user_id = ?;",
+                    (photo_msg_id, user_id)
+                )
+                conn.commit()
+                conn.close()
+                logger.debug(f"[{user_id}] last_photo_id обновлён: {photo_msg_id}")
+        except Exception as e:
+            logger.warning(f"[{user_id}] Не удалось сохранить last_photo_id: {e}")
+
+    except Exception as e:
+        logger.error(f"[{user_id}] Ошибка отправки в Telegram: {e}")
+
+    finally:
+        # 5. Чистим временные файлы
+        for path in (image_path, result_path):
+            try:
+                os.remove(path)
+                logger.debug(f"[{user_id}] Удалён файл: {path}")
+            except Exception as ex:
+                logger.warning(f"[{user_id}] Не удалось удалить файл {path}: {ex}")

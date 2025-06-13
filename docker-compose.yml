@@ -1,56 +1,22 @@
+version: "3.8"
+
 services:
-  redis:
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"
-    restart: unless-stopped
-
-  bot:
+  stub-bot:
     build:
       context: .
       dockerfile: Dockerfile
     working_dir: /app
+    # монтируем код на время разработки, можно убрать в проде
     volumes:
       - .:/app
-      - shared_tmp:/shared_tmp
+    # подтягиваем сразу всё из .env
+    env_file:
+      - .env
+    # (опционально) чтобы явно видеть, какие переменные мы используем
     environment:
-      - REDIS_URL=redis://redis:6379/0
-    depends_on:
-      - redis
-    command: python bot.py
+      - API_TOKEN
+      - SUB_CHANNEL_USERNAME
+      - ADMIN_CHANNEL_USERNAME
+      - ADMIN_IDS
+    command: python stub_bot.py
     restart: unless-stopped
-
-  worker:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    working_dir: /app
-    volumes:
-      - .:/app
-      - shared_tmp:/shared_tmp
-    environment:
-      - REDIS_URL=redis://redis:6379/0
-    depends_on:
-      - redis
-    command: celery -A celery_app worker --concurrency=6 --loglevel=info
-    restart: unless-stopped
-
-  flower:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    working_dir: /app
-    volumes:
-      - .:/app
-      - shared_tmp:/shared_tmp
-    environment:
-      - REDIS_URL=redis://redis:6379/0
-    depends_on:
-      - redis
-    command: celery -A celery_app flower --broker=redis://redis:6379/0 --port=5555
-    ports:
-      - "5555:5555"
-    restart: unless-stopped
-
-volumes:
-  shared_tmp:

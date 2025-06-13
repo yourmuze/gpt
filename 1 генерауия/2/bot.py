@@ -90,166 +90,104 @@ professions = [ normalize(p) for p in raw_professions ]
 # --------------------
 async def init_db():
     async with aiosqlite.connect(DB_PATH) as db:
-        # 1) админы
+        # Ожидаемая схема таблицы
+        expected_columns = [
+            ("user_id", "INTEGER", True),
+            ("name", "TEXT", False),
+            ("profession", "TEXT", False),
+            ("gender", "TEXT", False),
+            ("photo_count", "INTEGER", False)
+        ]
+
         await db.execute("""
             CREATE TABLE IF NOT EXISTS admins (
                 user_id INTEGER PRIMARY KEY
             );
         """)
-        for aid in ADMIN_IDS:
-            await db.execute("INSERT OR IGNORE INTO admins (user_id) VALUES (?);", (aid,))
+        # вставляем в неё ваших первоначальных админов из конфига
+        for admin in ADMIN_IDS:
+            await db.execute(
+                "INSERT OR IGNORE INTO admins (user_id) VALUES (?)",
+                (admin,)
+            )
+        await db.commit()
 
-        # 2) пользователи
-        await db.execute("""
+        await db.execute(
+            """
             CREATE TABLE IF NOT EXISTS users (
-                user_id             INTEGER PRIMARY KEY,
-                name                TEXT,
-                profession          TEXT,
-                gender              TEXT,
-                photo_count         INTEGER DEFAULT 0
+                user_id     INTEGER PRIMARY KEY,
+                name        TEXT,
+                profession  TEXT,
+                gender      TEXT,
+                photo_count INTEGER DEFAULT 0
             );
-        """)
+            """
+        )
+        await db.commit()
 
-        # 3) подписи подписок
-        await db.execute("""
-            CREATE TABLE IF NOT EXISTS subscriptions (
-                user_id       INTEGER PRIMARY KEY,
-                subscribed_at TEXT    DEFAULT (datetime('now'))
-            );
-        """)
-
-        # 4) Миграция: добавляем недостающие колонки
+        # 2) Проверим, есть ли у неё поле last_photo_id
         cursor = await db.execute("PRAGMA table_info(users);")
         cols = [row[1] for row in await cursor.fetchall()]
-
-        if "created_at" not in cols:
+        if "last_photo_id" not in cols:
             await db.execute(
-                "ALTER TABLE users ADD COLUMN created_at TEXT DEFAULT (datetime('now'));"
+                "ALTER TABLE users ADD COLUMN last_photo_id INTEGER DEFAULT NULL;"
             )
-        if "updated_at" not in cols:
-            await db.execute(
-                "ALTER TABLE users ADD COLUMN updated_at TEXT DEFAULT (datetime('now'));"
-            )
-        if "allowed_generations" not in cols:
-            await db.execute(
-                "ALTER TABLE users ADD COLUMN allowed_generations INTEGER DEFAULT 2;"
-            )
-
-        # 5) Инициализируем старые записи, у которых NULL
-        await db.execute(
-            "UPDATE users SET created_at = datetime('now') WHERE created_at IS NULL;"
-        )
-        await db.execute(
-            "UPDATE users SET updated_at = datetime('now') WHERE updated_at IS NULL;"
-        )
-        await db.execute(
-            "UPDATE users SET allowed_generations = 2 WHERE allowed_generations IS NULL;"
-        )
-
+            logger.info("Добавлен столбец last_photo_id в таблицу users")
         await db.commit()
-    # лог
-    logger.info("DB initialized and migrated")
 
+    logger.info("База данных инициализирована")
 
 async def is_admin(user_id: int) -> bool:
     async with aiosqlite.connect(DB_PATH) as db:
-        cur = await db.execute("SELECT 1 FROM admins WHERE user_id = ?", (user_id,))
+        cur = await db.execute(
+            "SELECT 1 FROM admins WHERE user_id = ?",
+            (user_id,)
+        )
         return await cur.fetchone() is not None
+    
+    logger.info("База данных инициализирована")
 
-# ————————————— get_user —————————————
-async def get_user(uid: int) -> dict | None:
+async def get_user(uid: int):
     async with aiosqlite.connect(DB_PATH) as db:
-        cur = await db.execute("""
-            SELECT user_id, name, profession, gender, photo_count,
-                   created_at, updated_at, allowed_generations
-              FROM users
-             WHERE user_id = ?;
-        """, (uid,))
-        row = await cur.fetchone()
-        if not row:
-            return None
-        return {
-            "user_id": row[0],
-            "name": row[1],
-            "profession": row[2],
-            "gender": row[3],
-            "photo_count": row[4],
-            "created_at": row[5],
-            "updated_at": row[6],
-            "allowed_generations": row[7]
-        }
+        cur = await db.execute("SELECT user_id, name, profession, gender, photo_count FROM users WHERE user_id = ?", (uid,))
+        user = await cur.fetchone()
+        if user:
+            user_dict = {
+                "user_id": user[0],
+                "name": user[1],
+                "profession": user[2],
+                "gender": user[3],
+                "photo_count": user[4]
+            }
+            logger.debug(f"Получены данные пользователя {uid}: {user_dict}")
+            return user_dict
+        logger.debug(f"Пользователь {uid} не найден")
+        return None
 
-async def upsert_user(
-    uid: int,
-    *,
-    name: str | None = None,
-    profession: str | None = None,
-    gender: str | None = None,
-    inc_photo: bool = False,
-    set_allowed: int | None = None,
-    dec_allowed: bool = False
-):
-    """
-    - При name/profession/gender/inc_photo обновляем updated_at.
-    - При set_allowed меняем allowed_generations на конкретное значение.
-    - При dec_allowed -- уменьшаем allowed_generations на 1.
-    """
+async def upsert_user(uid: int, name=None, profession=None, gender=None, inc_photo=False):
+    user = await get_user(uid)
     async with aiosqlite.connect(DB_PATH) as db:
-        cur = await db.execute("SELECT 1 FROM users WHERE user_id = ?;", (uid,))
-        exists = await cur.fetchone() is not None
-
-        if not exists:
-            # вставка новой строки
-            await db.execute("""
-                INSERT INTO users (
-                    user_id, name, profession, gender, photo_count,
-                    created_at, updated_at, allowed_generations
-                ) VALUES (
-                    ?, ?, ?, ?, ?,
-                    datetime('now'), datetime('now'), ?
-                );
-            """, (
-                uid,
-                name or "",
-                profession or "",
-                gender or "",
-                1 if inc_photo else 0,
-                set_allowed if set_allowed is not None else 2
-            ))
-        else:
-            # обновляем поля, если переданы
-            if name is not None:
-                await db.execute(
-                    "UPDATE users SET name = ?, updated_at = datetime('now') WHERE user_id = ?;",
-                    (name, uid)
-                )
-            if profession is not None:
-                await db.execute(
-                    "UPDATE users SET profession = ?, updated_at = datetime('now') WHERE user_id = ?;",
-                    (profession, uid)
-                )
-            if gender is not None:
-                await db.execute(
-                    "UPDATE users SET gender = ?, updated_at = datetime('now') WHERE user_id = ?;",
-                    (gender, uid)
-                )
+        if user:
+            if name:
+                await db.execute("UPDATE users SET name = ? WHERE user_id = ?", (name, uid))
+                logger.info(f"Обновлено имя пользователя {uid}: {name}")
+            if profession:
+                await db.execute("UPDATE users SET profession = ? WHERE user_id = ?", (profession, uid))
+                logger.info(f"Обновлена профессия пользователя {uid}: {profession}")
+            if gender:
+                await db.execute("UPDATE users SET gender = ? WHERE user_id = ?", (gender, uid))
+                logger.info(f"Обновлен пол пользователя {uid}: {gender}")
             if inc_photo:
-                await db.execute(
-                    "UPDATE users SET photo_count = photo_count + 1, updated_at = datetime('now') WHERE user_id = ?;",
-                    (uid,)
-                )
-            if set_allowed is not None:
-                await db.execute(
-                    "UPDATE users SET allowed_generations = ?, updated_at = datetime('now') WHERE user_id = ?;",
-                    (set_allowed, uid)
-                )
-            if dec_allowed:
-                await db.execute(
-                    "UPDATE users SET allowed_generations = allowed_generations - 1, updated_at = datetime('now') WHERE user_id = ?;",
-                    (uid,)
-                )
-
+                await db.execute("UPDATE users SET photo_count = photo_count + 1 WHERE user_id = ?", (uid,))
+                logger.info(f"Увеличен счетчик фото для пользователя {uid}")
+        else:
+            await db.execute(
+                "INSERT INTO users (user_id, name, profession, gender, photo_count) VALUES (?, ?, ?, ?, ?)",
+                (uid, name or "", profession or "", gender or "", 1 if inc_photo else 0)
+            )
+            logger.info(f"Добавлен новый пользователь {uid}: name={name}, profession={profession}, gender={gender}")
         await db.commit()
+
 # --------------------
 # Клавиатуры
 # --------------------
@@ -328,26 +266,18 @@ async def on_check_sub(call: types.CallbackQuery, state: FSMContext):
         is_sub = False
 
     if is_sub:
-        # 1) Записываем в subscriptions (если ещё не записано)
-        async with aiosqlite.connect(DB_PATH) as db:
-            await db.execute(
-                "INSERT OR IGNORE INTO subscriptions (user_id) VALUES (?);",
-                (call.from_user.id,)
-            )
-            await db.commit()
-
-        # 2) Переходим дальше по сценарию
+        # если подписан — сразу к вводу имени
         await call.message.edit_text(
             "Как вас зовут? Напишите только своё имя, так мы точно ничего не перепутаем🤭"
         )
         await state.set_state(Form.ask_name)
     else:
+        # если не подписан — просим подписаться, оставляем кнопки
         await call.message.edit_text(
             "Подписки пока нет 🥺. Скорее подпишитесь на @hh_ru_official, и мы продолжим!",
             reply_markup=sub_keyboard()
         )
         await state.set_state(Form.check_sub)
-
 
 @dp.message(StateFilter(Form.ask_name))
 async def process_name(msg: types.Message, state: FSMContext):
@@ -409,6 +339,7 @@ async def choose_gender(call: types.CallbackQuery, state: FSMContext):
     await call.message.answer(
         "Пора загрузить ваше фото! 📸 Чтобы фигурка получилась максимально похожей, выбирайте чёткое селфи без посторонних предметов на фоне.\n\n"
         "Всё как в хорошем резюме: чем лучше фото — тем круче результат!\n\n"
+        "Шлите смелее — даже если первый результат не понравится, у вас в запасе есть бонусная генерация!\n\n"
         "Отправляя фотографию для обработки в бот, вы даёте согласие на использование изображения "
         "(https://disk.yandex.com/i/1dj8dGtcoYFUxw)",
     disable_web_page_preview=True
@@ -423,57 +354,78 @@ async def not_photo(msg: types.Message):
 
 @dp.message(StateFilter(Form.ask_photo), F.photo)
 async def process_photo(msg: types.Message, state: FSMContext):
-    # Проверяем текущее состояние пользователя
+    # если фото пришло в составе альбома — обрабатываем только первый кадр
+    mgid = msg.media_group_id
+    if mgid:
+        key = (msg.chat.id, mgid)
+        if key in processed_media_groups:
+            return  # пропускаем дубликат из этого же альбома
+        processed_media_groups.add(key)
+    # иначе (mgid is None) — одиночное фото всегда обрабатываем
+
+    # Проверяем лимит фотографий
     user = await get_user(msg.from_user.id)
-    if not user:
-        # на всякий случай — новый пользователь
-        await upsert_user(msg.from_user.id)
-        user = await get_user(msg.from_user.id)
-
-    photo_count = user["photo_count"]
-    limit       = user["allowed_generations"]
-
-    if photo_count >= limit:
-        # лимит исчерпан — финальное сообщение
-        await msg.answer(
-            "Большое спасибо, что поучаствовали!❤️\n\n"
+    photo_count = int(user["photo_count"]) if user and user["photo_count"] is not None else 0
+    if photo_count >= 2:
+        await msg.answer("Большое спасибо, что поучаствовали!❤️\n\n"
             "Вы использовали все доступные попытки.\n\n"
-            "Обязательно ставьте фигурку на аватарку и не меняйте её до объявления победителей — 5 июня! 🤞\n\n"
-            "А если вам понравился результат, поделитесь им и ссылкой на бота с близкими.\n\n"
-            "Если что-то пошло не так, жмите /help 🥺"
-        )
+            "Обязательно ставьте фигурку на аватарку и не меняйте её до окончания акции и объявления победителей — 5 июня! 🤞\n\n"
+            "А если вам понравился результат, поделитесь им и ссылкой на бота с близкими — вдруг они тоже коллекционируют классный мерч.\n\n"
+            "Если что-то пошло не так, жмите /help 🥺")
+        logger.info(f"Пользователь {msg.from_user.id} достиг лимита фото")
         return
 
-    # Увеличиваем счётчик и сохраняем
+    # Увеличиваем счётчик и сообщаем пользователю
     await upsert_user(msg.from_user.id, inc_photo=True)
-    await msg.answer("Успех! Мы уже создаём вашу уникальную фигурку 😎 Это займёт некоторое время, мы оповестим вас о готовности!")
-    logger.info(f"Пользователь {msg.from_user.id} отправил фото, попытка {photo_count+1}/{limit}")
+    await msg.answer("Успех! Мы уже создаём вашу уникальную фигурку 😎 Это займёт некоторое время, мы тут же оповестим о готовности!")
+    logger.info(f"Пользователь {msg.from_user.id} отправил фото, обработка начата")
 
-    # Скачиваем фото в файл
+    # Скачиваем фото во временный файл
     photo = msg.photo[-1]
     file = await bot.get_file(photo.file_id)
     with tempfile.NamedTemporaryFile(dir="/shared_tmp", delete=False, suffix=".jpg") as tmp:
         await bot.download_file(file.file_path, tmp.name)
         image_path = tmp.name
+    logger.debug(f"Фото пользователя {msg.from_user.id} скачано: {image_path}")
 
-    # Placeholder-видео (не важно, сколько генераций)
-    asyncio.create_task(send_placeholder_video(msg.chat.id))
+    # Отправляем заглушку видео ровно один раз
+    video_file = FSInputFile(str(WAIT_VIDEO_PATH))
 
-    # Ставим задачу в очередь
-    data = await get_user(msg.from_user.id)
-    generate_image_task.delay(image_path, data["profession"], data["gender"], msg.from_user.id)
-    await state.clear()
+    # фоновая корутина, чтобы не тормозить основное
+    async def _send_placeholder_video():
+        try:
+            await bot.send_chat_action(chat_id=msg.chat.id, action=ChatAction.UPLOAD_VIDEO)
+            await asyncio.wait_for(
+                bot.send_video(
+                    chat_id=msg.chat.id,
+                    video=video_file,
+                    supports_streaming=True,
+                ),
+                timeout=120.0
+            )
+            logger.info(f"Видео-заглушка отправлена: {WAIT_VIDEO_PATH}")
+        except asyncio.TimeoutError:
+            logger.warning("Таймаут при отправке видео-заглушки")
+        except Exception as e:
+            logger.error(f"Не удалось отправить видео-заглушку: {e}")
 
-async def send_placeholder_video(chat_id: int):
-    try:
-        await bot.send_chat_action(chat_id=chat_id, action=ChatAction.UPLOAD_VIDEO)
-        await asyncio.wait_for(
-            bot.send_video(chat_id=chat_id, video=FSInputFile(WAIT_VIDEO_PATH), supports_streaming=True),
-            timeout=120.0
+    # запускаем фоново
+    asyncio.create_task(_send_placeholder_video())
+
+    # Ставим одну задачу в очередь на генерацию изображения
+    user_data = await get_user(msg.from_user.id)
+    profession = user_data["profession"]
+    gender     = user_data["gender"]
+    generate_image_task.delay(image_path, profession, gender, msg.from_user.id)
+    # Если очередь > 10, предупредить пользователя
+    if generator.queue.qsize() > 10:
+        await msg.answer(
+            "😅Желающих получить свою генерацию так много, что процесс может занять чуть больше времени."
+
         )
-        logger.info(f"Video placeholder sent to {chat_id}")
-    except Exception as e:
-        logger.warning(f"Не удалось отправить видео-заглушку: {e}")
+
+    # Очищаем состояние
+    await state.clear()
 
 
 #@dp.callback_query(F.data == "help")
@@ -756,6 +708,54 @@ async def cmd_analytics(msg: types.Message):
     )
     await msg.reply(text)
 
+@dp.message(Command("stats"))
+async def cmd_stats(msg: types.Message):
+    if not await is_admin(msg.from_user.id):
+        return await msg.reply("❌ У вас нет прав для этой команды.")
+
+    async with aiosqlite.connect(DB_PATH) as db:
+        # 1) Всего пользователей, у которых есть name
+        cur = await db.execute("SELECT COUNT(*) FROM users WHERE name != ''")
+        count_name = (await cur.fetchone())[0]
+
+        # 2) Всего пользователей, у которых есть profession
+        cur = await db.execute("SELECT COUNT(*) FROM users WHERE profession != ''")
+        count_prof = (await cur.fetchone())[0]
+
+        # 3) Всего пользователей, у которых выбран пол (male или female)
+        cur = await db.execute("SELECT COUNT(*) FROM users WHERE gender IN ('male','female')")
+        count_gender = (await cur.fetchone())[0]
+
+        # 4) Сколько из них male и сколько female
+        cur = await db.execute("""
+            SELECT 
+              SUM(CASE WHEN gender = 'male' THEN 1 ELSE 0 END),
+              SUM(CASE WHEN gender = 'female' THEN 1 ELSE 0 END)
+            FROM users
+            WHERE gender IN ('male','female')
+        """)
+        male_count, female_count = (await cur.fetchone())
+
+    # 5) Считаем проценты (если count_gender == 0 — ставим 0)
+    if count_gender > 0:
+        male_pct = male_count / count_gender * 100
+        female_pct = female_count / count_gender * 100
+    else:
+        male_pct = female_pct = 0.0
+
+    # 6) Формируем текст
+    text = (
+        f"📊 Статистика учаcтия:\n\n"
+        f"— Написали имя: {count_name}\n"
+        f"— Написали профессию: {count_prof}\n\n"
+        f"— Выбрали пол: {count_gender}\n"
+        f"   • М – {male_count} ({male_pct:.1f}%)\n"
+        f"   • Ж – {female_count} ({female_pct:.1f}%)"
+    )
+
+    await msg.reply(text)
+    logger.info(f"Выдана статистика: name={count_name}, prof={count_prof}, gender={count_gender} (M={male_count}, F={female_count})")
+
 @dp.message(Command("export"))
 async def cmd_export(msg: types.Message):
     # Проверяем, что пользователь — администратор
@@ -779,123 +779,6 @@ async def cmd_export(msg: types.Message):
         FSInputFile(file_path, filename="users_report.xlsx")
     )
     logger.info(f"Экспорт пользователей выполнен админом {msg.from_user.id}")
-
-from config import DEFAULT_ALLOWED_GENERATIONS
-import aiosqlite
-
-@dp.message(Command("generation"))
-async def cmd_generation(msg: types.Message):
-    """
-    /generation all 1   — установить allowed_generations=1 всем
-    /generation 12345 2 — установить allowed_generations=2 пользователю 12345
-    """
-    parts = msg.text.split()
-    if len(parts) != 3 or not parts[2].isdigit():
-        return await msg.reply("❌ Использование: /generation <all|user_id> <count>")
-
-    target, cnt = parts[1], int(parts[2])
-
-    if target.lower() == "all":
-        async with aiosqlite.connect(DB_PATH) as db:
-            await db.execute("UPDATE users SET allowed_generations = ?, updated_at = datetime('now');", (cnt,))
-            await db.commit()
-        return await msg.reply(f"✅ Установлено {cnt} генераций для всех пользователей.")
-    elif target.isdigit():
-        uid = int(target)
-        await upsert_user(uid, set_allowed=cnt)
-        return await msg.reply(f"✅ Установлено {cnt} генераций для пользователя {uid}.")
-    else:
-        return await msg.reply("❌ Неверный первый аргумент, используйте all или user_id.")
-
-@dp.message(Command("stats"))
-async def cmd_stats(msg: types.Message):
-    # 1) Собираем метрики из БД в отдельном соединении — чтобы не блокировать глобальные апдейты
-    async with aiosqlite.connect(DB_PATH, timeout=20.0) as db:
-        # (опционально) возвращать строки как dict
-        db.row_factory = aiosqlite.Row
-
-        # сколько пользователей вообще открыли бота
-        cur = await db.execute("SELECT COUNT(*) AS cnt FROM users;")
-        total_users = (await cur.fetchone())["cnt"]
-
-        # написали имя
-        cur = await db.execute(
-            "SELECT COUNT(*) AS cnt FROM users WHERE name IS NOT NULL AND name <> '';"
-        )
-        wrote_name = (await cur.fetchone())["cnt"]
-
-        # написали профессию
-        cur = await db.execute(
-            "SELECT COUNT(*) AS cnt FROM users WHERE profession IS NOT NULL AND profession <> '';"
-        )
-        wrote_prof = (await cur.fetchone())["cnt"]
-
-        # выбрали пол: всего, М, Ж
-        cur = await db.execute("SELECT COUNT(*) AS cnt FROM users WHERE gender IN ('male','female');")
-        total_gender = (await cur.fetchone())["cnt"]
-        cur = await db.execute("SELECT COUNT(*) AS cnt FROM users WHERE gender = 'male';")
-        male_count = (await cur.fetchone())["cnt"]
-        cur = await db.execute("SELECT COUNT(*) AS cnt FROM users WHERE gender = 'female';")
-        female_count = (await cur.fetchone())["cnt"]
-
-        # отправили хотя бы 1 фото
-        cur = await db.execute("SELECT COUNT(*) AS cnt FROM users WHERE photo_count >= 1;")
-        at_least_one = (await cur.fetchone())["cnt"]
-
-        # отправили 2 и более фото
-        cur = await db.execute("SELECT COUNT(*) AS cnt FROM users WHERE photo_count >= 2;")
-        at_least_two = (await cur.fetchone())["cnt"]
-
-        # активных за неделю (updated_at за последние 7 дней)
-        cur = await db.execute(
-            "SELECT COUNT(*) AS cnt "
-            "FROM users "
-            "WHERE updated_at >= datetime('now', '-7 days');"
-        )
-        active_week = (await cur.fetchone())["cnt"]
-
-        # подписались всего (с учётом ручного оффсета)
-        cur = await db.execute("SELECT COUNT(*) AS cnt FROM subscriptions;")
-        real_subs = (await cur.fetchone())["cnt"]
-        subs = real_subs + 13087  # ваш оффсет
-
-    # 2) Метрики очередей
-    local_q = generator.queue.qsize()
-    insp = celery_app.control.inspect()
-    reserved = insp.reserved() or {}
-    scheduled = insp.scheduled() or {}
-    reserved_count = sum(len(v) for v in reserved.values())
-    scheduled_count = sum(len(v) for v in scheduled.values())
-
-    # 3) Формируем и отправляем отчёт
-    text = (
-        f"📊 Общая статистика:\n\n"
-        f"— Открыли бота: {total_users}\n"
-        f"— Написали имя: {wrote_name}\n"
-        f"— Написали профессию: {wrote_prof}\n\n"
-        f"— Выбрали пол: {total_gender}  (M – {male_count}, F – {female_count})\n\n"
-        f"— Отправили ≥1 фото: {at_least_one}\n"
-        f"— Отправили ≥2 фото: {at_least_two}\n\n"
-        f"— AsyncIO-очередь: {local_q}\n"
-        f"— Celery reserved: {reserved_count}\n"
-        f"— Celery scheduled: {scheduled_count}\n\n"
-        f"— Активных за неделю: {active_week}\n"
-        f"— Подписались: {subs}"
-    )
-    await msg.reply(text)
-    logger.info(
-        f"STATISTICS: users={total_users}, name={wrote_name}, prof={wrote_prof}, "
-        f"1photo={at_least_one}, 2photo={at_least_two}, queue={local_q}, "
-        f"reserved={reserved_count}, scheduled={scheduled_count}, week={active_week}, subs={subs}"
-    )
-
-
-@dp.startup()
-async def on_startup():
-    await init_db()
-    for _ in range(MAX_CONCURRENT_TASKS):
-        asyncio.create_task(generator.worker())
-    logger.info("Бот запущен")
 
 if __name__ == "__main__":
     dp.run_polling(bot, skip_updates=True)
